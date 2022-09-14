@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public int startHealth = 100;
-    private int _health = 100;
+    public int startHealth;
+    private int _health;
     
     void Start()
     {

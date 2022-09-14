@@ -6,6 +6,8 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float movementSpeed;
+    public float rotationSpeed;
+    
     private CharacterController _characterController;
     //private Rigidbody _rigidbody;
     
@@ -43,5 +45,14 @@ public class Movement : MonoBehaviour
         //_rigidbody.freezeRotation = true;
         _characterController.Move(Vector3.right * movementSpeed * Time.deltaTime);
     }
-    
+
+    public void AxisInput(float horizontal, float vertical)
+    {
+        Vector3 rotation = new Vector3(0, horizontal * rotationSpeed * Time.deltaTime, 0);
+        Vector3 move = new Vector3(0, 0, vertical * Time.deltaTime);
+        move = transform.TransformDirection(move);
+        _characterController.Move(move * movementSpeed);
+        transform.Rotate(rotation);
+    }
+
 }

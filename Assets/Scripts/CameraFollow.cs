@@ -1,21 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-
+    [SerializeField] private Transform _cameraGlue;
     [SerializeField] private Transform _target;
-
-    private Vector3 _offset;
+    [SerializeField] private float _rotationSpeed;
     
-    void Start()
-    {
-        _offset = (transform.position - _target.transform.position);
-    }
+    private Vector3 _lastPlayerPos;
     
     void LateUpdate()
     {
-        transform.position = _target.transform.position + _offset;
+        if (_lastPlayerPos != _target.position) // Player moving, recenter camera
+        {
+            transform.position = _cameraGlue.position; // Instantly move camera to its ideal ("glue") position
+            
+            // Rotate it so it looks at the player
+            Quaternion q = Quaternion.LookRotation(_target.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, q, _rotationSpeed*Time.deltaTime);
+            
+            // Store last player position so we can keep track if player moved
+            _lastPlayerPos = _target.position;
+        }
     }
 }
