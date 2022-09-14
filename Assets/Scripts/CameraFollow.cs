@@ -22,4 +22,14 @@ public class CameraFollow : MonoBehaviour
             _lastPlayerPos = _target.position;
         }
     }
+
+    public void SetNewTarget(GameObject go)
+    {
+        _cameraGlue = go.GetComponent<WormInfo>().GetCameraGlue().transform;
+        _target = go.transform;
+        
+        // Instantly move camera
+        transform.position = _cameraGlue.position;
+        transform.rotation = Quaternion.LookRotation(_target.position - transform.position);
+    }
 }
