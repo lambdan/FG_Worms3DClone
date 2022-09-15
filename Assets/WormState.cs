@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(WormInfo))]
 public class WormState : MonoBehaviour
 {
     [SerializeField] private GameObject _activeIndicator;
@@ -9,6 +10,9 @@ public class WormState : MonoBehaviour
     private MeshRenderer _activeIndicatorMeshRender;
     private Animation _activeIndicatorAnimation;
     private InputReceiver _inputReceiver;
+    private ControlledByAI _controlledByAI;
+    private WormInfo _wormInfo;
+    
     private bool _active = false;
     
     void Awake()
@@ -16,6 +20,8 @@ public class WormState : MonoBehaviour
         _activeIndicatorMeshRender = _activeIndicator.GetComponent<MeshRenderer>();
         _activeIndicatorAnimation = _activeIndicator.GetComponent<Animation>();
         _inputReceiver = GetComponent<InputReceiver>();
+        _wormInfo = GetComponent<WormInfo>();
+        _controlledByAI = GetComponent<ControlledByAI>();
     }
     
     public bool IsActive()
@@ -27,7 +33,16 @@ public class WormState : MonoBehaviour
     {
         Debug.Log("Activating worm " + name);
         _active = true;
-        _inputReceiver.enabled = true;
+
+        if (_wormInfo.IsAIControlled())
+        {
+            _controlledByAI.enabled = true;
+        }
+        else
+        {
+            _inputReceiver.enabled = true;  
+        }
+        
         _activeIndicatorAnimation.enabled = true;
         _activeIndicatorMeshRender.enabled = true;
     }
@@ -36,7 +51,16 @@ public class WormState : MonoBehaviour
     {
         Debug.Log("Deactivating worm " + name);
         _active = false;
-        _inputReceiver.enabled = false;
+        
+        if (_wormInfo.IsAIControlled())
+        {
+            _controlledByAI.enabled = false;
+        }
+        else
+        {
+            _inputReceiver.enabled = false;  
+        }
+        
         _activeIndicatorAnimation.enabled = false;
         _activeIndicatorMeshRender.enabled = false;
     }

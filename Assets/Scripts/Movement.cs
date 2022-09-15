@@ -55,4 +55,10 @@ public class Movement : MonoBehaviour
         transform.Rotate(rotation);
     }
 
+    public void MoveTowards(Vector3 pos)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * movementSpeed);
+        transform.rotation = Quaternion.LookRotation(pos - transform.position);
+    }
+
 }

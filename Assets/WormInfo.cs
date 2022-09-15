@@ -8,6 +8,7 @@ public class WormInfo : MonoBehaviour
 
     private string _name;
     private int _team;
+    private bool _isAIControlled;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +47,16 @@ public class WormInfo : MonoBehaviour
     public void UpdateName()
     {
         this.name = "Team " + _team + " - " + _name;
+    }
+
+    public void SetAIControlled(bool state)
+    {
+        _isAIControlled = state;
+    }
+
+    public bool IsAIControlled()
+    {
+        return _isAIControlled;
     }
 
     public Transform GetCameraGlue()

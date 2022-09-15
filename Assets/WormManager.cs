@@ -36,7 +36,7 @@ public class WormManager : MonoBehaviour
             
             for (int i = 0; i < wormsPerTeam; i++)
             {
-                Vector3 pos = new Vector3(i*5, 1, t*10); // TODO make spawn points
+                Vector3 pos = new Vector3(i*10, 1, t*20); // TODO make spawn points
                 GameObject worm = Spawn(_wormPrefab, pos);
                 
                 // Set name and team assignment to worm
@@ -141,6 +141,7 @@ public class WormManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // These are just for TESTING -- delete them eventually !!
         if (nextWorm)
         {
             NextWorm();
@@ -159,4 +160,10 @@ public class WormManager : MonoBehaviour
             nextTeamTest = false;
         }
     }
+
+    public List<List<GameObject>> GetAllTeams()
+    {
+        return _teams;
+    }
+    
 }
