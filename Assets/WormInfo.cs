@@ -30,6 +30,12 @@ public class WormInfo : MonoBehaviour
     public void SetName(string newName)
     {
         _name = newName;
+
+        if (_isAIControlled)
+        {
+            _name = _name + " [AI]";
+        }
+        
         UpdateName();
     }
 

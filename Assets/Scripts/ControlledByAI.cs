@@ -13,7 +13,7 @@ public class ControlledByAI : MonoBehaviour
     
     private WormInfo _wormInfo;
     private Movement _movement;
-    private WormManager _wormManager;
+    private GameManager _gameManager;
     private WeaponHolder _weaponHolder;
 
     private int _myTeam;
@@ -24,7 +24,7 @@ public class ControlledByAI : MonoBehaviour
         _wormInfo = GetComponent<WormInfo>();
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
-        _wormManager = FindObjectOfType<WormManager>();
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
     void Start()
@@ -33,11 +33,11 @@ public class ControlledByAI : MonoBehaviour
         _myTeam = _wormInfo.GetTeam();
         
         // Add everyone who's not on my team to my enemy list
-        foreach (List<GameObject> team in _wormManager.GetAllTeams())
+        foreach (List<GameObject> team in _gameManager.GetAllTeams())
         {
             foreach (GameObject worm in team)
             {
-                if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam)
+                if (worm != null && worm.GetComponent<WormInfo>().GetTeam() != _myTeam)
                 {
                     _enemies.Add(worm);
                 }
@@ -57,7 +57,7 @@ public class ControlledByAI : MonoBehaviour
             for (int i = 0; i < _enemies.Count; i++)
             {
                 // Check if that enemy is still alive, and remove it from our enemy list if not
-                if (_enemies[i].GetComponent<Health>().GetHealth() <= 0)
+                if (_enemies[i] == null || _enemies[i].GetComponent<Health>().GetHealth() <= 0)
                 {
                     _enemies.RemoveAt(i);
                     continue;
