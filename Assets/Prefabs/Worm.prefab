@@ -198,6 +198,7 @@ MonoBehaviour:
   allWeapons:
   - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
+  - {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
   _testGiveWeapon: 0
   _testGive: {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _weaponHand: {fileID: 134202490290356421}

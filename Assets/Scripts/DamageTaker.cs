@@ -8,7 +8,6 @@ public class DamageTaker : MonoBehaviour
 {
     private Health _health;
     private HealthTextUpdater _healthTextUpdater;
-
     private bool _hasHealthText = false;
     
     // Start is called before the first frame update
@@ -21,11 +20,10 @@ public class DamageTaker : MonoBehaviour
             _hasHealthText = true;
         }
     }
-
+    
     public void TakeDamage(int amount)
     {
         _health.ChangeHealth(-amount);
-        
         // Refresh floating text above worm if it has one
         if (_hasHealthText)
         {
