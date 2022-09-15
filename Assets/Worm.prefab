@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 5185815060319161311}
   - component: {fileID: 7651442439378797146}
   - component: {fileID: 4932588296584274209}
+  - component: {fileID: 8882537621022959440}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -266,6 +267,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8bcf76fd11fb6045a8821c255da8a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8882537621022959440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473437008339127252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa3f8fa116f737c4d81e89b5ceb1b097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textField: {fileID: 4578219129543043087}
 --- !u!1 &2300788578148773472
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +391,6 @@ GameObject:
   - component: {fileID: 8370772723475428469}
   - component: {fileID: 6071937692115150523}
   - component: {fileID: 4578219129543043087}
-  - component: {fileID: 6991927177177369136}
   - component: {fileID: 6441094189459632795}
   m_Layer: 0
   m_Name: Health Text
@@ -540,18 +553,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6071937692115150523}
   m_maskType: 0
---- !u!114 &6991927177177369136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8614596538960599756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa3f8fa116f737c4d81e89b5ceb1b097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6441094189459632795
 MonoBehaviour:
   m_ObjectHideFlags: 0
