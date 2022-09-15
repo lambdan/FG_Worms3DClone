@@ -1,48 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class WeaponHolder : MonoBehaviour
 {
+    [SerializeField] private List<WeaponProperties> allWeapons;
+    [SerializeField] private bool _testGiveWeapon;
+    [SerializeField] private WeaponProperties _testGive;
     [SerializeField] private Transform _weaponHand;
-    [SerializeField] private GameObject _weaponPrefab;
 
-    private GameObject _currentWeapon;
+    private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
+    private int _currentWeaponIndex = 0;
+    private WeaponProperties _currentWeaponProperties;
+    private GameObject _currentWeaponObject;
     private WeaponScript _currentWeaponScript;
     
-    // Start is called before the first frame update
     void Start()
     {
-        
-    }
-    
-    
-    
-
-    public void SwitchWeapon(GameObject prefab)
-    {
-        Debug.Log("Switch weapon");
-        if (_currentWeapon != null)
+        foreach (WeaponProperties WP in allWeapons)
         {
-            Destroy(_currentWeapon); // Remove current weapon
+            GetNewWeapon(WP);
+        }
+    }
+
+
+    public void SwitchWeapon(WeaponProperties WepProps)
+    {
+        if (_currentWeaponObject != null)
+        {
+            Destroy(_currentWeaponObject); // Remove current weapon
+        }
+
+        _currentWeaponProperties = WepProps;
+        
+        GameObject weapon = Instantiate(_currentWeaponProperties.weaponPrefab, _weaponHand.position,
+            _weaponHand.rotation, _weaponHand);
+        _currentWeaponObject = weapon;
+        _currentWeaponScript = _currentWeaponObject.GetComponent<WeaponScript>();
+        _currentWeaponScript.SetWeaponProperties(_currentWeaponProperties);
+    }
+
+    public void GetNewWeapon(WeaponProperties WepProps)
+    {
+        // Check that we don't already have this weapon
+        foreach (WeaponProperties WP in _heldWeapons)
+        {
+            if (WP.name == WepProps.name)
+            {
+                Debug.Log("We already have this weapon... not picking it up again");
+                return;
+            }
         }
         
-        GameObject weapon = Instantiate(_weaponPrefab, _weaponHand.position, _weaponHand.rotation, _weaponHand); 
-        _currentWeapon = weapon;
-        _currentWeaponScript = weapon.GetComponent<WeaponScript>();
-
+        _heldWeapons.Add(WepProps);
+        
+        // Switch to latest picked up weapon (its gonna be at the end of the list)
+        SwitchWeapon(_heldWeapons[_heldWeapons.Count - 1]);
     }
-
     public void NextWeapon()
     {
-        // TODO go through a list of weapon prefabs here
-        SwitchWeapon(_weaponPrefab);
+        if (_heldWeapons.Count == 1)
+        {
+            // Only have 1 gun, nothing to switch to
+            return;
+        }
+        
+        int next = _currentWeaponIndex + 1;
+        if (next >= _heldWeapons.Count)
+        {
+            next = 0; // Back to first weapon
+        }
+
+        _currentWeaponIndex = next;
+        SwitchWeapon(_heldWeapons[next]);
+
     }
     
     public void Fire()
     {
-        Debug.Log("Firing in weapon holder!!!");
         _currentWeaponScript.Fire();
     }
 }

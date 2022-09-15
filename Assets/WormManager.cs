@@ -22,10 +22,10 @@ public class WormManager : MonoBehaviour
         _camera = Camera.main;
         _activeWorms = new List<GameObject>();
         
-        // Spawn n worms at random positions
+        // Spawn n worms // TODO make spawn points 
         for (int i = 0; i < wormsToSpawn; i++)
         {
-            Vector3 pos = new Vector3(Random.Range(-15, 15), 1, Random.Range(-15, 15));
+            Vector3 pos = new Vector3(i*5, 1, i*2);
             GameObject worm = Spawn(_wormPrefab, pos);
             worm.GetComponent<WormState>().Deactivate();
             _activeWorms.Add(worm);

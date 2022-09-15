@@ -195,8 +195,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5609bb4fc56b76142b245b64a6085edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allWeapons:
+  - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
+  - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
+  _testGiveWeapon: 0
+  _testGive: {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _weaponHand: {fileID: 134202490290356421}
-  _weaponPrefab: {fileID: 2914965304411521489, guid: e9987e10b5b97504dadde39eed105995, type: 3}
 --- !u!1 &2300788578148773472
 GameObject:
   m_ObjectHideFlags: 0

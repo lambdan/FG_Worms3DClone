@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
-    [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private Transform _barrelExit;
-    [SerializeField] private float _fireRate;
-    
     private float _lastFire;
+    private WeaponProperties _weaponProps;
+
+    
+    private GameObject _bulletPrefab;
+    private float _fireRate;
+    private Transform _barrelExit;
+    
+    public void SetWeaponProperties(WeaponProperties WP)
+    {
+        _bulletPrefab = WP.bulletPrefab;
+        _fireRate = WP.fireRate;
+        _barrelExit = GetComponent<BarrelExit>().GetBarrelExit();
+        _lastFire = 0;
+    }
     
     public void Fire()
     {

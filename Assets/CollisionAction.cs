@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollisionAction : MonoBehaviour
 {
     [SerializeField] private DamageGiver _damageGiver;
-    
-
     private bool _givesDamage = false;
 
     void Awake()
@@ -22,8 +17,9 @@ public class CollisionAction : MonoBehaviour
     {
         if (_givesDamage)
         {
+            // Check if target has a damage taker, and if so, give it the damage
             DamageTaker _dmgTaker = target.GetComponentInParent<DamageTaker>();
-            if (_dmgTaker != null) // Target can take damage
+            if (_dmgTaker != null)
             {
                 _dmgTaker.TakeDamage(_damageGiver.GetDamageAmount());
             }

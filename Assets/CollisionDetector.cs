@@ -15,7 +15,7 @@ public class CollisionDetector : MonoBehaviour
 
         if (_destroyOnCollision)
         {
-            Destroy(this); // Destroy bullet on collision
+            Destroy(this.gameObject); // Destroy bullet on collision
         }
     }
 }
