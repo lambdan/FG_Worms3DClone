@@ -6,6 +6,7 @@ using UnityEngine;
 public class CollisionAction : MonoBehaviour
 {
     [SerializeField] private DamageGiver _damageGiver;
+    
 
     private bool _givesDamage = false;
 

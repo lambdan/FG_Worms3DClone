@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WormInfo : MonoBehaviour
+public class BulletMover : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraGlue;
-
+    [SerializeField] private float _speed;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -13,14 +13,8 @@ public class WormInfo : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        transform.position += transform.forward * _speed * Time.fixedDeltaTime;
     }
-
-    public Transform GetCameraGlue()
-    {
-        return _cameraGlue.transform;
-    }
-    
 }
