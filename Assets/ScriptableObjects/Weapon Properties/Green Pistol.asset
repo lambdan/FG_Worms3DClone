@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 2914965304411521489, guid: e9987e10b5b97504dadde39eed105995, type: 3}
   bulletPrefab: {fileID: 514225864808704784, guid: 3c36be4eb22ec304084e354ef9d0bbf8, type: 3}
-  weaponName: Green Pistol
-  weaponDescription: A green pistol that fires pretty slow
+  weaponName: Decent Pistol
+  weaponDescription: A green pistol that can be fired pretty fast
   fireRate: 0.1

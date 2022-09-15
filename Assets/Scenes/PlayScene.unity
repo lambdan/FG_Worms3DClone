@@ -191,7 +191,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -280,8 +280,8 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
+  m_HDR: 0
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -316,7 +316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraGlue: {fileID: 0}
   _target: {fileID: 0}
-  _rotationSpeed: 6
 --- !u!1001 &618147657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,8 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
-  wormsToSpawn: 3
-  teamsPlaying: 10
+  teamsPlaying: 2
   wormsPerTeam: 2
   previousWorm: 0
   nextWorm: 0

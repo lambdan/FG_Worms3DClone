@@ -14,6 +14,10 @@ public class Health : MonoBehaviour
 
     public int GetHealth()
     {
+        if (_health < 0)
+        {
+            return 0;
+        }
         return _health;
     }
 
@@ -29,6 +33,9 @@ public class Health : MonoBehaviour
         if (_health <= 0)
         {
             Debug.Log(name + ": Health is <= 0 (I should die)");
+            
+            GetComponent<DeathAnimation>().TriggerDeathAnimation(); // TODO A nicer way to do this
+            
         }
     }
     

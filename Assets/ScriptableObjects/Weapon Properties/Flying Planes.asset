@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 2914965304411521489, guid: b14a0dfe8e08fff48a8474d2425afb17, type: 3}
   bulletPrefab: {fileID: 514225864808704784, guid: 2e7d23354d2821c4b9b3233c0092b4ee, type: 3}
-  weaponName: Flying Planes
-  weaponDescription: Throw flying planes
+  weaponName: Paper Plane (throwable)
+  weaponDescription: A very deadly paper lane that doesn't fly very far
   fireRate: 1

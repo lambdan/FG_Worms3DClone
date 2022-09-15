@@ -5,9 +5,8 @@ using UnityEngine;
 public class WormManager : MonoBehaviour
 {
     [SerializeField] private GameObject _wormPrefab;
-    [SerializeField] private int wormsToSpawn;
     
-    [Space]
+    
     [SerializeField] private int teamsPlaying;
     [SerializeField] private int wormsPerTeam;
     
@@ -25,7 +24,7 @@ public class WormManager : MonoBehaviour
     private int _activeTeam = 0;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _camera = Camera.main;
         _activeWorms = new List<GameObject>();
@@ -37,7 +36,7 @@ public class WormManager : MonoBehaviour
             
             for (int i = 0; i < wormsPerTeam; i++)
             {
-                Vector3 pos = new Vector3(i*5, 1, i*t*7); // TODO make spawn points
+                Vector3 pos = new Vector3(i*5, 1, t*10); // TODO make spawn points
                 GameObject worm = Spawn(_wormPrefab, pos);
                 
                 // Set name and team assignment to worm
@@ -53,8 +52,10 @@ public class WormManager : MonoBehaviour
             _teams.Add(thisTeamsWorms);
         }
 
+        
+        // First team gets first turn
         _activeTeam = 0;
-        _activeWorms = _teams[0];
+        _activeWorms = _teams[_activeTeam];
         SetActiveWorm(0);
     }
 
@@ -93,9 +94,10 @@ public class WormManager : MonoBehaviour
         {
             next = 0; 
         }
-        
 
-        _activeWorms = _teams[next]; // Swap out which worms are "active"
+        DisableWorm(_activeWorm);
+        _activeTeam = next;
+        _activeWorms = _teams[_activeTeam]; // Swap out which worms are "active"
         NextWorm();        
     }
 
