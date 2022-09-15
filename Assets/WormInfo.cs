@@ -6,6 +6,9 @@ public class WormInfo : MonoBehaviour
 {
     [SerializeField] private Transform _cameraGlue;
 
+    private string _name;
+    private int _team;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,33 @@ public class WormInfo : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public string GetName()
+    {
+        return _name;
+    }
+
+    public void SetName(string newName)
+    {
+        _name = newName;
+        UpdateName();
+    }
+
+    public int GetTeam()
+    {
+        return _team;
+    }
+
+    public void SetTeam(int newTeam)
+    {
+        _team = newTeam;
+        UpdateName();
+    }
+
+    public void UpdateName()
+    {
+        this.name = "Team " + _team + " - " + _name;
     }
 
     public Transform GetCameraGlue()

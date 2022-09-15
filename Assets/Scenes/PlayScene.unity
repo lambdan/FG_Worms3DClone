@@ -502,8 +502,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
   wormsToSpawn: 3
+  teamsPlaying: 10
+  wormsPerTeam: 2
   previousWorm: 0
   nextWorm: 0
+  nextTeamTest: 0
 --- !u!4 &1929845225
 Transform:
   m_ObjectHideFlags: 0
