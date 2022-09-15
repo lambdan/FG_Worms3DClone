@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class ControlledByAI : MonoBehaviour
 {
     [SerializeField] private float _firingRange;
+    [SerializeField] private int _weaponSwitchChance;
     
     private WormInfo _wormInfo;
     private Movement _movement;
@@ -80,8 +81,17 @@ public class ControlledByAI : MonoBehaviour
                 _weaponHolder.Fire();
             }            
         }
-        
+        else
+        {
+            // No enemies left... move around a little for the fun of it
+            _movement.MoveTowards(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
+        }
 
+        if (Random.Range(0, _weaponSwitchChance) == 0)
+        {
+            // Switch weapons occasionally
+            _weaponHolder.NextWeapon();
+        }
 
 
     }

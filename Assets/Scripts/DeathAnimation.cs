@@ -12,9 +12,12 @@ public class DeathAnimation : MonoBehaviour
 {
     [SerializeField] private bool _destroyWhenDone;
     [SerializeField] private float _speed;
+    [SerializeField] private float _duration;
 
     private Quaternion _startRotation;
     private Quaternion _targetRotation;
+
+    private float _animationStartedTime = 0;
     private bool _animationStarted = false;
     private bool _animationDone = false;
 
@@ -29,7 +32,7 @@ public class DeathAnimation : MonoBehaviour
             // Also ascend up into heaven
             transform.position += Vector3.up * _speed * Time.fixedDeltaTime;
             
-            if (transform.position.y > 20)
+            if (Time.time - _animationStartedTime > _duration) // Animate for n secs
             {
                 _animationDone = true;
             }
@@ -51,5 +54,6 @@ public class DeathAnimation : MonoBehaviour
         GetComponentInChildren<Rigidbody>().useGravity = false;        
         GetComponentInChildren<CapsuleCollider>().enabled = false;
         _animationStarted = true;
+        _animationStartedTime = Time.time;
     }
 }
