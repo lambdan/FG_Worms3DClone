@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 816362832799230046}
   - component: {fileID: 5185815060319161311}
   - component: {fileID: 7651442439378797146}
-  - component: {fileID: 7601774419645465649}
+  - component: {fileID: 4932588296584274209}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activeIndicator: {fileID: 2300788578148773472}
---- !u!114 &7601774419645465649
+--- !u!114 &4932588296584274209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 473437008339127252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d56954aca250746b06d53c551d5e7b, type: 3}
+  m_Script: {fileID: 11500000, guid: b8bcf76fd11fb6045a8821c255da8a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2300788578148773472
