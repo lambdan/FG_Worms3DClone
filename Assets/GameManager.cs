@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WormManager _wormManager;
     [SerializeField] WormGenerator _wormGenerator;
     [SerializeField] private GameObject _wormPrefab; // TODO Make this a list with different colored worms? (or maybe just switch texture on them?)
+    [SerializeField] private float _delayBetweenRounds;
     [SerializeField] private float roundLength;
     
     // Generate teams in WormGenerator
@@ -42,12 +43,7 @@ public class GameManager : MonoBehaviour
             _teams.Add(thisTeam);
         }
     }
-
-    void Start()
-    {
-        StartRound(0);
-    }
-
+    
     void StartRound(int team)
     {
         _roundStarted = Time.time;
@@ -89,7 +85,7 @@ public class GameManager : MonoBehaviour
         if (!_delayStarted && Time.time - _roundStarted > roundLength)
         {
             _wormManager.DisableAllActiveWorms();
-            StartCoroutine(StartNextRound(2));
+            StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
             _delayStarted = true;
         }
         
@@ -102,7 +98,7 @@ public class GameManager : MonoBehaviour
         return _teams;
     }
 
-    IEnumerator StartNextRound(float delay)
+    IEnumerator DelayedStartNextRound(float delay)
     {
         yield return new WaitForSeconds(delay);
         NextRound();

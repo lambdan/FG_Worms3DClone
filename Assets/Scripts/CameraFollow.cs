@@ -6,10 +6,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform _target;
 
     private Vector3 _lastPlayerPos;
-    
+
     void LateUpdate()
     {
-        if (_lastPlayerPos != _target.position) // Player moving, recenter camera
+        if (_target != null && _lastPlayerPos != _target.position) // Player moving, recenter camera
         {
             // Instantly move camera to its ideal ("glue") position
             transform.position = _cameraGlue.position; 

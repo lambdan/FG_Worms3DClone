@@ -1056,4 +1056,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colAction: {fileID: 514225864808704794}
-  _destroyOnCollision: 0
+  _destroyOnCollision: 1

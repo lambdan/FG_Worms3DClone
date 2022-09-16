@@ -8,9 +8,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(WeaponHolder))]
 public class ControlledByAI : MonoBehaviour
 {
-    [SerializeField] private float _firingRange;
-    [SerializeField] private int _weaponSwitchChance;
-    
+
     private WormInfo _wormInfo;
     private Movement _movement;
     private GameManager _gameManager;
@@ -72,7 +70,7 @@ public class ControlledByAI : MonoBehaviour
             }
         
             // If we are far away from the enemy, move closer
-            if (nearestEnemyDistance > _firingRange)
+            if (nearestEnemyDistance > Random.Range(5, 10))
             {
                 _movement.MoveTowards(_enemies[nearestEnemyIndex].transform.position);
             }
@@ -87,7 +85,7 @@ public class ControlledByAI : MonoBehaviour
             _movement.MoveTowards(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
         }
 
-        if (Random.Range(0, _weaponSwitchChance) == 0)
+        if (Random.Range(0, 10000) == 0)
         {
             // Switch weapons occasionally
             _weaponHolder.NextWeapon();
