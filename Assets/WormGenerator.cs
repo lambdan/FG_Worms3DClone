@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class WormGenerator : MonoBehaviour
 {
-    [SerializeField] private List<string> _names;
-    
-    
     public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase)
     {
         List<GameObject> thisTeam = new List<GameObject>();

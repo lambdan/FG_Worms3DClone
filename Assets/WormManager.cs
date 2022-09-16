@@ -6,6 +6,7 @@ public class WormManager : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private CameraFollow _cameraFollow;
+    [SerializeField] private HUDUpdater _HUDUpdater;
     
     private List<GameObject> _activeWorms = new List<GameObject>();
 
@@ -25,6 +26,9 @@ public class WormManager : MonoBehaviour
         // Move camera to this worm
         _cameraFollow.SetNewTarget(_activeWorms[n]);
         _cameraFollow.Activate();
+        
+        // Update name on the HUD
+        _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
         
         // Update which worm is currently active
         _activeWorm = n;

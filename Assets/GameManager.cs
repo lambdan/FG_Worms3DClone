@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(HUDUpdater))]
 [RequireComponent(typeof(WormGenerator))]
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private HUDUpdater _HUDUpdater;
     [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private List<Transform> _homeBases;
     [SerializeField] private int _humanPlayers;
@@ -53,17 +55,17 @@ public class GameManager : MonoBehaviour
         StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
     }
 
-    void StartRound(int team)
+    void StartRound()
     {
         _wormManager.SetActiveTeam(_currentTeam);
         _roundsPlayed += 1;
+        _HUDUpdater.UpdateRoundsPlayed(_roundsPlayed);
         StartCoroutine(RoundTimer(roundLength));
     }
 
     void NextRound()
     {
         Debug.Log("Starting new round!");
-        Debug.Log("Rounds played " + _roundsPlayed);
 
         int currentTeamIndex = _teams.IndexOf(_currentTeam);
         
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
 
         _currentTeamsTurn = nextTeam;
         _currentTeam = _teams[_currentTeamsTurn];
-        StartRound(_currentTeamsTurn);
+        StartRound();
     }
 
     void GameOver()
