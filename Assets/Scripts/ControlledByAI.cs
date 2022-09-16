@@ -97,6 +97,13 @@ public class ControlledByAI : MonoBehaviour
                 }
             }
 
+            if (Random.Range(0, 1000) < 1)
+            {
+                // occasionally go to a completely different enemy instead
+                Debug.Log(this.name + ": Lets go kill this guy instead");
+                nearestEnemy = _enemies[Random.Range(0, _enemies.Count)];
+            }
+
             _nearestEnemy = nearestEnemy.transform;
 
             //Debug.Log(this.name + " nearest enemy: " + nearestEnemy.name + " (" + nearestEnemyDistance + " away)");
@@ -108,7 +115,7 @@ public class ControlledByAI : MonoBehaviour
                 if (!_unstucking)
                 {
                     _movement.MoveTowards(nearestEnemy.transform.position);
-                    if (Vector3.Distance(_startPosition, transform.position) < 2f && Time.time - _startedTime > 1.5f)
+                    if (Vector3.Distance(_startPosition, transform.position) < 5 && Time.time - _startedTime > 1.5f)
                     {
                         // We don't seem to be moving, try going to the left for a while
                         StartCoroutine(Unstucker());
@@ -131,7 +138,7 @@ public class ControlledByAI : MonoBehaviour
             }
         }
 
-        if (Random.Range(0, 100) < 5)
+        if (Random.Range(0, 1000) < 1)
         {
             // Switch weapons occasionally
             _weaponHolder.NextWeapon();
