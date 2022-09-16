@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 3713165976416829121}
   - component: {fileID: 2567865808839315451}
   - component: {fileID: 7869669693173521239}
+  - component: {fileID: 3451263884784508282}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -92,7 +93,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: -0.03, y: 1.05, z: 0.03}
 --- !u!114 &473437008339127249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28d9339de39ec8448811c1261d4e4197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 10
   rotationSpeed: 180
 --- !u!114 &473437008339127251
 MonoBehaviour:
@@ -214,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef407ad54522bc4580eee8607fc976b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destroyWhenDone: 1
+  _destroyWhenDone: 0
   _speed: 1.5
   _duration: 7
 --- !u!114 &7869669693173521239
@@ -229,8 +230,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ebef0116233734bafc76cea7e8befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firingRange: 7
-  _weaponSwitchChance: 1000
+--- !u!114 &3451263884784508282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473437008339127252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21189f538fd1114195eef49644457fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2300788578148773472
 GameObject:
   m_ObjectHideFlags: 0

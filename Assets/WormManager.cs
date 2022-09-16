@@ -13,20 +13,18 @@ public class WormManager : MonoBehaviour
 
     public void SetActiveTeam(List<GameObject> team)
     {
-        DisableAllActiveWorms();
         _activeWorms = team; // Swap to the new team
-        SetActiveWorm(Random.Range(0, _activeWorms.Count)); // Activate random worm of that team
+        SetActiveWorm(Random.Range(0, _activeWorms.Count));
     }
     
     void SetActiveWorm(int n)
-    {
-        
-        
+    { 
         // Enable input receiver on this worm
         _activeWorms[n].GetComponent<WormState>().Activate();
         
         // Move camera to this worm
         _cameraFollow.SetNewTarget(_activeWorms[n]);
+        _cameraFollow.Activate();
         
         // Update which worm is currently active
         _activeWorm = n;
@@ -36,12 +34,7 @@ public class WormManager : MonoBehaviour
     {
         foreach (GameObject worm in _activeWorms)
         {
-            if (worm != null)
-            {
-                worm.GetComponent<WormState>().Deactivate();
-            }
-            
-
+            worm.GetComponent<WormState>().Deactivate();
         }
     }
     

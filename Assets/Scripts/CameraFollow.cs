@@ -6,10 +6,11 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform _target;
 
     private Vector3 _lastPlayerPos;
+    private bool _active = false;
 
     void LateUpdate()
     {
-        if (_target != null && _lastPlayerPos != _target.position) // Player moving, recenter camera
+        if (_active && _target != null && _lastPlayerPos != _target.position) // Player moving, recenter camera
         {
             // Instantly move camera to its ideal ("glue") position
             transform.position = _cameraGlue.position; 
@@ -31,4 +32,26 @@ public class CameraFollow : MonoBehaviour
         transform.position = _cameraGlue.position;
         transform.rotation = Quaternion.LookRotation(_target.position - transform.position);
     }
+
+    public void Activate()
+    {
+        _active = true;
+    }
+
+    public void Deactivate()
+    {
+        _active = false;
+    }
+
+    public bool GetStats()
+    {
+        return _active;
+    }
+
+    public Transform GetTarget()
+    {
+        return _target;
+    }
+    
+    
 }

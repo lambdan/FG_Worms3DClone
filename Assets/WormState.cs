@@ -37,9 +37,11 @@ public class WormState : MonoBehaviour
         if (_wormInfo.IsAIControlled())
         {
             _controlledByAI.enabled = true;
+            _inputReceiver.enabled = false;
         }
         else
         {
+            _controlledByAI.enabled = false;
             _inputReceiver.enabled = true;  
         }
         
@@ -52,15 +54,9 @@ public class WormState : MonoBehaviour
         Debug.Log("Deactivating worm " + name);
         _active = false;
         
-        if (_wormInfo.IsAIControlled())
-        {
-            _controlledByAI.enabled = false;
-        }
-        else
-        {
-            _inputReceiver.enabled = false;  
-        }
-        
+
+        _controlledByAI.enabled = false;
+        _inputReceiver.enabled = false;
         _activeIndicatorAnimation.enabled = false;
         _activeIndicatorMeshRender.enabled = false;
     }

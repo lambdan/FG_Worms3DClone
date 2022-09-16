@@ -678,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911c261d6229c784e84a09679daa3fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraFollow: {fileID: 109040654}
   _homeBases:
   - {fileID: 1551863965}
   - {fileID: 531190727}
@@ -688,12 +689,12 @@ MonoBehaviour:
   - {fileID: 559418556}
   _humanPlayers: 0
   _aiPlayers: 4
-  _wormsPerTeam: 3
+  _wormsPerTeam: 1
   _wormManager: {fileID: 1913921541}
   _wormGenerator: {fileID: 1913921542}
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
   _delayBetweenRounds: 2
-  roundLength: 5
+  roundLength: 10
 --- !u!4 &1913921544
 Transform:
   m_ObjectHideFlags: 0
