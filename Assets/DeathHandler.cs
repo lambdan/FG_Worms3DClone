@@ -11,6 +11,7 @@ public class DeathHandler : MonoBehaviour
     void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
+        
         _deathAnim = GetComponent<DeathAnimation>();
         _wormInfo = GetComponent<WormInfo>();
     }
@@ -29,8 +30,14 @@ public class DeathHandler : MonoBehaviour
 
     public void Died()
     {
-        Debug.Log("Death Handler: reporting death of " + this.name + " to Game Manager");
-        _gameManager.ReportDeath(this.gameObject, _wormInfo.GetTeam());
-        _deathAnim.TriggerDeathAnimation();
+        if (_deathAnim != null)
+        {
+            _deathAnim.TriggerDeathAnimation();
+        }
+
+        if (_gameManager != null)
+        {
+            _gameManager.ReportDeath(this.gameObject, _wormInfo.GetTeam());
+        }
     }
 }
