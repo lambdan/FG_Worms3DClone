@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     public void MoveTowards(Vector3 pos)
     {
         RotateTowards(pos);
-        transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+        transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
     }
 
     public void RotateTowards(Vector3 pos)
