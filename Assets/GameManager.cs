@@ -32,35 +32,42 @@ public class GameManager : MonoBehaviour
     private int _currentTeamsTurn = 0;
     private int _roundsPlayed = 0;
     private bool _gameOver = false;
+    private int _teamsGenerated;
 
     void Awake()
     {
         // Generate teams/worms for human players (aiControlled = false)
         for (int t = 0; t < _humanPlayers; t++)
         {
-            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, t, false,
+            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
                 _homeBases[_teams.Count].position);
             _teams.Add(thisTeam);
+            _teamsGenerated++;
         }
 
         // Generate teams/worms for AI players (aiControlled = true)
         for (int t = 0; t < _aiPlayers; t++)
         {
-            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, t, true,
+            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, true,
                 _homeBases[_teams.Count].position);
             _teams.Add(thisTeam);
+            _teamsGenerated++;
         }
     }
 
     void Start()
     {
-        _currentTeamsTurn = 0;
-        _currentTeam = _teams[_currentTeamsTurn];
         StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
     }
 
     void StartRound()
     {
+        if (_roundsPlayed == 0)
+        {
+            _currentTeam = _teams[0];
+            _currentTeamsTurn = 0;
+        }
+        
         _wormManager.SetActiveTeam(_currentTeam);
         _roundsPlayed += 1;
         _HUDUpdater.UpdateRoundsPlayed(_roundsPlayed);

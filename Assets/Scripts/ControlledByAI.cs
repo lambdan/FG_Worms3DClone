@@ -131,7 +131,7 @@ public class ControlledByAI : MonoBehaviour
             }
         }
 
-        if (Random.Range(0, 5000) == 0)
+        if (Random.Range(0, 100) < 5)
         {
             // Switch weapons occasionally
             _weaponHolder.NextWeapon();
