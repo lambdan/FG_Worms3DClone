@@ -34,4 +34,7 @@ public class HealthTextUpdater : MonoBehaviour
         _currentText = _health.GetHealth() + " / " + _health.GetMaxHealth();
         _textField.text = _currentText; 
     }
+    
+    
+    
 }
