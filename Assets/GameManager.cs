@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> _currentTeam = new List<GameObject>();
 
     private int _currentTeamsTurn = 0;
-    private int _roundsPlayed = 0;
+    private int _turnsPlayed = 0;
     private bool _gameOver = false;
     private int _teamsGenerated;
 
@@ -62,15 +62,15 @@ public class GameManager : MonoBehaviour
 
     void StartRound()
     {
-        if (_roundsPlayed == 0)
+        if (_turnsPlayed == 0)
         {
             _currentTeam = _teams[0];
             _currentTeamsTurn = 0;
         }
         
         _wormManager.SetActiveTeam(_currentTeam);
-        _roundsPlayed += 1;
-        _HUDUpdater.UpdateRoundsPlayed(_roundsPlayed);
+        _turnsPlayed += 1;
+        
         StartCoroutine(RoundTimer(_roundLength));
     }
 
@@ -94,6 +94,13 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         Debug.Log("Game over!!!!");
+        _gameOver = true;
+        
+        // Get winning team by extracting it from surviving worm's name
+        // TODO Make this better
+        var winningTeam = _teams[0][0].name.Substring(0, 6);
+        _HUDUpdater.UpdateCurrentPlayerText("WINNER: " + winningTeam);
+
         Time.timeScale = 0;
     }
 
@@ -147,6 +154,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(roundLength);
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
+        _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
         StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
     }
 }

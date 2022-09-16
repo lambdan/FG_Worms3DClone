@@ -12,9 +12,10 @@ public class HUDUpdater : MonoBehaviour
     {
         _currentPlayerText.text = newText;
     }
+    
 
-    public void UpdateRoundsPlayed(int rounds)
+    public void UpdateTurnsPlayed(int rounds)
     {
-        _roundsPlayedText.text = "Rounds Played: " + rounds;
+        _roundsPlayedText.text = "Turns played: " + rounds;
     }
 }

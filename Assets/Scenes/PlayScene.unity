@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 910784459}
   - component: {fileID: 910784458}
   m_Layer: 5
-  m_Name: Rounds Text
+  m_Name: Turns text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Rounds: 0'
+  m_text: 'Turns played: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1402,7 +1402,7 @@ MonoBehaviour:
   - {fileID: 1948967197}
   _humanPlayers: 1
   _aiPlayers: 1
-  _wormsPerTeam: 3
+  _wormsPerTeam: 1
   _wormManager: {fileID: 1913921541}
   _wormGenerator: {fileID: 1913921542}
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
