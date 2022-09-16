@@ -9,7 +9,7 @@ using UnityEngine;
 public class HealthTextUpdater : MonoBehaviour
 {
     private Health _health;
-    [SerializeField] TMP_Text _textField;
+    [SerializeField] TextMeshPro _textField;
 
     private string _currentText;
     
@@ -17,6 +17,14 @@ public class HealthTextUpdater : MonoBehaviour
     void Start()
     {
         _health = GetComponent<Health>(); // Get health object from worm
+        if (_health.GetHealth() > 50)
+        {
+            _textField.color = Color.green;
+        }
+        else
+        {
+            _textField.color = Color.red;
+        }
         Refresh();
 
     }

@@ -64,7 +64,8 @@ public class Movement : MonoBehaviour
     public void RotateTowards(Vector3 pos)
     {
         Quaternion targetRot = Quaternion.LookRotation(pos - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * 5);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * 2);
+        //transform.LookAt(pos);
     }
 
 }

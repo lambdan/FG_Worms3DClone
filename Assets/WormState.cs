@@ -31,7 +31,6 @@ public class WormState : MonoBehaviour
     
     public void Activate()
     {
-        Debug.Log("Activating worm " + name);
         _active = true;
 
         if (_wormInfo.IsAIControlled())
@@ -51,10 +50,7 @@ public class WormState : MonoBehaviour
     
     public void Deactivate()
     {
-        Debug.Log("Deactivating worm " + name);
         _active = false;
-        
-
         _controlledByAI.enabled = false;
         _inputReceiver.enabled = false;
         _activeIndicatorAnimation.enabled = false;
