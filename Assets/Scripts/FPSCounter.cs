@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // https://sharpcoderblog.com/blog/unity-fps-counter
-// Isn't 1/time.deltaTime enough?
 
 public class FPSCounter : MonoBehaviour
 {
@@ -13,14 +12,12 @@ public class FPSCounter : MonoBehaviour
     private int frames = 0;
     private float timeLeft;
     private float fps;
-    
     private GUIStyle textStyle = new GUIStyle();
     
     // Start is called before the first frame update
     void Start()
     {
         timeLeft = updateInterval;
-
         textStyle.fontStyle = FontStyle.Bold;
         textStyle.normal.textColor = Color.green;
 
@@ -29,7 +26,6 @@ public class FPSCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Is 1 / Time.deltaTime not enough?
         timeLeft -= Time.deltaTime;
         accum += Time.timeScale / Time.deltaTime;
         ++frames;
@@ -41,8 +37,6 @@ public class FPSCounter : MonoBehaviour
             accum = 0f;
             frames = 0;
         }
-
-
     }
 
     void OnGUI()

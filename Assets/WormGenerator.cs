@@ -8,10 +8,12 @@ public class WormGenerator : MonoBehaviour
     public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase)
     {
         List<GameObject> thisTeam = new List<GameObject>();
-            
+        
         for (int i = 0; i < amount; i++)
         {
-            Vector3 pos = homebase + new Vector3(i*5, 1, i*5); // TODO make spawn points
+            // Generate circle around base point for spawn positions
+            float spawnAngle = (180f / amount) * i;
+            Vector3 pos = homebase + 6 * new Vector3(Mathf.Cos(spawnAngle), 0, Mathf.Sin(spawnAngle));
             GameObject worm = CreateWorm(wormPrefab, pos);
             
             // Make the worms look towards the center of the map on spawn (keep y the same so they dont look "below")

@@ -15,19 +15,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _wormsPerTeam;
     [SerializeField] private WormManager _wormManager;
     [SerializeField] WormGenerator _wormGenerator;
-
     [SerializeField] private GameObject _wormPrefab; // TODO Make this a list with different colored worms? (or maybe just switch texture on them?)
-
     [SerializeField] private float _delayBetweenRounds;
     [SerializeField] private float _roundLength;
-
-    // Generate teams in WormGenerator
-    // Pass them to WormManager
-    // Handle game state here
-    // Send commands to WormManager and have them manage which worms are active etc.
-
-    private List<List<GameObject>> _teams = new List<List<GameObject>>();
-    private List<GameObject> _currentTeam = new List<GameObject>();
+    
+    
+    private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
+    private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
 
     private int _currentTeamsTurn = 0;
     private int _turnsPlayed = 0;
