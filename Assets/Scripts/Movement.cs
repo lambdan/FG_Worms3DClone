@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
     {
         Debug.Log(horizontal + "," + vertical);
         Vector3 rotation = new Vector3(0, horizontal * rotationSpeed * Time.deltaTime, 0);
-        Vector3 move = new Vector3(horizontal * Time.fixedDeltaTime, 0, vertical * Time.fixedDeltaTime);
+        Vector3 move = new Vector3(horizontal, 0, vertical).normalized * Time.deltaTime;
         transform.Translate(move * movementSpeed);
         transform.Rotate(rotation);
     }
