@@ -16,7 +16,9 @@ public class ControlledByAI : MonoBehaviour
 
     private int _myTeam;
     private List<GameObject> _enemies = new List<GameObject>();
-    
+    private bool _startedMoving;
+    private bool _startedShooting;
+
     void Awake()
     {
         _wormInfo = GetComponent<WormInfo>();
@@ -27,6 +29,8 @@ public class ControlledByAI : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(this.name + "AI START");
+        
         // Get what team I'm playing for
         _myTeam = _wormInfo.GetTeam();
         
@@ -41,50 +45,59 @@ public class ControlledByAI : MonoBehaviour
                 }
             }
         }
+        
+        _startedMoving = false;
+        _startedShooting = false;
+        StartCoroutine(WaitBeforeMoving(Random.Range(1, 3))); // Simulate a thinking period
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        if (!_startedMoving)
+        {
+            return;
+        }
+        
         if (_enemies.Count > 0)
         {
-            int nearestEnemyIndex = 0;
+            GameObject nearestEnemy = null;
             float nearestEnemyDistance = 0;
             float distance;
-        
-            // Find nearest enemy
-            for (int i = 0; i < _enemies.Count; i++)
+
+            foreach (GameObject enemy in _enemies)
             {
-                // Check if that enemy is still alive, and remove it from our enemy list if not
-                if (_enemies[i] == null || _enemies[i].GetComponent<Health>().GetHealth() <= 0)
+                if (enemy == null) // this should catch dead enemies
                 {
-                    _enemies.RemoveAt(i);
                     continue;
                 }
-            
-                distance = Vector3.Distance(transform.position, _enemies[i].transform.position);
-                if (i == 0 || distance < nearestEnemyDistance)
+                
+                distance = Vector3.Distance(transform.position, enemy.transform.position);
+                if (nearestEnemy == null || distance < nearestEnemyDistance)
                 {
                     nearestEnemyDistance = distance;
-                    nearestEnemyIndex = i;
+                    nearestEnemy = enemy;
                 }
             }
         
-            // If we are far away from the enemy, move closer
-            if (nearestEnemyDistance > Random.Range(5, 10))
+            // If we havent started shooting and we are far away from the enemy move towards it
+            if (!_startedShooting && nearestEnemyDistance > Random.Range(7, 12))
             {
-                _movement.MoveTowards(_enemies[nearestEnemyIndex].transform.position);
+                _movement.MoveTowards(nearestEnemy.transform.position);
             }
             else // Otherwise, start firing
             {
-                _weaponHolder.Fire();
+                _startedShooting = true;
+                _movement.RotateTowards(nearestEnemy.transform.position);
+                
+                // Simulate random presses of the trigger
+                if (Random.Range(0, 100) < 10)
+                {
+                    _weaponHolder.Fire();
+                }
+                
             }            
         }
-        else
-        {
-            // No enemies left... move around a little for the fun of it
-            _movement.MoveTowards(new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
-        }
-
+        
         if (Random.Range(0, 10000) == 0)
         {
             // Switch weapons occasionally
@@ -94,4 +107,9 @@ public class ControlledByAI : MonoBehaviour
 
     }
 
+    IEnumerator WaitBeforeMoving(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _startedMoving = true;
+    }
 }

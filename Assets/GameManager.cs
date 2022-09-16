@@ -15,15 +15,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _wormsPerTeam;
     [SerializeField] private WormManager _wormManager;
     [SerializeField] WormGenerator _wormGenerator;
+
     [SerializeField] private GameObject _wormPrefab; // TODO Make this a list with different colored worms? (or maybe just switch texture on them?)
+
     [SerializeField] private float _delayBetweenRounds;
-    [SerializeField] private float roundLength;
-    
+    [SerializeField] private float _roundLength;
+
     // Generate teams in WormGenerator
     // Pass them to WormManager
     // Handle game state here
     // Send commands to WormManager and have them manage which worms are active etc.
-    
+
     private List<List<GameObject>> _teams = new List<List<GameObject>>();
     private List<GameObject> _currentTeam = new List<GameObject>();
 
@@ -36,14 +38,16 @@ public class GameManager : MonoBehaviour
         // Generate teams/worms for human players (aiControlled = false)
         for (int t = 0; t < _humanPlayers; t++)
         {
-            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, t, false, _homeBases[_teams.Count].position);
+            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, t, false,
+                _homeBases[_teams.Count].position);
             _teams.Add(thisTeam);
         }
-        
+
         // Generate teams/worms for AI players (aiControlled = true)
         for (int t = 0; t < _aiPlayers; t++)
         {
-            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, t, true, _homeBases[_teams.Count].position);
+            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, t, true,
+                _homeBases[_teams.Count].position);
             _teams.Add(thisTeam);
         }
     }
@@ -60,7 +64,7 @@ public class GameManager : MonoBehaviour
         _wormManager.SetActiveTeam(_currentTeam);
         _roundsPlayed += 1;
         _HUDUpdater.UpdateRoundsPlayed(_roundsPlayed);
-        StartCoroutine(RoundTimer(roundLength));
+        StartCoroutine(RoundTimer(_roundLength));
     }
 
     void NextRound()
@@ -68,7 +72,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Starting new round!");
 
         int currentTeamIndex = _teams.IndexOf(_currentTeam);
-        
+
         int nextTeam = currentTeamIndex + 1;
         if (nextTeam >= _teams.Count)
         {
@@ -85,7 +89,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game over!!!!");
         Time.timeScale = 0;
     }
-    
+
     void RemoveTeam(int t)
     {
         Debug.Log("Removing team " + t);
@@ -97,13 +101,14 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
     }
+
     public void ReportDeath(GameObject worm, int teamNumber)
     {
         Debug.Log("Game Manager got death report of " + worm.name);
-        
+
         // Find index of this worm
         int wormIndex = _teams[teamNumber].IndexOf(worm);
-            
+
         // Destroy it and remove it from the team
         Destroy(_teams[teamNumber][wormIndex]);
         _teams[teamNumber].RemoveAt(wormIndex);
@@ -113,7 +118,12 @@ public class GameManager : MonoBehaviour
             RemoveTeam(teamNumber);
         }
     }
-    
+
+    public float GetRoundLength()
+    {
+        return _roundLength;
+    }
+
     public List<List<GameObject>> GetAllTeams()
     {
         return _teams;
@@ -132,5 +142,4 @@ public class GameManager : MonoBehaviour
         _wormManager.DisableAllActiveWorms();
         StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
     }
-
 }
