@@ -19,7 +19,12 @@ public class ControlledByAI : MonoBehaviour
     private int _myTeam;
     private List<GameObject> _enemies = new List<GameObject>();
     private bool _startedMoving;
+    
     private Transform _nearestEnemy;
+
+    private float _startedTime;
+    private Vector3 _startPosition;
+    private bool _unstucking;
 
     void Awake()
     {
@@ -32,6 +37,7 @@ public class ControlledByAI : MonoBehaviour
     void Start()
     {
         Debug.Log(this.name + "AI START");
+        
 
         // Get what team I'm playing for
         _myTeam = _wormInfo.GetTeam();
@@ -93,13 +99,25 @@ public class ControlledByAI : MonoBehaviour
 
             _nearestEnemy = nearestEnemy.transform;
 
-            Debug.Log(this.name + " nearest enemy: " + nearestEnemy.name + " (" + nearestEnemyDistance + " away)");
+            //Debug.Log(this.name + " nearest enemy: " + nearestEnemy.name + " (" + nearestEnemyDistance + " away)");
 
 
             // If we havent started shooting and we are far away from the enemy move towards it
             if (nearestEnemyDistance > 7f)
             {
-                _movement.MoveTowards(nearestEnemy.transform.position);
+                if (!_unstucking)
+                {
+                    _movement.MoveTowards(nearestEnemy.transform.position);
+                    if (Vector3.Distance(_startPosition, transform.position) < 2f && Time.time - _startedTime > 1.5f)
+                    {
+                        // We don't seem to be moving, try going to the left for a while
+                        StartCoroutine(Unstucker());
+                    }
+                }
+                
+
+
+                
             }
             else // Otherwise, start firing
             {
@@ -113,7 +131,7 @@ public class ControlledByAI : MonoBehaviour
             }
         }
 
-        if (Random.Range(0, 10000) == 0)
+        if (Random.Range(0, 5000) == 0)
         {
             // Switch weapons occasionally
             _weaponHolder.NextWeapon();
@@ -124,5 +142,22 @@ public class ControlledByAI : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _startedMoving = true;
+        _startPosition = transform.position;
+        _startedTime = Time.time;
+    }
+
+    IEnumerator Unstucker()
+    {
+        _unstucking = true;
+        var started = Time.time;
+        while (Time.time - started < 1)
+        {
+            Debug.Log("UNSTUCKING!!!");
+            _movement.MoveTowards(transform.position + (Vector3.right * 10));
+            yield return new WaitForFixedUpdate();
+        }
+
+        _unstucking = false;
+
     }
 }

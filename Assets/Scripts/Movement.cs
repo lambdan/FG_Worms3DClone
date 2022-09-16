@@ -35,15 +35,15 @@ public class Movement : MonoBehaviour
 
     public void MoveTowards(Vector3 pos)
     {
-        transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * movementSpeed);
         RotateTowards(pos);
+        transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
     }
 
     public void RotateTowards(Vector3 pos)
     {
+        pos = new Vector3(pos.x, 0, pos.z);
         Quaternion targetRot = Quaternion.LookRotation(pos - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * 2);
-        //transform.LookAt(pos);
     }
 
 }
