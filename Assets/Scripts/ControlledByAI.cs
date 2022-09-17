@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+
 [RequireComponent(typeof(WormInfo))]
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(WeaponHolder))]
@@ -32,21 +33,22 @@ public class ControlledByAI : MonoBehaviour
         _weaponHolder = GetComponent<WeaponHolder>();
         _gameManager = FindObjectOfType<GameManager>();
     }
-
+    
     void Start()
     {
-        if (!_gotInfo) // Start() gets triggered everytime we re-activate the AI control, so make sure we only get info about ourselves once
+        // Start() gets triggered everytime we re-activate the AI control, so make sure we only get info about ourselves once
+        // (Cant do it in awake because worms haven't been generated yet)
+        if (!_gotInfo) 
         {
-            Debug.Log("Getting info");
-            
             // Get what team I'm playing for
             _myTeam = _wormInfo.GetTeam();
 
-            // Add everyone who's not on my team to my enemy list
+            // Go through every team...
             foreach (List<GameObject> team in _gameManager.GetAllTeams())
             {
-                foreach (GameObject worm in team)
+                foreach (GameObject worm in team) // ... every worm ...
                 {
+                    // ... add everyone who's not on my team and has >0 HP to my enemy list
                     if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam && worm.GetComponent<Health>().GetHealth() > 0)
                     {
                         _enemies.Add(worm);
@@ -59,10 +61,10 @@ public class ControlledByAI : MonoBehaviour
                 _enemiesAlive = true;
             }
 
-            _gotInfo = true;
+            _gotInfo = true; // So we don't go through this again next time we get activated
         }
         
-        // Simulate a thinking period
+        // Fake a thinking period
         _startedMoving = false;
         StartCoroutine(WaitBeforeMoving(Random.Range(1, 3))); 
         
@@ -72,12 +74,11 @@ public class ControlledByAI : MonoBehaviour
     {
         if (!_startedMoving)
         {
-            return;
+            return; // The fake thinking period is still active: do nothing
         }
         
-        if (Random.Range(0, 1000) < 1)
+        if (Random.Range(0, 1000) < 1) // Switch weapons occasionally
         {
-            // Switch weapons occasionally
             _weaponHolder.NextWeapon();
         }
 
@@ -87,16 +88,19 @@ public class ControlledByAI : MonoBehaviour
             {
                 _currentTarget = FindNearestEnemy();
             }
-            
-            // Move closer to our target if we are far away
-            if (Vector3.Distance(_currentTarget.transform.position, transform.position) > 5f)
+
+            if (_currentTarget != null) // We got a target
             {
-                _movement.MoveTowards(_currentTarget.transform.position);
-            }
-            else // Otherwise, start firing
-            {
-                _movement.RotateTowards(_currentTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
-                _weaponHolder.Fire();
+                // Move closer to our target if we are far away...
+                if (Vector3.Distance(_currentTarget.transform.position, transform.position) > 5f)
+                {
+                    _movement.MoveTowards(_currentTarget.transform.position);
+                }
+                else // ... otherwise, start firing
+                {
+                    _movement.RotateTowards(_currentTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
+                    _weaponHolder.Fire();
+                }            
             }
         }
         

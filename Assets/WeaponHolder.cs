@@ -14,6 +14,8 @@ public class WeaponHolder : MonoBehaviour
     private WeaponProperties _currentWeaponProperties;
     private GameObject _currentWeaponObject;
     private WeaponScript _currentWeaponScript;
+
+    private float _nextFire = 0;
     
     void Start()
     {
@@ -78,6 +80,11 @@ public class WeaponHolder : MonoBehaviour
     
     public void Fire()
     {
-        _currentWeaponScript.Fire();
+        if (Time.time > _nextFire)
+        {
+            _currentWeaponScript.Fire();
+            _nextFire = Time.time + _currentWeaponProperties.fireRate;
+        }
+        
     }
 }

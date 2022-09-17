@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
-    private float _lastFire;
+    private float _nextFire = 0;
     private WeaponProperties _weaponProps;
-
     
     private GameObject _bulletPrefab;
     private float _fireRate;
@@ -17,16 +16,15 @@ public class WeaponScript : MonoBehaviour
         _bulletPrefab = WP.bulletPrefab;
         _fireRate = WP.fireRate;
         _barrelExit = GetComponent<BarrelExit>().GetBarrelExit();
-        _lastFire = 0;
     }
     
     public void Fire()
     {
-        if (Time.time - _lastFire > _fireRate)
+        if (Time.time > _nextFire)
         {
             // Root rotation to get direction the worm is facing
             Instantiate(_bulletPrefab, _barrelExit.position, transform.root.rotation);
-            _lastFire = Time.time;
+            _nextFire = Time.time + _fireRate;
         }
     }
 }
