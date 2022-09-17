@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 5951706526054075084}
   - component: {fileID: 5553992503053852344}
   - component: {fileID: 4798301035607218794}
+  - component: {fileID: 7547320281999764775}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -349,6 +350,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!111 &7547320281999764775
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495646832798496716}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 52801809b3fc273478d36ddb08466c9c, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 52801809b3fc273478d36ddb08466c9c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2300788578148773472
 GameObject:
   m_ObjectHideFlags: 0
