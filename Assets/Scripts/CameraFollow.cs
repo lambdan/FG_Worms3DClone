@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraGlue;
-    [SerializeField] private Transform _target;
+    private Transform _cameraGlue;
+    private Transform _target;
 
     private Vector3 _lastPlayerPos;
     private bool _active = false;

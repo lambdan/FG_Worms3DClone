@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     private int _currentTeamsTurn = 0;
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
+
+    private float _turnEnds;
     
 
     void Awake()
@@ -61,30 +63,30 @@ public class GameManager : MonoBehaviour
         }
 
         _teamsAlive = _teamsGenerated;
+        
+        // Set max of turn time slider to round length
+        _HUDUpdater.SetTurnSliderMax(_roundLength);
+        
     }
 
     void Start()
     {
-        StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
+        _currentTeam = _teams[0];
+        _currentTeamsTurn = 0;
+        StartRound();
     }
 
     void StartRound()
     {
-        if (_turnsPlayed == 0)
-        {
-            _currentTeam = _teams[0];
-            _currentTeamsTurn = 0;
-        }
-        
         _wormManager.SetActiveTeam(_currentTeam);
         _turnsPlayed += 1;
-        
-        StartCoroutine(RoundTimer(_roundLength));
+        _turnEnds = Time.time + _roundLength;
+
+        StartCoroutine(RoundTimer());
     }
 
     void NextRound()
     {
-        Debug.Log("Starting new round!");
         int next = GetNextTeam();
         _currentTeamsTurn = next;
         _currentTeam = _teams[_currentTeamsTurn];
@@ -124,19 +126,6 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0;
     }
-
-    void RemoveTeam(int t)
-    {
-        Debug.Log("Removing team " + t);
-        _teams.RemoveAt(t);
-
-        if (_teams.Count == 1)
-        {
-            _wormManager.DisableAllActiveWorms();
-            GameOver();
-        }
-    }
-
     void TeamDefeated(int t)
     {
         Debug.Log("Team " + t + " is defeated");
@@ -185,9 +174,13 @@ public class GameManager : MonoBehaviour
         NextRound();
     }
 
-    IEnumerator RoundTimer(float roundLength)
+    IEnumerator RoundTimer()
     {
-        yield return new WaitForSeconds(roundLength);
+        while (Time.time <= _turnEnds)
+        {
+            _HUDUpdater.UpdateTurnSlider(_turnEnds - Time.time);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
