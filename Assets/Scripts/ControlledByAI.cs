@@ -47,7 +47,7 @@ public class ControlledByAI : MonoBehaviour
         {
             foreach (GameObject worm in team)
             {
-                if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam)
+                if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam && worm.GetComponent<Health>().GetHealth() > 0)
                 {
                     _enemies.Add(worm);
                 }
@@ -84,31 +84,19 @@ public class ControlledByAI : MonoBehaviour
 
             foreach (GameObject enemy in _enemies)
             {
-                if (enemy == null) // this should catch dead enemies
+                if (enemy.activeSelf) // Enemy is active (not dead)
                 {
-                    continue;
-                }
-
-                distance = Vector3.Distance(transform.position, enemy.transform.position);
-                if (nearestEnemy == null || distance < nearestEnemyDistance)
-                {
-                    nearestEnemyDistance = distance;
-                    nearestEnemy = enemy;
+                    distance = Vector3.Distance(transform.position, enemy.transform.position);
+                    if (nearestEnemy == null || distance < nearestEnemyDistance)
+                    {
+                        nearestEnemyDistance = distance;
+                        nearestEnemy = enemy;
+                    }      
                 }
             }
-
-            if (Random.Range(0, 1000) < 1)
-            {
-                // occasionally go to a completely different enemy instead
-                Debug.Log(this.name + ": Lets go kill this guy instead");
-                nearestEnemy = _enemies[Random.Range(0, _enemies.Count)];
-            }
-
+            
             _nearestEnemy = nearestEnemy.transform;
-
-            //Debug.Log(this.name + " nearest enemy: " + nearestEnemy.name + " (" + nearestEnemyDistance + " away)");
-
-
+            
             // If we havent started shooting and we are far away from the enemy move towards it
             if (nearestEnemyDistance > 7f)
             {

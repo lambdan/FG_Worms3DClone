@@ -23,10 +23,14 @@ public class GameManager : MonoBehaviour
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
     private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
 
+    private List<int> _teamAliveWorms = new List<int>();
+    private List<string> _teamNames = new List<string>();
+
+    private int _teamsAlive = 0;
     private int _currentTeamsTurn = 0;
     private int _turnsPlayed = 0;
-    private bool _gameOver = false;
-    private int _teamsGenerated;
+    private int _teamsGenerated = 0;
+    
 
     void Awake()
     {
@@ -35,7 +39,11 @@ public class GameManager : MonoBehaviour
         {
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
                 _homeBases[_teams.Count].position);
+            
             _teams.Add(thisTeam);
+            _teamAliveWorms.Add(_wormsPerTeam);
+            _teamNames.Add("Team " + _teamsGenerated);
+            
             _teamsGenerated++;
         }
 
@@ -44,9 +52,15 @@ public class GameManager : MonoBehaviour
         {
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, true,
                 _homeBases[_teams.Count].position);
+            
             _teams.Add(thisTeam);
+            _teamAliveWorms.Add(_wormsPerTeam);
+            _teamNames.Add("Team " + _teamsGenerated);
+            
             _teamsGenerated++;
         }
+
+        _teamsAlive = _teamsGenerated;
     }
 
     void Start()
@@ -71,29 +85,42 @@ public class GameManager : MonoBehaviour
     void NextRound()
     {
         Debug.Log("Starting new round!");
+        int next = GetNextTeam();
+        _currentTeamsTurn = next;
+        _currentTeam = _teams[_currentTeamsTurn];
+        StartRound();
+    }
 
-        int currentTeamIndex = _teams.IndexOf(_currentTeam);
-
-        int nextTeam = currentTeamIndex + 1;
+    int GetNextTeam()
+    {
+        int nextTeam = _currentTeamsTurn + 1;
         if (nextTeam >= _teams.Count)
         {
             nextTeam = 0;
         }
+        
+        while (_teamAliveWorms[nextTeam] == 0)
+        {
+            nextTeam += 1;
+            if (nextTeam >= _teams.Count)
+            {
+                nextTeam = 0;
+            }
+        }
 
-        _currentTeamsTurn = nextTeam;
-        _currentTeam = _teams[_currentTeamsTurn];
-        StartRound();
+        return nextTeam;
     }
 
     void GameOver()
     {
         Debug.Log("Game over!!!!");
-        _gameOver = true;
-        
+
         // Get winning team by extracting it from surviving worm's name
         // TODO Make this better
-        var winningTeam = _teams[0][0].name.Substring(0, 6);
-        _HUDUpdater.UpdateCurrentPlayerText("WINNER: " + winningTeam);
+        //var winningTeam = _teams[0][0].name.Substring(0, 6);
+        //_HUDUpdater.UpdateCurrentPlayerText("WINNER: " + winningTeam);
+
+        _HUDUpdater.UpdateCurrentPlayerText("GAME OVER");
 
         Time.timeScale = 0;
     }
@@ -110,20 +137,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void TeamDefeated(int t)
+    {
+        Debug.Log("Team " + t + " is defeated");
+        _teamsAlive -= 1;
+
+        if (_teamsAlive == 1)
+        {
+            GameOver();
+        }
+
+    }
+
     public void ReportDeath(GameObject worm, int teamNumber)
     {
         Debug.Log("Game Manager got death report of " + worm.name);
 
         // Find index of this worm
         int wormIndex = _teams[teamNumber].IndexOf(worm);
-
-        // Destroy it and remove it from the team
-        Destroy(_teams[teamNumber][wormIndex]);
-        _teams[teamNumber].RemoveAt(wormIndex);
-
-        if (_teams[teamNumber].Count == 0)
+        
+        // Disable it 
+        _teams[teamNumber][wormIndex].SetActive(false);
+        
+        // -1 alive worms of that team
+        _teamAliveWorms[teamNumber] -= 1;
+        
+        // Check if everyone is dead on that team
+        if (_teamAliveWorms[teamNumber] == 0)
         {
-            RemoveTeam(teamNumber);
+            TeamDefeated(teamNumber);
         }
     }
 

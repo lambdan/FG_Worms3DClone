@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class WormManager : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
     [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private HUDUpdater _HUDUpdater;
     
     private List<GameObject> _activeWorms = new List<GameObject>();
-
     private int _activeWorm = 0;
 
     public void SetActiveTeam(List<GameObject> team)
     {
         _activeWorms = team; // Swap to the new team
-        SetActiveWorm(Random.Range(0, _activeWorms.Count));
+
+        for (int i = 0; i < team.Count; i++)
+        {
+            if (_activeWorms[i].activeSelf) // Find an alive worm and make it active
+            {
+                SetActiveWorm(i); // TODO make it so its not always the 0th worm
+                break;
+            }
+        }
     }
     
     void SetActiveWorm(int n)
     { 
-        // Enable input receiver on this worm
+        // Enable input receiver/AI on this worm
         _activeWorms[n].GetComponent<WormState>().Activate();
         
         // Move camera to this worm
