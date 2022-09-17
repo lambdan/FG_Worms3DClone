@@ -1842,10 +1842,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
+  m_Radius: 0.25
   m_Height: 3.5115602
   m_Direction: 1
-  m_Center: {x: -0.22, y: 1.6248208, z: -0.00000011920929}
+  m_Center: {x: -0.13, y: 1.34, z: -0.00000011920929}
 --- !u!1 &1456587119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2199,9 +2199,9 @@ MonoBehaviour:
   - {fileID: 531190727}
   - {fileID: 2130031992}
   - {fileID: 1948967197}
-  _humanPlayers: 2
-  _aiPlayers: 0
-  _wormsPerTeam: 3
+  _humanPlayers: 0
+  _aiPlayers: 4
+  _wormsPerTeam: 4
   _wormManager: {fileID: 1913921541}
   _wormGenerator: {fileID: 1913921542}
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
