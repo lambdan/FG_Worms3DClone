@@ -98,7 +98,7 @@ public class ControlledByAI : MonoBehaviour
             _nearestEnemy = nearestEnemy.transform;
             
             // If we havent started shooting and we are far away from the enemy move towards it
-            if (nearestEnemyDistance > 7f)
+            if (nearestEnemyDistance > Random.Range(5, 10))
             {
                 if (!_unstucking)
                 {
