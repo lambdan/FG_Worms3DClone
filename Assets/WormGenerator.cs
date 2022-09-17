@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WormGenerator : MonoBehaviour
 {
+    [SerializeField] private List<Color> teamColors;
+    
     public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase)
     {
         List<GameObject> thisTeam = new List<GameObject>();
@@ -24,6 +26,9 @@ public class WormGenerator : MonoBehaviour
             wormInfo.SetAIControlled(aiControlled);
             wormInfo.SetName("Worm " + i);
             wormInfo.SetTeam(teamNumber);
+            
+            // Set color
+            worm.GetComponent<WormColor>().SetNewColor(teamColors[teamNumber]); 
             
             worm.GetComponent<WormState>().Deactivate();
                 
