@@ -15,16 +15,15 @@ public class ControlledByAI : MonoBehaviour
     private Movement _movement;
     private GameManager _gameManager;
     private WeaponHolder _weaponHolder;
-
+    
+    private bool _gotInfo = false;
     private int _myTeam;
     private List<GameObject> _enemies = new List<GameObject>();
-    private bool _startedMoving;
     
-    private Transform _nearestEnemy;
-
-    private float _startedTime;
-    private Vector3 _startPosition;
-    private bool _unstucking;
+    private GameObject _currentTarget = null;
+    private bool _enemiesAlive = false;
+    
+    private bool _startedMoving;
 
     void Awake()
     {
@@ -36,123 +35,104 @@ public class ControlledByAI : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(this.name + "AI START");
-        
-
-        // Get what team I'm playing for
-        _myTeam = _wormInfo.GetTeam();
-
-        // Add everyone who's not on my team to my enemy list
-        foreach (List<GameObject> team in _gameManager.GetAllTeams())
+        if (!_gotInfo) // Start() gets triggered everytime we re-activate the AI control, so make sure we only get info about ourselves once
         {
-            foreach (GameObject worm in team)
+            Debug.Log("Getting info");
+            
+            // Get what team I'm playing for
+            _myTeam = _wormInfo.GetTeam();
+
+            // Add everyone who's not on my team to my enemy list
+            foreach (List<GameObject> team in _gameManager.GetAllTeams())
             {
-                if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam && worm.GetComponent<Health>().GetHealth() > 0)
+                foreach (GameObject worm in team)
                 {
-                    _enemies.Add(worm);
+                    if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam && worm.GetComponent<Health>().GetHealth() > 0)
+                    {
+                        _enemies.Add(worm);
+                    }
                 }
             }
-        }
 
+            if (_enemies.Count > 0)
+            {
+                _enemiesAlive = true;
+            }
+
+            _gotInfo = true;
+        }
+        
+        // Simulate a thinking period
         _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(1, 3))); // Simulate a thinking period
+        StartCoroutine(WaitBeforeMoving(Random.Range(1, 3))); 
         
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        if (_nearestEnemy != null)
-        {
-            Gizmos.DrawLine(transform.position, _nearestEnemy.position);
-        }
-        
-    }
-
+    
     void FixedUpdate()
     {
         if (!_startedMoving)
         {
             return;
         }
-
-        if (_enemies.Count > 0)
-        {
-            GameObject nearestEnemy = null;
-            float nearestEnemyDistance = 9999;
-            float distance;
-
-            foreach (GameObject enemy in _enemies)
-            {
-                if (enemy.activeSelf) // Enemy is active (not dead)
-                {
-                    distance = Vector3.Distance(transform.position, enemy.transform.position);
-                    if (nearestEnemy == null || distance < nearestEnemyDistance)
-                    {
-                        nearestEnemyDistance = distance;
-                        nearestEnemy = enemy;
-                    }      
-                }
-            }
-            
-            _nearestEnemy = nearestEnemy.transform;
-            
-            // If we havent started shooting and we are far away from the enemy move towards it
-            if (nearestEnemyDistance > Random.Range(5, 10))
-            {
-                if (!_unstucking)
-                {
-                    _movement.MoveTowards(nearestEnemy.transform.position);
-                    if (Vector3.Distance(_startPosition, transform.position) < 5 && Time.time - _startedTime > 1.5f)
-                    {
-                        // We don't seem to be moving, try going to the left for a while
-                        StartCoroutine(Unstucker());
-                    }
-                }
-                
-
-
-                
-            }
-            else // Otherwise, start firing
-            {
-                _movement.RotateTowards(nearestEnemy.transform.position);
-
-                // Simulate random presses of the trigger
-                if (Random.Range(0, 100) < 10)
-                {
-                    _weaponHolder.Fire();
-                }
-            }
-        }
-
+        
         if (Random.Range(0, 1000) < 1)
         {
             // Switch weapons occasionally
             _weaponHolder.NextWeapon();
         }
+
+        if (_enemiesAlive)
+        {
+            if (_currentTarget == null || _currentTarget.activeSelf == false) // No target or current target disabled: get a new target
+            {
+                _currentTarget = FindNearestEnemy();
+            }
+            
+            // Move closer to our target if we are far away
+            if (Vector3.Distance(_currentTarget.transform.position, transform.position) > 5f)
+            {
+                _movement.MoveTowards(_currentTarget.transform.position);
+            }
+            else // Otherwise, start firing
+            {
+                _movement.RotateTowards(_currentTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
+                _weaponHolder.Fire();
+            }
+        }
+        
     }
 
+    GameObject FindNearestEnemy()
+    {
+        GameObject nearestEnemy = null;
+        float nearestEnemyDistance = 0;
+        float distance;
+
+        foreach (GameObject enemy in _enemies)
+        {
+            if (enemy.activeSelf) // Enemy is active (not dead)
+            {
+                distance = Vector3.Distance(transform.position, enemy.transform.position);
+                if (nearestEnemy == null || distance < nearestEnemyDistance)
+                {
+                    nearestEnemyDistance = distance;
+                    nearestEnemy = enemy;
+                }      
+            }
+        }
+        
+        // If we're still null here, it means there are no enemies left
+        if (nearestEnemy == null)
+        {
+            _enemiesAlive = false;
+        }
+
+        return nearestEnemy;
+    }
+    
     IEnumerator WaitBeforeMoving(float delay)
     {
         yield return new WaitForSeconds(delay);
         _startedMoving = true;
-        _startPosition = transform.position;
-        _startedTime = Time.time;
-    }
-
-    IEnumerator Unstucker()
-    {
-        _unstucking = true;
-        var started = Time.time;
-        while (Time.time - started < 1)
-        {
-            Debug.Log("UNSTUCKING!!!");
-            _movement.MoveTowards(transform.position + (Vector3.right * 10));
-            yield return new WaitForFixedUpdate();
-        }
-
-        _unstucking = false;
-
     }
 }
