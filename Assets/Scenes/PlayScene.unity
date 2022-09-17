@@ -718,7 +718,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.070006, y: 0}
+  m_AnchoredPosition: {x: 2.0700073, y: 0}
   m_SizeDelta: {x: -15.860012, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &618147657
@@ -851,6 +851,7 @@ GameObject:
   - component: {fileID: 878689041}
   - component: {fileID: 878689043}
   - component: {fileID: 878689042}
+  - component: {fileID: 878689044}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -872,7 +873,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 592771822}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.4074087}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -1.6399918, y: 2.04}
@@ -916,6 +917,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 878689040}
   m_CullTransparentMesh: 1
+--- !u!111 &878689044
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878689040}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 43f7db320691cf2439c11a8764ab82ca, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 43f7db320691cf2439c11a8764ab82ca, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &910784456
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2293,7 @@ MonoBehaviour:
   _currentPlayerText: {fileID: 2031630277}
   _turnsPlayedText: {fileID: 910784458}
   _turnTimeSlider: {fileID: 1158040785}
+  _turnTimeSliderAnimation: {fileID: 878689044}
 --- !u!1 &1948967196
 GameObject:
   m_ObjectHideFlags: 0
