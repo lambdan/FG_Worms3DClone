@@ -1,25 +1,39 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    [SerializeField] private CameraControls _cameraControls;
     private Transform _target;
     private bool _active = false;
+    private bool _paused = false;
 
     private Vector3 _cameraDestination;
 
     void LateUpdate()
     {
-        if (_active && _target  != null)
+        if (_paused)
         {
-            _cameraDestination = _target.position - (_target.transform.forward * 7) + (_target.transform.up * 3);
+            return;
         }
         
-        transform.position = Vector3.Lerp(transform.position, _cameraDestination, Mathf.Max(Vector3.Distance(transform.position, _cameraDestination), 10f) * Time.deltaTime * 0.1f);
-        transform.LookAt(_target);
+        if (_active && _target  != null)
+        {
+            _cameraDestination = _target.position - (_target.transform.forward * 5) + (_target.transform.up * 3);
+        }
+        
+        transform.position = Vector3.Lerp(transform.position, _cameraDestination, Vector3.Distance(transform.position, _cameraDestination) * Time.deltaTime);
+        Quaternion rot = Quaternion.LookRotation(_target.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 2);
     }
-    
+
+
+    private void Awake()
+    {
+        _cameraControls = GetComponent<CameraControls>();
+    }
 
     public void SetNewTarget(GameObject go)
     {
@@ -28,7 +42,9 @@ public class CameraFollow : MonoBehaviour
     
     public void Activate()
     {
+        _cameraControls.MakeInactive(); // Deactivate the manual camera
         _active = true;
+        _paused = false;
     }
 
     public void Deactivate()
@@ -37,7 +53,17 @@ public class CameraFollow : MonoBehaviour
         _cameraDestination = _target.position + (transform.right*10) + (transform.forward*10) + (transform.up*10);
     }
 
-    public bool GetStats()
+    public void Pause()
+    {
+        _paused = true;
+    }
+
+    public void Unpause()
+    {
+        _paused = false;
+    }
+    
+    public bool GetState()
     {
         return _active;
     }
@@ -47,17 +73,5 @@ public class CameraFollow : MonoBehaviour
         return _target;
     }
 
-    IEnumerator SmoothMoveToNewTarget()
-    {
-        while (transform.position != _cameraDestination)
-        {
-            transform.position = Vector3.Lerp(transform.position, _cameraDestination, 2 * Time.fixedDeltaTime);
-            transform.LookAt(_target);
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
 
-        Debug.Log("MoveToNewTarget() done");
-    }
-    
-    
 }

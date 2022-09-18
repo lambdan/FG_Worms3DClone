@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(WormInfo))]
 public class WormState : MonoBehaviour
 {
-    private InputReceiver _inputReceiver;
+    private InputListener _inputListener;
     private ControlledByAI _controlledByAI;
     private WormInfo _wormInfo;
     [SerializeField] private HealthBar _healthBar;
@@ -14,7 +14,7 @@ public class WormState : MonoBehaviour
     
     void Awake()
     {
-        _inputReceiver = GetComponent<InputReceiver>();
+        _inputListener = GetComponent<InputListener>();
         _wormInfo = GetComponent<WormInfo>();
         _controlledByAI = GetComponent<ControlledByAI>();
     }
@@ -32,12 +32,12 @@ public class WormState : MonoBehaviour
         if (_wormInfo.IsAIControlled())
         {
             _controlledByAI.enabled = true;
-            _inputReceiver.enabled = false;
+            _inputListener.enabled = false;
         }
         else
         {
             _controlledByAI.enabled = false;
-            _inputReceiver.enabled = true;  
+            _inputListener.enabled = true;  
         }
         
     }
@@ -47,6 +47,6 @@ public class WormState : MonoBehaviour
         _active = false;
         _healthBar.StopPulsing();
         _controlledByAI.enabled = false;
-        _inputReceiver.enabled = false;
+        _inputListener.enabled = false;
     }
 }

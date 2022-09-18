@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 109040652}
   - component: {fileID: 109040651}
   - component: {fileID: 109040654}
+  - component: {fileID: 109040655}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -378,7 +379,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &109040654
 MonoBehaviour:
@@ -390,6 +391,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c876a245e8e95a94da5a8305e175cf04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraControls: {fileID: 0}
+--- !u!114 &109040655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109040650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939f0bd9321050b42917767dc3f16b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &139454626
@@ -1277,7 +1291,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158040783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 44}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1289,7 +1303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -340}
+  m_AnchoredPosition: {x: 0, y: -312}
   m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158040785
@@ -2329,7 +2343,7 @@ GameObject:
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2391,14 +2405,14 @@ MonoBehaviour:
   - {fileID: 655536100}
   - {fileID: 2037577874}
   - {fileID: 979132403}
-  _humanPlayers: 0
-  _aiPlayers: 8
-  _wormsPerTeam: 4
+  _humanPlayers: 1
+  _aiPlayers: 1
+  _wormsPerTeam: 1
   _wormManager: {fileID: 1913921541}
   _wormGenerator: {fileID: 1913921542}
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
   _delayBetweenRounds: 2.5
-  _roundLength: 10
+  _roundLength: 15
 --- !u!4 &1913921544
 Transform:
   m_ObjectHideFlags: 0
@@ -2407,12 +2421,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913921540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04867287, y: -2.0870981, z: 8.2287445}
+  m_LocalPosition: {x: 0.04867287, y: 59.3, z: 8.2287445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1913921545
 MonoBehaviour:

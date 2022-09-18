@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cc0375e9096b143ad5b3b5d91821ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraControls: {fileID: 0}
 --- !u!114 &7869669693173521239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 7.5
   rotationSpeed: 90
+  jumpForce: 1500
 --- !u!114 &473437008339127251
 MonoBehaviour:
   m_ObjectHideFlags: 0
