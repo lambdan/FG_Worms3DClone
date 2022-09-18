@@ -66,7 +66,7 @@ public class ControlledByAI : MonoBehaviour
         
         // Fake a thinking period
         _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(1, 3))); 
+        StartCoroutine(WaitBeforeMoving(Random.Range(0, 2))); 
         
     }
     

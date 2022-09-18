@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         _currentTeam = _teams[0];
         _currentTeamsTurn = 0;
+
         StartRound();
     }
 
