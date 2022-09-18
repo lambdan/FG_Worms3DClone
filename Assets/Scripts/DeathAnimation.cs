@@ -10,50 +10,21 @@ using Vector3 = UnityEngine.Vector3;
 [RequireComponent(typeof(Health))]
 public class DeathAnimation : MonoBehaviour
 {
-    [SerializeField] private bool _destroyWhenDone;
-    [SerializeField] private float _speed;
-    [SerializeField] private float _duration;
-
-    private Quaternion _startRotation;
-    private Quaternion _targetRotation;
-
-    private float _animationStartedTime = 0;
-    private bool _animationStarted = false;
-    private bool _animationDone = false;
-
-    void FixedUpdate()
-    {
-        // Check if animation has been triggered
-        if (_animationStarted && !_animationDone)
-        {
-            // Rotate on the z axis to 90 degrees make the worm lie down
-            transform.rotation = Quaternion.Lerp(transform.rotation, _targetRotation, Time.fixedDeltaTime);
-            
-            // Also ascend up into heaven
-            transform.position += Vector3.up * _speed * Time.fixedDeltaTime;
-            
-            if (Time.time - _animationStartedTime > _duration) // Animate for n secs
-            {
-                _animationDone = true;
-            }
-            
-        }
-
-        // Animation is done, the entire worm can be destroyed
-        if (_animationDone && _destroyWhenDone)
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
+    
     public void TriggerDeathAnimation()
     {
-        _startRotation = transform.rotation;
-        _targetRotation = Quaternion.Euler(new Vector3(0, 0, 90));
+        StartCoroutine(DeathAnim());
+    }
 
-        GetComponentInChildren<Rigidbody>().useGravity = false;        
-        GetComponentInChildren<CapsuleCollider>().enabled = false;
-        _animationStarted = true;
-        _animationStartedTime = Time.time;
+    IEnumerator DeathAnim()
+    {
+        while (transform.localScale.x >= 0.01f)
+        {
+            transform.localScale -= new Vector3(0.005f, 0.005f, 0.005f);
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
+        }
+
+        this.gameObject.SetActive(false);
+        Debug.Log("Death animation done");
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class WormManager : MonoBehaviour
@@ -16,7 +17,8 @@ public class WormManager : MonoBehaviour
 
         for (int i = 0; i < team.Count; i++)
         {
-            if (_activeWorms[i].activeSelf) // Find an alive worm and make it active
+            Debug.Log("HP left " + _activeWorms[i].GetComponent<Health>().GetHealth());
+            if (_activeWorms[i].activeSelf && _activeWorms[i].GetComponent<Health>().GetHealth() > 0) // Find an alive worm and make it active
             {
                 SetActiveWorm(i); // TODO make it so its not always the 0th worm
                 break;

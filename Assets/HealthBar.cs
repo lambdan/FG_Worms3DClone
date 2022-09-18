@@ -25,6 +25,11 @@ public class HealthBar : MonoBehaviour
     {
         _heartAnimation.Stop();
     }
+
+    public void Hide()
+    {
+        _slider.gameObject.SetActive(false);
+    }
     
     public void SetMax(float max)
     {

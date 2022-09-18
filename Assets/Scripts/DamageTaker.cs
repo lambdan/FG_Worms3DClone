@@ -10,6 +10,7 @@ public class DamageTaker : MonoBehaviour
     [SerializeField] HealthBar _healthBar;
     
     private bool _hasHealthBar = false;
+    private bool _dead = false;
     
     void Awake()
     {
@@ -23,11 +24,28 @@ public class DamageTaker : MonoBehaviour
     
     public void TakeDamage(int amount)
     {
+
+        if (_dead)
+        {
+            return;
+        }
+
         _health.ChangeHealth(-amount);
 
         if (_hasHealthBar) // Tell the health bar to refresh if we hae one
         {
             _healthBar.Refresh();
+
+            if (_health.GetHealth() <= 0)
+            {
+                _healthBar.Hide();
+            }
+            
+        }
+
+        if (_health.GetHealth() <= 0)
+        {
+            _dead = true;
         }
     }
 }

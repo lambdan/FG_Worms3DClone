@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         int wormIndex = _teams[teamNumber].IndexOf(worm);
         
         // Disable it 
-        _teams[teamNumber][wormIndex].SetActive(false);
+        //_teams[teamNumber][wormIndex].SetActive(false);
         
         // -1 alive worms of that team
         _teamAliveWorms[teamNumber] -= 1;

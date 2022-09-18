@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 3414428226879847738}
   - component: {fileID: 1599797495908800018}
   - component: {fileID: 4513286937411717522}
+  - component: {fileID: 1643650164547525213}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -83,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7.5
-  rotationSpeed: 180
+  rotationSpeed: 90
 --- !u!114 &473437008339127251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,7 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287da851dc261e545b443e766b140a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraGlue: {fileID: 0}
 --- !u!114 &7651442439378797146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca65af8be8df5b479bd77ee917faf1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 4967883794530675212}
+  _healthBar: {fileID: 1643650164547525213}
 --- !u!114 &4932588296584274209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8bcf76fd11fb6045a8821c255da8a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 4967883794530675212}
+  _healthBar: {fileID: 1643650164547525213}
 --- !u!114 &3713165976416829121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,9 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef407ad54522bc4580eee8607fc976b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destroyWhenDone: 0
-  _speed: 1.5
-  _duration: 7
 --- !u!114 &3451263884784508282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +223,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 473437008214295696}
+--- !u!114 &1643650164547525213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473437008339127252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17559390549f2634da3315a604cf80c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 473437008339127251}
+  _slider: {fileID: 7129777289093427880}
+  _heartAnimation: {fileID: 7547320281999764775}
 --- !u!1 &495646832798496716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +1044,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6978266200498513315}
   - component: {fileID: 5973061251489488857}
-  - component: {fileID: 1902209813387073133}
   m_Layer: 5
   m_Name: Cooldown slider
   m_TagString: Untagged
@@ -1114,21 +1125,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1902209813387073133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6332379862816819840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17559390549f2634da3315a604cf80c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 473437008339127251}
-  _slider: {fileID: 5973061251489488857}
-  _heartAnimation: {fileID: 0}
 --- !u!1 &6819811345087445978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,7 +1172,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6905943854426321725}
   - component: {fileID: 7129777289093427880}
-  - component: {fileID: 4967883794530675212}
   m_Layer: 5
   m_Name: Health Bar (slider)
   m_TagString: Untagged
@@ -1258,21 +1253,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4967883794530675212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8599507093316324134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17559390549f2634da3315a604cf80c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 473437008339127251}
-  _slider: {fileID: 7129777289093427880}
-  _heartAnimation: {fileID: 7547320281999764775}
 --- !u!1001 &473437008212008176
 PrefabInstance:
   m_ObjectHideFlags: 0

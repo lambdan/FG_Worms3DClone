@@ -77,14 +77,14 @@ public class ControlledByAI : MonoBehaviour
             return; // The fake thinking period is still active: do nothing
         }
         
-        if (Random.Range(0, 1000) < 1) // Switch weapons occasionally
+        if (Random.Range(0, 500) < 1) // Switch weapons occasionally
         {
             _weaponHolder.NextWeapon();
         }
 
         if (_enemiesAlive)
         {
-            if (_currentTarget == null || _currentTarget.activeSelf == false) // No target or current target disabled: get a new target
+            if (_currentTarget == null || _currentTarget.GetComponent<Health>().GetHealth() <= 0) // Current target not set or dead, get a new one
             {
                 _currentTarget = FindNearestEnemy();
             }
@@ -114,7 +114,7 @@ public class ControlledByAI : MonoBehaviour
 
         foreach (GameObject enemy in _enemies)
         {
-            if (enemy.activeSelf) // Enemy is active (not dead)
+            if (enemy.activeSelf && enemy.GetComponent<Health>().GetHealth() > 0) // Enemy is active and not dead
             {
                 distance = Vector3.Distance(transform.position, enemy.transform.position);
                 if (nearestEnemy == null || distance < nearestEnemyDistance)

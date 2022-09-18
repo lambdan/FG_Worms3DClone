@@ -13,11 +13,12 @@ public class Health : MonoBehaviour
     void Awake()
     {
         _deathHandler = GetComponent<DeathHandler>();
+        _health = startHealth;
     }
     
     void Start()
     {
-        _health = startHealth;
+        
     }
 
     public int GetHealth()
