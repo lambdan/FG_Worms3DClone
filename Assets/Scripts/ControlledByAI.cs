@@ -81,7 +81,7 @@ public class ControlledByAI : MonoBehaviour
         {
             _weaponHolder.NextWeapon();
         }
-
+        
         if (_enemiesAlive)
         {
             if (_currentTarget == null || _currentTarget.GetComponent<Health>().GetHealth() <= 0) // Current target not set or dead, get a new one
@@ -94,7 +94,16 @@ public class ControlledByAI : MonoBehaviour
                 // Move closer to our target if we are far away...
                 if (Vector3.Distance(_currentTarget.transform.position, transform.position) > 5f)
                 {
-                    _movement.MoveTowards(_currentTarget.transform.position);
+                    if (Random.Range(0, 100) < 10) // Wiggle occasionally, helps preventing getting stuck
+                    {
+                        _movement.MoveTowards(transform.right * 10);
+                    }
+                    else
+                    {
+                        _movement.MoveTowards(_currentTarget.transform.position);
+                    }
+                    
+                    
                 }
                 else // ... otherwise, start firing
                 {
