@@ -29,6 +29,7 @@ public class CameraControls : MonoBehaviour
     private void LateUpdate(){
         if (_active)
         {
+            // Move camera to the position we got from axis input
             transform.position += _moveVector * Time.deltaTime * 30;
             _moveVector = Vector3.zero;
             
