@@ -7,12 +7,23 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private Slider _slider;
+    [SerializeField] private Animation _heartAnimation;
 
     void Start()
     {
         SetMax(_health.GetMaxHealth());
         SetMin(0);
         Refresh();
+    }
+
+    public void StartPulsing()
+    {
+        _heartAnimation.Play();
+    }
+    
+    public void StopPulsing()
+    {
+        _heartAnimation.Stop();
     }
     
     public void SetMax(float max)

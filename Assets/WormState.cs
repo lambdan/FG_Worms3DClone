@@ -5,20 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(WormInfo))]
 public class WormState : MonoBehaviour
 {
-    [SerializeField] private GameObject _activeIndicator;
-
-    private MeshRenderer _activeIndicatorMeshRender;
-    private Animation _activeIndicatorAnimation;
     private InputReceiver _inputReceiver;
     private ControlledByAI _controlledByAI;
     private WormInfo _wormInfo;
+    [SerializeField] private HealthBar _healthBar;
     
     private bool _active = false;
     
     void Awake()
     {
-        _activeIndicatorMeshRender = _activeIndicator.GetComponent<MeshRenderer>();
-        _activeIndicatorAnimation = _activeIndicator.GetComponent<Animation>();
         _inputReceiver = GetComponent<InputReceiver>();
         _wormInfo = GetComponent<WormInfo>();
         _controlledByAI = GetComponent<ControlledByAI>();
@@ -32,6 +27,7 @@ public class WormState : MonoBehaviour
     public void Activate()
     {
         _active = true;
+        _healthBar.StartPulsing();
 
         if (_wormInfo.IsAIControlled())
         {
@@ -44,16 +40,13 @@ public class WormState : MonoBehaviour
             _inputReceiver.enabled = true;  
         }
         
-        _activeIndicatorAnimation.enabled = true;
-        _activeIndicatorMeshRender.enabled = true;
     }
     
     public void Deactivate()
     {
         _active = false;
+        _healthBar.StopPulsing();
         _controlledByAI.enabled = false;
         _inputReceiver.enabled = false;
-        _activeIndicatorAnimation.enabled = false;
-        _activeIndicatorMeshRender.enabled = false;
     }
 }

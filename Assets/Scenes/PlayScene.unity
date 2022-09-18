@@ -853,7 +853,7 @@ GameObject:
   - component: {fileID: 878689042}
   - component: {fileID: 878689044}
   m_Layer: 5
-  m_Name: Handle
+  m_Name: Clock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

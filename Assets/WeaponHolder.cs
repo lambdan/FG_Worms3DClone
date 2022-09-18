@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponHolder : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class WeaponHolder : MonoBehaviour
     [SerializeField] private bool _testGiveWeapon;
     [SerializeField] private WeaponProperties _testGive;
     [SerializeField] private Transform _weaponHand;
+    [SerializeField] private Slider _cooldownSlider;
 
     private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
     private int _currentWeaponIndex = 0;
@@ -16,7 +18,12 @@ public class WeaponHolder : MonoBehaviour
     private WeaponScript _currentWeaponScript;
 
     private float _nextFire = 0;
-    
+
+    void Awake()
+    {
+        _cooldownSlider.gameObject.SetActive(false); // Hide cooldown slider
+    }
+
     void Start()
     {
         foreach (WeaponProperties WP in allWeapons)
@@ -83,8 +90,27 @@ public class WeaponHolder : MonoBehaviour
         if (Time.time > _nextFire)
         {
             _currentWeaponScript.Fire();
-            _nextFire = Time.time + _currentWeaponProperties.fireRate;
+            
+            _nextFire = Time.time + _currentWeaponProperties.fireRate; // When can we fire again? (cooldown)
+            
+            
+            StartCoroutine(UpdateCooldownBar(_currentWeaponProperties.fireRate));
         }
+
+    }
+
+    IEnumerator UpdateCooldownBar(float cooldown)
+    {
         
+        _cooldownSlider.gameObject.SetActive(true);
+        while (Time.time < _nextFire)
+        {
+            _cooldownSlider.maxValue = cooldown;
+            _cooldownSlider.value = _nextFire - Time.time;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        _cooldownSlider.gameObject.SetActive(false);
+        //_cooldownSlider.value = _cooldownSlider.maxValue; // Reset to 100%
     }
 }
