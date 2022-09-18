@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Health _health;
     [SerializeField] private Slider _slider;
     [SerializeField] private Animation _heartAnimation;
+    [SerializeField] private TMP_Text _text;
 
     void Start()
     {
@@ -44,5 +46,6 @@ public class HealthBar : MonoBehaviour
     public void Refresh()
     {
         _slider.value = _health.GetHealth();
+        _text.text = _health.GetHealth().ToString();
     }
 }
