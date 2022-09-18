@@ -47,11 +47,8 @@ public class CameraControls : MonoBehaviour
         }
     }
 
-    public void AxisInput(float horizontal, float vertical)
+    public void AxisInput(Vector2 input)
     {
-        // Get input from axis
-        
-        Vector2 input = new Vector2(horizontal, vertical);
         if (input.magnitude > 0.1) // Its above the "Deadzone"
         {
             _active = true; // Make manual camera movement active here
@@ -59,7 +56,7 @@ public class CameraControls : MonoBehaviour
             _cameraFollow.Pause(); // Pause any "auto camera" system that is going
             
             // Calculate move vector (which gets used in Update()
-            _moveVector = ( (transform.up * vertical) + (transform.right * horizontal)).normalized;
+            _moveVector = ( (transform.up * input.y) + (transform.right * input.x)).normalized;
 
             _lastInput = Time.time; // To keep track of when we restore to "auto camera"
         }
@@ -70,6 +67,13 @@ public class CameraControls : MonoBehaviour
         }
     }
 
+    public void ResetCamera()
+    {
+        _active = false;
+        _cameraFollow.Unpause();
+        _cameraFollow.InstantReset();
+    }
+    
     public void MakeActive()
     {
         _active = true;

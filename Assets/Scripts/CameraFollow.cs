@@ -73,5 +73,11 @@ public class CameraFollow : MonoBehaviour
         return _target;
     }
 
+    public void InstantReset()
+    {
+        transform.position = _cameraDestination;
+        transform.LookAt(_target);
+    }
+
 
 }
