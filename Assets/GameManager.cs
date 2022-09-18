@@ -31,8 +31,10 @@ public class GameManager : MonoBehaviour
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
 
+    private bool _gameOver = false;
+
     private float _turnEnds;
-    
+
 
     void Awake()
     {
@@ -116,16 +118,11 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
+        _gameOver = true;
         Debug.Log("Game over!!!!");
-
-        // Get winning team by extracting it from surviving worm's name
-        // TODO Make this better
-        //var winningTeam = _teams[0][0].name.Substring(0, 6);
-        //_HUDUpdater.UpdateCurrentPlayerText("WINNER: " + winningTeam);
-
         _HUDUpdater.UpdateCurrentPlayerText("GAME OVER");
-
-        Time.timeScale = 0;
+        
+        // TODO go to a menu or something here?
     }
     void TeamDefeated(int t)
     {
@@ -188,6 +185,11 @@ public class GameManager : MonoBehaviour
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
-        StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
+
+        if (!_gameOver)
+        {
+            StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
+        }
+        
     }
 }
