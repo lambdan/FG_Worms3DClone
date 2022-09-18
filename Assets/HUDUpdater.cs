@@ -11,6 +11,7 @@ public class HUDUpdater : MonoBehaviour
     [SerializeField] private TMP_Text _turnsPlayedText;
     [SerializeField] private Slider _turnTimeSlider;
     [SerializeField] private Animation _turnTimeSliderAnimation;
+    [SerializeField] private TMP_Text _turnTimeText;
 
     public void UpdateCurrentPlayerText(string newText)
     {
@@ -26,6 +27,9 @@ public class HUDUpdater : MonoBehaviour
     public void UpdateTurnSlider(float current)
     {
         _turnTimeSlider.value = current;
+
+        _turnTimeText.text = current.ToString("0.0");
+
         if (current < 0.1)
         {
             _turnTimeSliderAnimation.Stop();

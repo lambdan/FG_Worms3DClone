@@ -10,6 +10,7 @@ using Vector3 = UnityEngine.Vector3;
 [RequireComponent(typeof(Health))]
 public class DeathAnimation : MonoBehaviour
 {
+    [SerializeField] private float _shrinkSpeed;
     
     public void TriggerDeathAnimation()
     {
@@ -20,7 +21,7 @@ public class DeathAnimation : MonoBehaviour
     {
         while (transform.localScale.x >= 0.01f)
         {
-            transform.localScale -= new Vector3(0.005f, 0.005f, 0.005f);
+            transform.localScale -= Vector3.one * _shrinkSpeed;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 

@@ -17,7 +17,6 @@ public class WormManager : MonoBehaviour
 
         for (int i = 0; i < team.Count; i++)
         {
-            Debug.Log("HP left " + _activeWorms[i].GetComponent<Health>().GetHealth());
             if (_activeWorms[i].activeSelf && _activeWorms[i].GetComponent<Health>().GetHealth() > 0) // Find an alive worm and make it active
             {
                 SetActiveWorm(i); // TODO make it so its not always the 0th worm
