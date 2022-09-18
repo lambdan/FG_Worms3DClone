@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         _turnsPlayed += 1;
         _turnEnds = Time.time + _roundLength;
 
-        StartCoroutine(RoundTimer());
+        StartCoroutine(TurnTimer());
     }
 
     void NextRound()
@@ -175,13 +175,16 @@ public class GameManager : MonoBehaviour
         NextRound();
     }
 
-    IEnumerator RoundTimer()
+    IEnumerator TurnTimer()
     {
         while (Time.time <= _turnEnds)
         {
             _HUDUpdater.UpdateTurnSlider(_turnEnds - Time.time);
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        
+        // Turn over
+        
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);

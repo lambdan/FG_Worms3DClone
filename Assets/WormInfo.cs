@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WormInfo : MonoBehaviour
 {
-    [SerializeField] private Transform _cameraGlue;
 
     private string _name;
     private int _team;
@@ -64,10 +63,6 @@ public class WormInfo : MonoBehaviour
     {
         return _isAIControlled;
     }
-
-    public Transform GetCameraGlue()
-    {
-        return _cameraGlue.transform;
-    }
+    
     
 }
