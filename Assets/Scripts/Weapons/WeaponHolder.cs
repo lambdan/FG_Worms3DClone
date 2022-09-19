@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class WeaponHolder : MonoBehaviour
     private WeaponScript _currentWeaponScript;
 
     private float _nextFire = 0;
+    private bool _cooldownPulsing = false;
 
     void Awake()
     {
@@ -92,9 +94,22 @@ public class WeaponHolder : MonoBehaviour
             _currentWeaponScript.Fire();
             
             _nextFire = Time.time + _currentWeaponProperties.fireRate; // When can we fire again? (cooldown)
+
+            if (_currentWeaponProperties.fireRate >= 0.5)
+            {   
+                // Show cooldown bar if its a long one
+                StartCoroutine(UpdateCooldownBar(_currentWeaponProperties.fireRate));
+            }
             
+        }
+        else
+        {
+            // Pulse the cooldown
+            if (!_cooldownPulsing)
+            {
+                StartCoroutine(PulseCooldownBar());
+            }
             
-            StartCoroutine(UpdateCooldownBar(_currentWeaponProperties.fireRate));
         }
 
     }
@@ -112,5 +127,28 @@ public class WeaponHolder : MonoBehaviour
 
         _cooldownSlider.gameObject.SetActive(false);
         //_cooldownSlider.value = _cooldownSlider.maxValue; // Reset to 100%
+    }
+
+    IEnumerator PulseCooldownBar()
+    {
+        _cooldownPulsing = true;
+        Vector3 startScale = _cooldownSlider.transform.localScale;
+        
+        // First make it bigger
+        while (_cooldownSlider.transform.localScale.x <= (startScale.x * 3f))
+        {
+            _cooldownSlider.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+            yield return new WaitForFixedUpdate();
+        }
+        
+        // Then make it smaller
+        while (_cooldownSlider.transform.localScale.x >= (startScale.x))
+        {
+            _cooldownSlider.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
+            yield return new WaitForFixedUpdate();
+        }
+        
+        _cooldownSlider.transform.localScale = startScale;
+        _cooldownPulsing = false;
     }
 }

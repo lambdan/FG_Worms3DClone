@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(DeathHandler))]
 public class Health : MonoBehaviour
 {
     public int startHealth;
     private int _health;
-    private DeathHandler _deathHandler;
 
     public UnityEvent healthZero;
     public UnityEvent healthChanged;
@@ -16,7 +14,6 @@ public class Health : MonoBehaviour
 
     void Awake()
     {
-        _deathHandler = GetComponent<DeathHandler>();
         _health = startHealth;
     }
 
@@ -42,7 +39,6 @@ public class Health : MonoBehaviour
 
         if (_health <= 0)
         {
-            Debug.Log(name + ": Health is <= 0 (I should die)");
             healthZero.Invoke();
         }
     }
