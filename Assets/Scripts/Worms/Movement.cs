@@ -22,14 +22,8 @@ public class Movement : MonoBehaviour
 
     public void AxisInput(float horizontal, float vertical)
     {
-        /*
-        Vector3 rotation = new Vector3(0, horizontal * rotationSpeed * Time.deltaTime, 0);
-        Vector3 move = new Vector3(horizontal, 0, vertical).normalized;
-        transform.Translate(move * (movementSpeed * Time.deltaTime));
-        transform.Rotate(rotation);*/
-        //Vector3 move = ((horizontal * Vector3.right) + (vertical * Vector3.forward)).normalized;
         transform.Translate(Vector3.forward * vertical * movementSpeed * Time.deltaTime);
-        transform.Rotate(0, horizontal * 180f * Time.deltaTime, 0); // Rotate character towards direction stick is pressed
+        transform.Rotate(0, horizontal * rotationSpeed * Time.deltaTime, 0); // Rotate character towards direction stick is pressed
     }
 
     public void MoveTowards(Vector3 pos)
@@ -40,9 +34,9 @@ public class Movement : MonoBehaviour
 
     public void RotateTowards(Vector3 pos)
     {
-        pos = new Vector3(pos.x, 0, pos.z);
+        pos = new Vector3(pos.x, 0, pos.z); // y = 0 to ignore height
         Quaternion targetRot = Quaternion.LookRotation(pos - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * 2);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime);
     }
 
     public void Jump()

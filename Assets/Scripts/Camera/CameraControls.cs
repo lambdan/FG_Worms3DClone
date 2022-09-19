@@ -16,11 +16,11 @@ public class CameraControls : MonoBehaviour
     private Transform _target;
 
     private bool _active = false;
-
-    private float _lastInput = 0;
-
+    
     private Vector3 _moveVector;
 
+    private Vector3 _offset;
+    
     void Awake()
     {
         _cameraFollow = GetComponent<CameraFollow>(); // Get the "auto camera" system
@@ -29,22 +29,10 @@ public class CameraControls : MonoBehaviour
     private void LateUpdate(){
         if (_active)
         {
-            // Move camera to the position we got from axis input
-            transform.position += _moveVector * Time.deltaTime * 10f;
-            _moveVector = Vector3.zero;
-            
-            // Catch up to the player if we get too far away
-            if (Vector3.Distance(transform.position, _target.position) > 7f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, _target.position, 30*Time.deltaTime);
-            }
-            
             if (transform.position.y < _target.position.y + 1f) // To prevent the camera from going under the player
             {
                 transform.position = new Vector3(transform.position.x, _target.position.y + 1f, transform.position.z);
             }
-            
-            transform.LookAt(_target);
         }
     }
 
@@ -52,16 +40,20 @@ public class CameraControls : MonoBehaviour
     {
         if (input.magnitude > 0.1) // Its above the "Deadzone"
         {
-            _active = true; // Make manual camera movement active here
+            if (!_active)
+            {
+                _active = true;
+            }
+            
             _target = _cameraFollow.GetTarget(); // Get our player character (target) from somewhere
             _cameraFollow.Pause(); // Pause any "auto camera" system that is going
-            
-            // Calculate move vector (which gets used in Update()
-            _moveVector = ( (transform.up * input.y) + (transform.right * input.x)).normalized;
 
-            _lastInput = Time.time; // To keep track of when we restore to "auto camera"
+            _moveVector = ( (transform.up * input.y) + (transform.right * input.x));
+            
+            transform.position += _moveVector * Time.fixedDeltaTime;
+            transform.LookAt(_target);
         }
-        else if (_active && Time.time - _lastInput > 2) // It's been a while since last user camera movement, restore to auto
+        else if (_active) // It's been a while since last user camera movement, restore to auto
         {
             _active = false;
             _cameraFollow.Unpause();

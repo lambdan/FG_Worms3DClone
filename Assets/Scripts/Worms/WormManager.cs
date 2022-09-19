@@ -37,8 +37,7 @@ public class WormManager : MonoBehaviour
         // Move camera to this worm
         _cameraFollow.SetNewTarget(_activeWorms[n]);
         _cameraFollow.Activate();
-        _cameraFollow.InstantReset();
-        
+
         // Update name on the HUD
         _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
         
@@ -61,12 +60,6 @@ public class WormManager : MonoBehaviour
     
     public void NextWorm()
     {
-        if (_aliveWorms == 1)
-        {
-            // No other worms available
-            return;
-        }
-        
         int next = _activeWorm + 1;
         if (next >= _activeWorms.Count)
         {
