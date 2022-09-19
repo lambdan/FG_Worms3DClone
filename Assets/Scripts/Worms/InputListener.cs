@@ -41,32 +41,37 @@ public class InputListener : MonoBehaviour
         
         
         // Keyboard
-        
-        if (_kb.leftCtrlKey.wasPressedThisFrame)
-        {
-            _weaponHolder.Fire();
-        }
 
-        if (_kb.qKey.wasPressedThisFrame)
+        if (_kb.anyKey.isPressed)
         {
-            _weaponHolder.NextWeapon();
-        }
+            if (_kb.leftCtrlKey.wasPressedThisFrame)
+            {
+                _weaponHolder.Fire();
+            }
 
-        if (_kb.eKey.wasPressedThisFrame)
-        {
-            _wormManager.NextWorm();
-        }
+            if (_kb.qKey.wasPressedThisFrame)
+            {
+                _weaponHolder.NextWeapon();
+            }
+
+            if (_kb.eKey.wasPressedThisFrame)
+            {
+                _wormManager.NextWorm();
+            }
         
-        if (_kb.spaceKey.wasPressedThisFrame)
-        {
-            _movement.Jump();
+            if (_kb.spaceKey.wasPressedThisFrame)
+            {
+                _movement.Jump();
             
+            }
+        
+            if (_kb.cKey.wasPressedThisFrame)
+            {
+                _cameraControls.ResetCamera();
+            }   
         }
         
-        if (_kb.cKey.wasPressedThisFrame)
-        {
-            _cameraControls.ResetCamera();
-        }
+
 
         // Mouse
         
@@ -76,31 +81,35 @@ public class InputListener : MonoBehaviour
         }
 
         // Gamepad
-
-        if (_gamepad.buttonSouth.wasPressedThisFrame)
+        if (_gamepad.wasUpdatedThisFrame)
         {
-            _movement.Jump();
-        }
+            if (_gamepad.buttonSouth.wasPressedThisFrame)
+            {
+                _movement.Jump();
+            }
 
-        if (_gamepad.buttonWest.wasPressedThisFrame)
-        {
-            _weaponHolder.Fire();
-        }
+            if (_gamepad.buttonWest.wasPressedThisFrame)
+            {
+                _weaponHolder.Fire();
+            }
 
-        if (_gamepad.buttonNorth.wasPressedThisFrame)
-        {
-            _weaponHolder.NextWeapon();
-        }
+            if (_gamepad.buttonNorth.wasPressedThisFrame)
+            {
+                _weaponHolder.NextWeapon();
+            }
 
-        if (_gamepad.rightStickButton.wasPressedThisFrame)
-        {
-            _cameraControls.ResetCamera();
-        }
+            if (_gamepad.rightStickButton.wasPressedThisFrame)
+            {
+                _cameraControls.ResetCamera();
+            }
 
-        if (_gamepad.rightShoulder.wasPressedThisFrame)
-        {
-            _wormManager.NextWorm();
+            if (_gamepad.rightShoulder.wasPressedThisFrame)
+            {
+                _wormManager.NextWorm();
+            }    
         }
+        
+
         
     }
 }
