@@ -69,12 +69,12 @@ public class WormManager : MonoBehaviour
         while (!_activeWorms[next].activeSelf && _activeWorms[next].GetComponent<Health>().GetHealth() <= 0)
         {
             next += 1;
-            if (_activeWorm >= _activeWorms.Count)
+            if (next >= _activeWorms.Count)
             {
                 next = 0;
             }
         }
-
+        
         DisableWorm(_activeWorm);
         SetActiveWorm(next);
     }
