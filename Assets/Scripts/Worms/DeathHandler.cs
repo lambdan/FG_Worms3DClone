@@ -16,18 +16,6 @@ public class DeathHandler : MonoBehaviour
         _wormInfo = GetComponent<WormInfo>();
     }
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Died()
     {
         if (_deathAnim != null)
@@ -37,7 +25,7 @@ public class DeathHandler : MonoBehaviour
 
         if (_gameManager != null)
         {
-            _gameManager.ReportDeath(this.gameObject, _wormInfo.GetTeam());
+            _gameManager.ReportDeath(_wormInfo.GetTeam());
         }
     }
 }

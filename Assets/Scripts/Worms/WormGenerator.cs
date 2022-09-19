@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class WormGenerator : MonoBehaviour
 {
-    [SerializeField] private List<Color> teamColors;
-    
-    public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase)
+    public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase, Color teamColor)
     {
         List<GameObject> thisTeam = new List<GameObject>();
         
@@ -28,9 +25,9 @@ public class WormGenerator : MonoBehaviour
             wormInfo.SetTeam(teamNumber);
             
             // Set color
-            worm.GetComponent<WormColor>().SetNewColor(teamColors[teamNumber]); 
+            worm.GetComponent<WormColor>().SetNewColor(teamColor);
             
-            worm.GetComponent<WormState>().Deactivate();
+            worm.GetComponent<WormState>().Deactivate(); // Deactivate this worm (it gets activated when its their turn)
                 
             thisTeam.Add(worm);
         }

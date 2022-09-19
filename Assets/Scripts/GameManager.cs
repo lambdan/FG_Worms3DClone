@@ -15,10 +15,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _wormsPerTeam;
     [SerializeField] private WormManager _wormManager;
     [SerializeField] WormGenerator _wormGenerator;
-    [SerializeField] private GameObject _wormPrefab; // TODO Make this a list with different colored worms? (or maybe just switch texture on them?)
-    [SerializeField] private float _delayBetweenRounds;
-    [SerializeField] private float _roundLength;
-    
+    [SerializeField] private GameObject _wormPrefab;
+    [SerializeField] private float _delayBetweenTurns;
+    [SerializeField] private float _turnLength;
+    [SerializeField] private List<Color> teamColors;
     
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
     private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
@@ -34,15 +34,14 @@ public class GameManager : MonoBehaviour
     private bool _gameOver = false;
 
     private float _turnEnds;
-
-
-    void Awake()
+    
+    void GenerateTeams()
     {
         // Generate teams/worms for human players (aiControlled = false)
         for (int t = 0; t < _humanPlayers; t++)
         {
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
-                _homeBases[_teams.Count].position);
+                _homeBases[_teams.Count].position, teamColors[_teamsGenerated]);
             
             _teams.Add(thisTeam);
             _teamAliveWorms.Add(_wormsPerTeam);
@@ -55,7 +54,7 @@ public class GameManager : MonoBehaviour
         for (int t = 0; t < _aiPlayers; t++)
         {
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, true,
-                _homeBases[_teams.Count].position);
+                _homeBases[_teams.Count].position, teamColors[_teamsGenerated]);
             
             _teams.Add(thisTeam);
             _teamAliveWorms.Add(_wormsPerTeam);
@@ -67,15 +66,17 @@ public class GameManager : MonoBehaviour
         _teamsAlive = _teamsGenerated;
         
         // Set max of turn time slider to round length
-        _HUDUpdater.SetTurnSliderMax(_roundLength);
-        
+        _HUDUpdater.SetTurnSliderMax(_turnLength);
     }
-
+    
     void Start()
     {
+        // TODO Get amount of humans/AI's here in a menu
+        GenerateTeams();
+        
         _currentTeam = _teams[0];
         _currentTeamsTurn = 0;
-
+        
         StartRound();
     }
 
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
     {
         _wormManager.SetActiveTeam(_currentTeam);
         _turnsPlayed += 1;
-        _turnEnds = Time.time + _roundLength;
+        _turnEnds = Time.time + _turnLength;
 
         StartCoroutine(TurnTimer());
     }
@@ -136,16 +137,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void ReportDeath(GameObject worm, int teamNumber)
+    public void ReportDeath(int teamNumber)
     {
-        Debug.Log("Game Manager got death report of " + worm.name);
-
-        // Find index of this worm
-        int wormIndex = _teams[teamNumber].IndexOf(worm);
-        
-        // Disable it 
-        //_teams[teamNumber][wormIndex].SetActive(false);
-        
         // -1 alive worms of that team
         _teamAliveWorms[teamNumber] -= 1;
         
@@ -158,7 +151,7 @@ public class GameManager : MonoBehaviour
 
     public float GetRoundLength()
     {
-        return _roundLength;
+        return _turnLength;
     }
 
     public List<List<GameObject>> GetAllTeams()
@@ -166,7 +159,7 @@ public class GameManager : MonoBehaviour
         return _teams;
     }
 
-    IEnumerator DelayedStartNextRound(float delay)
+    IEnumerator DelayedStartNextTurn(float delay)
     {
         yield return new WaitForSeconds(delay);
         NextRound();
@@ -181,14 +174,13 @@ public class GameManager : MonoBehaviour
         }
         
         // Turn over
-        
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
 
         if (!_gameOver)
         {
-            StartCoroutine(DelayedStartNextRound(_delayBetweenRounds));
+            StartCoroutine(DelayedStartNextTurn(_delayBetweenTurns));
         }
         
     }
