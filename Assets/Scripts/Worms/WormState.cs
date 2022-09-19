@@ -42,6 +42,7 @@ public class WormState : MonoBehaviour
             _inputListener.enabled = true;  
         }
         
+        activated.Invoke();
     }
     
     public void Deactivate()
@@ -49,5 +50,6 @@ public class WormState : MonoBehaviour
         _active = false;
         _controlledByAI.enabled = false;
         _inputListener.enabled = false;
+        deactivated.Invoke();
     }
 }
