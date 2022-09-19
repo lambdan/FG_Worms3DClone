@@ -16,7 +16,6 @@ public class InputListener : MonoBehaviour
     private WeaponHolder _weaponHolder;
     private CameraControls _cameraControls;
     
-    // Start is called before the first frame update
     void Start()
     {
         _kb = Keyboard.current;
@@ -27,10 +26,6 @@ public class InputListener : MonoBehaviour
         _cameraControls = Camera.main.GetComponent<CameraControls>();
     }
     
-    
-
-
-    // Update is called once per frame
     void Update()
     {
         _movement.AxisInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));

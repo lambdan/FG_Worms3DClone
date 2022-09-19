@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c876a245e8e95a94da5a8305e175cf04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraControls: {fileID: 0}
+  _cameraControls: {fileID: 109040655}
 --- !u!114 &109040655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2397,8 +2397,8 @@ MonoBehaviour:
   - {fileID: 2037577874}
   - {fileID: 979132403}
   _humanPlayers: 0
-  _aiPlayers: 8
-  _wormsPerTeam: 3
+  _aiPlayers: 4
+  _wormsPerTeam: 4
   _wormManager: {fileID: 1913921541}
   _wormGenerator: {fileID: 1913921542}
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
@@ -2654,7 +2654,7 @@ GameObject:
   - component: {fileID: 2125031001}
   m_Layer: 0
   m_Name: World
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

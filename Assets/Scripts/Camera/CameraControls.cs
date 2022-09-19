@@ -30,7 +30,7 @@ public class CameraControls : MonoBehaviour
         if (_active)
         {
             // Move camera to the position we got from axis input
-            transform.position += _moveVector * Time.deltaTime * 30;
+            transform.position += _moveVector * Time.deltaTime * 10f;
             _moveVector = Vector3.zero;
             
             // Catch up to the player if we get too far away
@@ -39,9 +39,9 @@ public class CameraControls : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, _target.position, 30*Time.deltaTime);
             }
             
-            if (transform.position.y < _target.position.y) // To prevent the camera from going under the player
+            if (transform.position.y < _target.position.y + 1f) // To prevent the camera from going under the player
             {
-                transform.position = new Vector3(transform.position.x, _target.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x, _target.position.y + 1f, transform.position.z);
             }
             
             transform.LookAt(_target);

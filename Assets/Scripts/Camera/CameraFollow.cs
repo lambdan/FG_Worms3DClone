@@ -21,12 +21,12 @@ public class CameraFollow : MonoBehaviour
         
         if (_active && _target  != null)
         {
-            _cameraDestination = _target.position - (_target.transform.forward * 5) + (_target.transform.up * 3);
+            _cameraDestination = _target.position - (_target.transform.forward * 7) + (_target.transform.up * 4);
         }
         
         transform.position = Vector3.Lerp(transform.position, _cameraDestination, Vector3.Distance(transform.position, _cameraDestination) * Time.deltaTime);
         Quaternion rot = Quaternion.LookRotation(_target.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * 2);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, 100 * Time.deltaTime * Mathf.Abs(transform.rotation.y - _target.rotation.y));
     }
 
 
@@ -45,6 +45,7 @@ public class CameraFollow : MonoBehaviour
         _cameraControls.MakeInactive(); // Deactivate the manual camera
         _active = true;
         _paused = false;
+        InstantReset();
     }
 
     public void Deactivate()
