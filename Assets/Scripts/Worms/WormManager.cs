@@ -73,9 +73,9 @@ public class WormManager : MonoBehaviour
             next = 0;
         }
         // Find the next active & alive worm
-        while (!_activeWorms[next].activeSelf && _activeWorms[next].GetComponent<Health>().GetHealth() <= 0) 
+        while (!_activeWorms[next].activeSelf && _activeWorms[next].GetComponent<Health>().GetHealth() <= 0)
         {
-            _activeWorm += 1;
+            next += 1;
             if (_activeWorm >= _activeWorms.Count)
             {
                 next = 0;
