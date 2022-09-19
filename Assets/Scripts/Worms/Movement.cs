@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
 
     public void AxisInput(float horizontal, float vertical)
     {
-        transform.Translate(Vector3.forward * vertical * movementSpeed * Time.deltaTime);
+        transform.Translate(Vector3.forward * (vertical * movementSpeed * Time.deltaTime));
         transform.Rotate(0, horizontal * rotationSpeed * Time.deltaTime, 0); // Rotate character towards direction stick is pressed
     }
 

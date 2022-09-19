@@ -20,7 +20,7 @@ public class WormGenerator : MonoBehaviour
             // Set name and team assignment to worm
             WormInfo wormInfo = worm.GetComponent<WormInfo>();
             wormInfo.SetAIControlled(aiControlled);
-            wormInfo.SetName("Worm " + i);
+            wormInfo.SetName("Worm " + (i+1));
             wormInfo.SetTeam(teamNumber);
             
             // Set color

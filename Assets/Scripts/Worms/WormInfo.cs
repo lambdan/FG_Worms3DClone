@@ -51,7 +51,7 @@ public class WormInfo : MonoBehaviour
 
     public void UpdateName()
     {
-        this.name = "Team " + _team + " - " + _name;
+        this.name = "Team " + (_team+1) + " - " + _name;
     }
 
     public void SetAIControlled(bool state)
