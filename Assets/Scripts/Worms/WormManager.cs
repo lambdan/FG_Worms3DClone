@@ -7,22 +7,26 @@ public class WormManager : MonoBehaviour
 {
     [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private HUDUpdater _HUDUpdater;
-    
+
     private List<GameObject> _activeWorms = new List<GameObject>();
     private int _activeWorm = 0;
+    private int _aliveWorms = 0;
 
     public void SetActiveTeam(List<GameObject> team)
     {
+        _aliveWorms = 0;
         _activeWorms = team; // Swap to the new team
 
-        for (int i = 0; i < team.Count; i++)
+        for (int i = 0; i < _activeWorms.Count; i++)
         {
-            if (_activeWorms[i].activeSelf && _activeWorms[i].GetComponent<Health>().GetHealth() > 0) // Find an alive worm and make it active
+            // Count how many worms are alive
+            if (_activeWorms[i].activeSelf && _activeWorms[i].GetComponent<Health>().GetHealth() > 0) 
             {
-                SetActiveWorm(i); // TODO make it so its not always the 0th worm
-                break;
+                _aliveWorms += 1;
             }
         }
+        
+        NextWorm();
     }
     
     void SetActiveWorm(int n)
@@ -33,6 +37,7 @@ public class WormManager : MonoBehaviour
         // Move camera to this worm
         _cameraFollow.SetNewTarget(_activeWorms[n]);
         _cameraFollow.Activate();
+        _cameraFollow.InstantReset();
         
         // Update name on the HUD
         _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
@@ -56,18 +61,27 @@ public class WormManager : MonoBehaviour
     
     public void NextWorm()
     {
-        if (_activeWorms.Count == 1)
+        if (_aliveWorms == 1)
         {
             // No other worms available
             return;
         }
         
         int next = _activeWorm + 1;
-        if (next == _activeWorms.Count) // Last worm, go back to first
+        if (next >= _activeWorms.Count)
         {
-            next = 0; 
+            next = 0;
         }
-        
+        // Find the next active & alive worm
+        while (!_activeWorms[next].activeSelf && _activeWorms[next].GetComponent<Health>().GetHealth() <= 0) 
+        {
+            _activeWorm += 1;
+            if (_activeWorm >= _activeWorms.Count)
+            {
+                next = 0;
+            }
+        }
+
         DisableWorm(_activeWorm);
         SetActiveWorm(next);
     }

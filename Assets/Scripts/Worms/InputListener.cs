@@ -15,15 +15,21 @@ public class InputListener : MonoBehaviour
     private Movement _movement;
     private WeaponHolder _weaponHolder;
     private CameraControls _cameraControls;
-    
+    private WormManager _wormManager;
+
+    void Awake()
+    {
+        _movement = GetComponent<Movement>();
+        _weaponHolder = GetComponent<WeaponHolder>();
+        _cameraControls = Camera.main.GetComponent<CameraControls>();
+        _wormManager = FindObjectOfType<WormManager>();
+    }
+
     void Start()
     {
         _kb = Keyboard.current;
         _mouse = Mouse.current;
         _gamepad = Gamepad.current;
-        _movement = GetComponent<Movement>();
-        _weaponHolder = GetComponent<WeaponHolder>();
-        _cameraControls = Camera.main.GetComponent<CameraControls>();
     }
     
     void Update()
@@ -46,12 +52,17 @@ public class InputListener : MonoBehaviour
             _weaponHolder.NextWeapon();
         }
 
+        if (_kb.eKey.wasPressedThisFrame)
+        {
+            _wormManager.NextWorm();
+        }
+        
         if (_kb.spaceKey.wasPressedThisFrame)
         {
             _movement.Jump();
             
         }
-
+        
         if (_kb.cKey.wasPressedThisFrame)
         {
             _cameraControls.ResetCamera();
@@ -84,6 +95,11 @@ public class InputListener : MonoBehaviour
         if (_gamepad.rightStickButton.wasPressedThisFrame)
         {
             _cameraControls.ResetCamera();
+        }
+
+        if (_gamepad.rightShoulder.wasPressedThisFrame)
+        {
+            _wormManager.NextWorm();
         }
         
     }

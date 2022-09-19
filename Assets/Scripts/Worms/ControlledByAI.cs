@@ -70,7 +70,7 @@ public class ControlledByAI : MonoBehaviour
         
     }
     
-    void FixedUpdate()
+    void Update()
     {
         if (!_startedMoving)
         {
