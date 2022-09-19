@@ -19,10 +19,10 @@ GameObject:
   - component: {fileID: 3713165976416829121}
   - component: {fileID: 2567865808839315451}
   - component: {fileID: 3451263884784508282}
-  - component: {fileID: 3414428226879847738}
-  - component: {fileID: 1599797495908800018}
   - component: {fileID: 4513286937411717522}
   - component: {fileID: 1643650164547525213}
+  - component: {fileID: 3414428226879847738}
+  - component: {fileID: 1599797495908800018}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -99,6 +99,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 100
+  healthZero:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2567865808839315451}
+        m_TargetAssemblyTypeName: DeathAnimation, Assembly-CSharp
+        m_MethodName: TriggerDeathAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3451263884784508282}
+        m_TargetAssemblyTypeName: DeathHandler, Assembly-CSharp
+        m_MethodName: Died
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1643650164547525213}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: Refresh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5185815060319161311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +165,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca65af8be8df5b479bd77ee917faf1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 1643650164547525213}
+  activated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1643650164547525213}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: StartPulsing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  deactivated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1643650164547525213}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: StopPulsing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4932588296584274209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +241,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shrinkSpeed: 0.02
+  animationDone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 473437008339127252}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3451263884784508282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +268,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21189f538fd1114195eef49644457fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4513286937411717522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473437008339127252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea005a1b5a87fae408ebe199882f2d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 473437008214295696}
+--- !u!114 &1643650164547525213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473437008339127252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17559390549f2634da3315a604cf80c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 473437008339127251}
+  _slider: {fileID: 7129777289093427880}
+  _heartAnimation: {fileID: 7547320281999764775}
+  _text: {fileID: 7221789097135616102}
 --- !u!136 &3414428226879847738
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -212,35 +327,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4513286937411717522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473437008339127252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea005a1b5a87fae408ebe199882f2d9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 473437008214295696}
---- !u!114 &1643650164547525213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473437008339127252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17559390549f2634da3315a604cf80c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 473437008339127251}
-  _slider: {fileID: 7129777289093427880}
-  _heartAnimation: {fileID: 7547320281999764775}
-  _text: {fileID: 7221789097135616102}
 --- !u!1 &495646832798496716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,7 +1418,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6332379862816819840}
-  m_LocalRotation: {x: 0, y: 0, z: -0.078459024, w: 0.99691737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
@@ -1343,11 +1429,11 @@ RectTransform:
   - {fileID: 2101080159381109431}
   m_Father: {fileID: 4034366395539108559}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 63.4, y: -36}
-  m_SizeDelta: {x: 100, y: 20}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: 200, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5973061251489488857
 MonoBehaviour:

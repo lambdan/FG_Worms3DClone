@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(WormInfo))]
 public class WormState : MonoBehaviour
@@ -8,8 +9,10 @@ public class WormState : MonoBehaviour
     private InputListener _inputListener;
     private ControlledByAI _controlledByAI;
     private WormInfo _wormInfo;
-    [SerializeField] private HealthBar _healthBar;
-    
+
+    public UnityEvent activated;
+    public UnityEvent deactivated;
+
     private bool _active = false;
     
     void Awake()
@@ -27,7 +30,6 @@ public class WormState : MonoBehaviour
     public void Activate()
     {
         _active = true;
-        _healthBar.StartPulsing();
 
         if (_wormInfo.IsAIControlled())
         {
@@ -45,7 +47,6 @@ public class WormState : MonoBehaviour
     public void Deactivate()
     {
         _active = false;
-        _healthBar.StopPulsing();
         _controlledByAI.enabled = false;
         _inputListener.enabled = false;
     }

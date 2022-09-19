@@ -2396,8 +2396,8 @@ MonoBehaviour:
   - {fileID: 655536100}
   - {fileID: 2037577874}
   - {fileID: 979132403}
-  _humanPlayers: 0
-  _aiPlayers: 4
+  _humanPlayers: 2
+  _aiPlayers: 2
   _wormsPerTeam: 4
   _wormManager: {fileID: 1913921541}
   _wormGenerator: {fileID: 1913921542}

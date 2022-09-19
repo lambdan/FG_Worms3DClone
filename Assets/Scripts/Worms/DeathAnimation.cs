@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -11,6 +12,7 @@ using Vector3 = UnityEngine.Vector3;
 public class DeathAnimation : MonoBehaviour
 {
     [SerializeField] private float _shrinkSpeed;
+    public UnityEvent animationDone;
     
     public void TriggerDeathAnimation()
     {
@@ -25,7 +27,7 @@ public class DeathAnimation : MonoBehaviour
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
 
-        this.gameObject.SetActive(false);
+        animationDone.Invoke();
         Debug.Log("Death animation done");
     }
 }
