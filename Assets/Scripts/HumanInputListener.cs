@@ -54,10 +54,13 @@ public class HumanInputListener : MonoBehaviour
         {
             _IL.MovementAxis(_gamepad.leftStick.ReadValue());
             _IL.CameraAxis(_gamepad.rightStick.ReadValue());
+            _IL.CameraAxis(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 10);
         
             // Keyboard
             if (_kb.anyKey.isPressed)
             {
+                _IL.MovementAxis(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
+                
                 if (_kb.leftCtrlKey.wasPressedThisFrame)
                 {
                     _IL.Fire();
