@@ -26,8 +26,6 @@ public class DeathAnimation : MonoBehaviour
             transform.localScale -= Vector3.one * _shrinkSpeed;
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
-
         animationDone.Invoke();
-        Debug.Log("Death animation done");
     }
 }
