@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
@@ -10,6 +12,8 @@ public class MenuManager : MonoBehaviour
     
     [SerializeField] private TMP_Text _humanMenuSelector;
     [SerializeField] private TMP_Text _aiMenuSelector;
+
+    [SerializeField] private TMP_Text _messageBox;
 
     [SerializeField] private SettingsManager _settingsManager;
     
@@ -69,6 +73,17 @@ public class MenuManager : MonoBehaviour
 
         if (_menuIndex == 0) // Start game
         {
+            if (_settingsManager.GetTotalPlayers() > _settingsManager.GetMaxPlayers())
+            {
+                ErrorMessage(
+                    "There can only be a total of " + _settingsManager.GetMaxPlayers().ToString() + " players.");
+                return;
+            } else if (_settingsManager.GetTotalPlayers() < 2)
+            {
+                ErrorMessage("There needs to be atleast 2 players");
+                return;
+            }
+            
             SceneManager.LoadScene("Scenes/PlayScene");
         }
         
@@ -88,5 +103,24 @@ public class MenuManager : MonoBehaviour
     {
         _humanMenuSelector.text = _settingsManager.GetHumans().ToString();
         _aiMenuSelector.text = _settingsManager.GetAIs().ToString();
+    }
+
+    void ErrorMessage(string msg)
+    {
+        _messageBox.color = Color.red;
+        _messageBox.text = msg;
+        _messageBox.gameObject.SetActive(true);
+        StartCoroutine(HideMessage(5));
+    }
+
+    IEnumerator HideMessage(float duration)
+    {
+        float disappear = Time.time + duration;
+        while (Time.time < disappear)
+        {
+            yield return new WaitForSeconds(1);
+        }
+
+        _messageBox.gameObject.SetActive(false);
     }
 }

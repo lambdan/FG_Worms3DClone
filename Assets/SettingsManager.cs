@@ -17,16 +17,11 @@ public class SettingsManager : MonoBehaviour
     {
         if (_humanPlayers >= 8)
         {
-            _humanPlayers = 1;
+            _humanPlayers = 0;
         }
         else
         {
             _humanPlayers += 1;
-        }
-
-        if (totalPlayers() > _maxPlayers && _aiPlayers > 0)
-        {
-            _aiPlayers -= 1;
         }
     }
 
@@ -34,16 +29,11 @@ public class SettingsManager : MonoBehaviour
     {
         if (_aiPlayers >= 8)
         {
-            _aiPlayers = 1;
+            _aiPlayers = 0;
         }
         else
         {
             _aiPlayers += 1;
-        }
-        
-        if (totalPlayers() > _maxPlayers && _humanPlayers > 0)
-        {
-            _humanPlayers -= 1;
         }
     }
 
@@ -55,6 +45,16 @@ public class SettingsManager : MonoBehaviour
     public int GetAIs()
     {
         return _aiPlayers;
+    }
+
+    public int GetTotalPlayers()
+    {
+        return _aiPlayers + _humanPlayers;
+    }
+
+    public int GetMaxPlayers()
+    {
+        return _maxPlayers;
     }
 
     void Awake()
