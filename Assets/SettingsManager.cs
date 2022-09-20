@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
+    public static SettingsManager Instance { get; private set; }
+
     [SerializeField] private int _maxPlayers;
 
-    [Header("Default Settings")]
-    [SerializeField] private int _humanPlayers;
-    [SerializeField] private int _aiPlayers;
-    [SerializeField] private int _turnLength;
-    [SerializeField] private int _wormsPerTeam;
-
-    private int totalPlayers()
-    {
-        return _humanPlayers + _aiPlayers;
-    }
+    private int _humanPlayers = 1;
+    private int _aiPlayers = 1;
+    private int _turnLength = 15;
+    private int _wormsPerTeam = 3;
 
     public void IncrementHumans()
     {
@@ -91,6 +87,15 @@ public class SettingsManager : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
 }

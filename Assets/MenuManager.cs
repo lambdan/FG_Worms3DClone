@@ -17,10 +17,18 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private TMP_Text _messageBox;
 
-    [SerializeField] private SettingsManager _settingsManager;
+    private SettingsManager _settingsManager;
     
     private int _menuIndex = 0;
 
+    void Awake()
+    {
+        if (_settingsManager == null) // Only grab the settings manager if there isn't one already going (singleton)
+        {
+            _settingsManager = FindObjectOfType<SettingsManager>();
+        }
+    }
+    
     void Start()
     {
         newSelection(0);

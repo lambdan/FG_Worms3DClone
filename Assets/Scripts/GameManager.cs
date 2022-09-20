@@ -135,7 +135,10 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         _gameOver = true;
+        _cameraFollow.Deactivate();
+        _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateCurrentPlayerText("GAME OVER");
+        StartCoroutine(GameOverDelay());
     }
     void TeamDefeated(int t)
     {
@@ -194,11 +197,17 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(DelayedStartNextTurn(_delayBetweenTurns));
         }
-        else
+
+    }
+
+    IEnumerator GameOverDelay()
+    {
+        float duration = Time.time + 3;
+        while (Time.time < duration)
         {
-            // Game over triggered
-            SceneManager.LoadScene("Scenes/Menu");
+            yield return new WaitForSeconds(1);
         }
-        
+
+        SceneManager.LoadScene("Scenes/Menu");
     }
 }
