@@ -207,7 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8bcf76fd11fb6045a8821c255da8a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 1643650164547525213}
 --- !u!114 &3713165976416829121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,8 +223,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   - {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
   - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
-  _testGiveWeapon: 0
-  _testGive: {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _weaponHand: {fileID: 134202490290356421}
   _cooldownSlider: {fileID: 5973061251489488857}
 --- !u!114 &2567865808839315451
@@ -1683,6 +1680,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: dc069623e2a946c43b8d2f0a2fb602d5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c89a73caf26194948b5a891401eaf18e, type: 3}
+--- !u!1 &473437008212105808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: c89a73caf26194948b5a891401eaf18e, type: 3}
+  m_PrefabInstance: {fileID: 473437008212008176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &554841043508606773
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473437008212105808}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 4ec4e91cb43456d4aa0d0aaaa11c08ab, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 4ec4e91cb43456d4aa0d0aaaa11c08ab, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!4 &473437008212395632 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c89a73caf26194948b5a891401eaf18e, type: 3}

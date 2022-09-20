@@ -52,8 +52,11 @@ public class HumanInputListener : MonoBehaviour
         
         if (_IL != null)
         {
+            // Gamepad sticks
             _IL.MovementAxis(_gamepad.leftStick.ReadValue());
             _IL.CameraAxis(_gamepad.rightStick.ReadValue());
+            
+            // Mouse movement
             _IL.CameraAxis(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 10);
         
             // Keyboard

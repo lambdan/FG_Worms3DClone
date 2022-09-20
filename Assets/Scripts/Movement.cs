@@ -17,8 +17,12 @@ public class Movement : MonoBehaviour
     
     public void AxisInput(Vector2 move)
     {
-        transform.Translate(Vector3.forward * (move.y * movementSpeed * Time.deltaTime));
-        transform.Rotate(0, move.x * rotationSpeed * Time.deltaTime, 0); // Rotate character towards direction stick is pressed
+        if (move.magnitude > 0.1)
+        {
+            transform.Translate(Vector3.forward * (move.y * movementSpeed * Time.deltaTime));
+            transform.Rotate(0, move.x * rotationSpeed * Time.deltaTime, 0); // Rotate character towards direction stick is pressed
+        }
+        
     }
 
     public void MoveTowards(Vector3 pos)
