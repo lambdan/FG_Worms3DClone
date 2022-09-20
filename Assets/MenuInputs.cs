@@ -1,59 +1,111 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MenuInputs : MonoBehaviour
 {
-    private Keyboard _kb;
-    private Gamepad _gp;
-    [SerializeField] private MenuManager _mm;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        _kb = Keyboard.current;
-        _gp = Gamepad.current;
-    }
+    public List<TMP_Text> menuEntries;
+    public Keyboard kb;
+    public Gamepad gp;
 
+    private int _selectionIndex = 0;
+    
     // Update is called once per frame
     void Update()
     {
-        if (_kb.anyKey.wasPressedThisFrame)
+        kb = Keyboard.current;
+        gp = Gamepad.current;
+        
+        if (kb.anyKey.wasPressedThisFrame)
         {
-            if (_kb.enterKey.wasPressedThisFrame)
+            if (kb.enterKey.wasPressedThisFrame)
             {
-                _mm.Select();
+                Select();
             }
             
-            if (_kb.upArrowKey.wasPressedThisFrame)
+            if (kb.upArrowKey.wasPressedThisFrame)
             {
-                _mm.MoveUp();
+                MoveUp();
             }
 
-            if (_kb.downArrowKey.wasPressedThisFrame)
+            if (kb.downArrowKey.wasPressedThisFrame)
             {
-                _mm.MoveDown();
+                MoveDown();
             }
         }
 
-        if (_gp.wasUpdatedThisFrame)
+        if (gp.wasUpdatedThisFrame)
         {
-            if (_gp.buttonSouth.wasPressedThisFrame)
+            if (gp.buttonSouth.wasPressedThisFrame)
             {
-                _mm.Select();
+                Select();
             }
 
-            if (_gp.dpad.down.wasPressedThisFrame)
+            if (gp.dpad.down.wasPressedThisFrame)
             {
-                _mm.MoveDown();
+                MoveDown();
             }
 
-            if (_gp.dpad.up.wasPressedThisFrame)
+            if (gp.dpad.up.wasPressedThisFrame)
             {
-                _mm.MoveUp();
+                MoveUp();
             }
             
         }
+
+
+    }
+    
+    public virtual void MakeActive(int entryIndex)
+    {
+        // Make the current entry yellow and the rest white
+        for (int i = 0; i < menuEntries.Count; i++)
+        {
+            if (i == entryIndex)
+            {
+                menuEntries[i].color = Color.yellow;
+            }
+            else
+            {
+                menuEntries[i].color = Color.white;
+            }
+            
+        }
+    }
+
+    public int GetSelectionIndex()
+    {
+        return _selectionIndex;
+    }
+    
+    public virtual void newSelection(int selection)
+    {
+        _selectionIndex = selection;
+        MakeActive(_selectionIndex);
+    }
+    
+    public virtual void Select(){} // Each menu is gonna have different ways to deal with selection
+
+    public virtual void MoveUp()
+    {
+        int prev = _selectionIndex - 1;
+        if (prev < 0)
+        {
+            prev = menuEntries.Count - 1; // At top = move to bottom
+        }
+        newSelection(prev);
+    }
+
+    public virtual void MoveDown()
+    {
+        int next = _selectionIndex + 1;
+        if (next >= menuEntries.Count)
+        {
+            next = 0;
+        }
+
+        newSelection(next);
     }
 }

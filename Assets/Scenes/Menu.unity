@@ -1518,10 +1518,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxPlayers: 8
-  _humanPlayers: 1
-  _aiPlayers: 1
-  _turnLength: 15
-  _wormsPerTeam: 3
 --- !u!4 &1572059615
 Transform:
   m_ObjectHideFlags: 0
@@ -1535,7 +1531,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1641084614
 GameObject:
@@ -1547,7 +1543,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1641084616}
   - component: {fileID: 1641084615}
-  - component: {fileID: 1641084617}
   m_Layer: 0
   m_Name: Menu Manager
   m_TagString: Untagged
@@ -1567,19 +1562,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08c6bdad652d6940bcde7fc2e6048c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuEntries:
+  menuEntries:
   - {fileID: 1243782620}
   - {fileID: 420623979}
   - {fileID: 125352986}
   - {fileID: 78408388}
   - {fileID: 1920429339}
   - {fileID: 771403557}
+  selectionIndex: 0
   _humanMenuSelector: {fileID: 420623979}
   _aiMenuSelector: {fileID: 125352986}
   _turnTimeSelector: {fileID: 78408388}
   _wormsPerTeamSelector: {fileID: 1920429339}
   _messageBox: {fileID: 1898821962}
-  _settingsManager: {fileID: 1572059614}
 --- !u!4 &1641084616
 Transform:
   m_ObjectHideFlags: 0
@@ -1593,21 +1588,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1641084617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1641084614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27205247fb41f8a4694844637df39be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mm: {fileID: 1641084615}
 --- !u!1 &1898821960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,74 +1725,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1898821960}
   m_CullTransparentMesh: 1
---- !u!1 &1919230504
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1919230507}
-  - component: {fileID: 1919230506}
-  - component: {fileID: 1919230505}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1919230505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919230504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &1919230506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919230504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1919230507
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919230504}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920429337
 GameObject:
   m_ObjectHideFlags: 0

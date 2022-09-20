@@ -15,8 +15,6 @@ public class HumanInputListener : MonoBehaviour
     private WormManager _WM;
     private InputListener _IL;
 
-    private bool _wormInputAllowed = false;
-    
     void Awake()
     {
         _GM = GetComponent<GameManager>();

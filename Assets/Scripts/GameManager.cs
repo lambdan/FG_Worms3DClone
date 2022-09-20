@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private float _delayBetweenTurns;
     [SerializeField] private List<Color> teamColors;
+    [SerializeField] private PauseMenu _pauseMenu;
 
     private HUDUpdater _HUDUpdater;
     private CameraFollow _cameraFollow;
@@ -38,8 +39,7 @@ public class GameManager : MonoBehaviour
     private int _aiPlayers = 1;
     private int _turnLength = 60; 
     private int _wormsPerTeam = 10;
-
-    private float _defaultTimeScale;
+    
     private bool _paused = false;
     private bool _gameOver = false;
     
@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
         _wormGenerator = GetComponent<WormGenerator>();
         _HIL = GetComponent<HumanInputListener>();
         _cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        Time.timeScale = 1;
 
-        _defaultTimeScale = Time.timeScale;
     }
     
     void GenerateTeams(int humans, int ais)
@@ -184,12 +184,14 @@ public class GameManager : MonoBehaviour
         if (_paused)
         {
             // Unpause
+            _pauseMenu.Deactivate();
+            Time.timeScale = 1;
             _paused = false;
-            Time.timeScale = _defaultTimeScale;
         }
         else
         {
             // Pause
+            _pauseMenu.Activate();
             Time.timeScale = 0;
             _paused = true;
         }
