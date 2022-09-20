@@ -28,7 +28,7 @@ public class WormManager : MonoBehaviour
     }
     
     void SetActiveWorm(int n)
-    { 
+    {
         // Enable input receiver/AI on this worm
         _activeWorms[n].GetComponent<WormState>().Activate();
         

@@ -4,23 +4,10 @@ using UnityEngine;
 
 public class WormInfo : MonoBehaviour
 {
-
     private string _name;
     private int _team;
     private bool _isAIControlled;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public string GetName()
     {
         return _name;

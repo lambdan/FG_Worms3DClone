@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
+        _HIL.DisableTarget();
 
         if (!_gameOver)
         {

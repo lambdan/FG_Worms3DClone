@@ -59,7 +59,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cc0375e9096b143ad5b3b5d91821ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mouseSensitivity: 1000
 --- !u!114 &7869669693173521239
 MonoBehaviour:
   m_ObjectHideFlags: 0
