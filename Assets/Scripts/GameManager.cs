@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HUDUpdater _HUDUpdater;
     [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private List<Transform> _homeBases;
-    [SerializeField] private int _humanPlayers;
-    [SerializeField] private int _aiPlayers;
+    
     [SerializeField] private int _wormsPerTeam;
     [SerializeField] private WormManager _wormManager;
     [SerializeField] WormGenerator _wormGenerator;
@@ -19,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _delayBetweenTurns;
     [SerializeField] private float _turnLength;
     [SerializeField] private List<Color> teamColors;
+
+    private SettingsManager _settingsManager;
     
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
     private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
@@ -35,10 +36,10 @@ public class GameManager : MonoBehaviour
 
     private float _turnEnds;
     
-    void GenerateTeams()
+    void GenerateTeams(int humans, int ais)
     {
         // Generate teams/worms for human players (aiControlled = false)
-        for (int t = 0; t < _humanPlayers; t++)
+        for (int t = 0; t < humans; t++)
         {
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
                 _homeBases[_teams.Count].position, teamColors[_teamsGenerated]);
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Generate teams/worms for AI players (aiControlled = true)
-        for (int t = 0; t < _aiPlayers; t++)
+        for (int t = 0; t < ais; t++)
         {
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, true,
                 _homeBases[_teams.Count].position, teamColors[_teamsGenerated]);
@@ -65,17 +66,29 @@ public class GameManager : MonoBehaviour
 
         _teamsAlive = _teamsGenerated;
         
-        // Set max of turn time slider to round length
-        _HUDUpdater.SetTurnSliderMax(_turnLength);
+        
     }
     
     void Start()
     {
-        // TODO Get amount of humans/AI's here in a menu
-        GenerateTeams();
+        _settingsManager = FindObjectOfType<SettingsManager>();
+        if (_settingsManager != null)
+        {
+            // We have a settings manager, use its settings
+            GenerateTeams(_settingsManager.GetHumans(), _settingsManager.GetAIs());
+        }
+        else
+        {
+            // Debugging or whatever...
+            GenerateTeams(1, 1);
+        }
+        
         
         _currentTeam = _teams[0];
         _currentTeamsTurn = 0;
+        
+        // Set max of turn time slider to round length
+        _HUDUpdater.SetTurnSliderMax(_turnLength);
         
         StartRound();
     }
