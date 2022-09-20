@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(HUDUpdater))]
 [RequireComponent(typeof(WormGenerator))]
@@ -11,12 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private List<Transform> _homeBases;
     
-    [SerializeField] private int _wormsPerTeam;
     [SerializeField] private WormManager _wormManager;
     [SerializeField] WormGenerator _wormGenerator;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private float _delayBetweenTurns;
-    [SerializeField] private float _turnLength;
+    
     [SerializeField] private List<Color> teamColors;
 
     private SettingsManager _settingsManager;
@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
     private int _currentTeamsTurn = 0;
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
+
+    private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
+    private int _aiPlayers = 1;
+    private int _turnLength = 10; 
+    private int _wormsPerTeam = 3;
 
     private bool _gameOver = false;
 
@@ -65,8 +70,6 @@ public class GameManager : MonoBehaviour
         }
 
         _teamsAlive = _teamsGenerated;
-        
-        
     }
     
     void Start()
@@ -75,14 +78,13 @@ public class GameManager : MonoBehaviour
         if (_settingsManager != null)
         {
             // We have a settings manager, use its settings
-            GenerateTeams(_settingsManager.GetHumans(), _settingsManager.GetAIs());
+            _humanPlayers = _settingsManager.GetHumans();
+            _aiPlayers = _settingsManager.GetAIs();
+            _turnLength = _settingsManager.GetTurnLength();
+            _wormsPerTeam = _settingsManager.GetWormsPerTeam();
         }
-        else
-        {
-            // Debugging or whatever...
-            GenerateTeams(1, 1);
-        }
-        
+
+        GenerateTeams(_humanPlayers, _aiPlayers);
         
         _currentTeam = _teams[0];
         _currentTeamsTurn = 0;
@@ -133,10 +135,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         _gameOver = true;
-        Debug.Log("Game over!!!!");
         _HUDUpdater.UpdateCurrentPlayerText("GAME OVER");
-        
-        // TODO go to a menu or something here?
     }
     void TeamDefeated(int t)
     {
@@ -194,6 +193,11 @@ public class GameManager : MonoBehaviour
         if (!_gameOver)
         {
             StartCoroutine(DelayedStartNextTurn(_delayBetweenTurns));
+        }
+        else
+        {
+            // Game over triggered
+            SceneManager.LoadScene("Scenes/Menu");
         }
         
     }

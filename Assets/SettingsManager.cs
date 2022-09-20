@@ -5,8 +5,12 @@ using UnityEngine;
 public class SettingsManager : MonoBehaviour
 {
     [SerializeField] private int _maxPlayers;
+
+    [Header("Default Settings")]
     [SerializeField] private int _humanPlayers;
     [SerializeField] private int _aiPlayers;
+    [SerializeField] private int _turnLength;
+    [SerializeField] private int _wormsPerTeam;
 
     private int totalPlayers()
     {
@@ -37,6 +41,24 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    public void IncrementTurnTime()
+    {
+        _turnLength += 5;
+        if (_turnLength > 100)
+        {
+            _turnLength = 5;
+        }
+    }
+
+    public void IncrementWorms()
+    {
+        _wormsPerTeam += 1;
+        if (_wormsPerTeam > 10)
+        {
+            _wormsPerTeam = 1;
+        }
+    }
+
     public int GetHumans()
     {
         return _humanPlayers;
@@ -55,6 +77,16 @@ public class SettingsManager : MonoBehaviour
     public int GetMaxPlayers()
     {
         return _maxPlayers;
+    }
+
+    public int GetTurnLength()
+    {
+        return _turnLength;
+    }
+
+    public int GetWormsPerTeam()
+    {
+        return _wormsPerTeam;
     }
 
     void Awake()

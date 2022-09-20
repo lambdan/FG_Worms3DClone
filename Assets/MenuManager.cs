@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.PackageManager;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
     
     [SerializeField] private TMP_Text _humanMenuSelector;
     [SerializeField] private TMP_Text _aiMenuSelector;
+    [SerializeField] private TMP_Text _turnTimeSelector;
+    [SerializeField] private TMP_Text _wormsPerTeamSelector;
 
     [SerializeField] private TMP_Text _messageBox;
 
@@ -22,6 +24,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         newSelection(0);
+        RefreshMenu();
     }
 
     void MakeActive(int entryIndex)
@@ -78,31 +81,44 @@ public class MenuManager : MonoBehaviour
                 ErrorMessage(
                     "There can only be a total of " + _settingsManager.GetMaxPlayers().ToString() + " players.");
                 return;
-            } else if (_settingsManager.GetTotalPlayers() < 2)
+            }
+            else if (_settingsManager.GetTotalPlayers() < 2)
             {
                 ErrorMessage("There needs to be atleast 2 players");
                 return;
             }
-            
+
             SceneManager.LoadScene("Scenes/PlayScene");
         }
-        
+
         if (_menuIndex == 1) // Humans
         {
             _settingsManager.IncrementHumans();
-        } 
+        }
         else if (_menuIndex == 2) // AI's
         {
             _settingsManager.IncrementAIs();
         }
-        
-        RefreshPlayerCounts();
+        else if (_menuIndex == 3) // Turn length
+        {
+            _settingsManager.IncrementTurnTime();
+        } else if (_menuIndex == 4) // Worms per team
+        {
+            _settingsManager.IncrementWorms();
+        } else if (_menuIndex == 5) // Quit
+        {
+            Application.Quit();
+        }
+
+        RefreshMenu();
     }
 
-    void RefreshPlayerCounts()
+    void RefreshMenu()
     {
         _humanMenuSelector.text = _settingsManager.GetHumans().ToString();
         _aiMenuSelector.text = _settingsManager.GetAIs().ToString();
+        _turnTimeSelector.text = _settingsManager.GetTurnLength().ToString();
+        _wormsPerTeamSelector.text = _settingsManager.GetWormsPerTeam().ToString();
     }
 
     void ErrorMessage(string msg)
