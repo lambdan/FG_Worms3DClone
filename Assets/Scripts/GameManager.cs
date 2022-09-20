@@ -38,8 +38,11 @@ public class GameManager : MonoBehaviour
     private int _aiPlayers = 1;
     private int _turnLength = 60; 
     private int _wormsPerTeam = 10;
-    
+
+    private float _defaultTimeScale;
+    private bool _paused = false;
     private bool _gameOver = false;
+    
 
     private float _turnEnds;
 
@@ -50,6 +53,8 @@ public class GameManager : MonoBehaviour
         _wormGenerator = GetComponent<WormGenerator>();
         _HIL = GetComponent<HumanInputListener>();
         _cameraFollow = Camera.main.GetComponent<CameraFollow>();
+
+        _defaultTimeScale = Time.timeScale;
     }
     
     void GenerateTeams(int humans, int ais)
@@ -171,6 +176,22 @@ public class GameManager : MonoBehaviour
         if (_teamAliveWorms[teamNumber] == 0)
         {
             TeamDefeated(teamNumber);
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (_paused)
+        {
+            // Unpause
+            _paused = false;
+            Time.timeScale = _defaultTimeScale;
+        }
+        else
+        {
+            // Pause
+            Time.timeScale = 0;
+            _paused = true;
         }
     }
 

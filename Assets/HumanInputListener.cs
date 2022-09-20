@@ -66,7 +66,12 @@ public class HumanInputListener : MonoBehaviour
             if (_kb.cKey.wasPressedThisFrame)
             {
                 _IL.Recenter();
-            }   
+            }
+
+            if (_kb.escapeKey.wasPressedThisFrame)
+            {
+                _GM.TogglePause();
+            }
         }
         
 
@@ -104,6 +109,11 @@ public class HumanInputListener : MonoBehaviour
             if (_gamepad.rightShoulder.wasPressedThisFrame)
             {
                 _WM.NextWorm(); 
+            }
+
+            if (_gamepad.startButton.wasPressedThisFrame)
+            {
+                _GM.TogglePause();
             }
         }
         
