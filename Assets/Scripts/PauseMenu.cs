@@ -23,13 +23,11 @@ public class PauseMenu : MenuInputs
                     break;
             }     
         }
-
-        
     }
 
     void Awake()
     {
-        newSelection(0);
+        newSelection(0); // To make the first item be hovered
     }
 
     public void Activate()

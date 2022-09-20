@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class WeaponHolder : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> allWeapons;
-    [SerializeField] private bool _testGiveWeapon;
-    [SerializeField] private WeaponProperties _testGive;
     [SerializeField] private Transform _weaponHand;
     [SerializeField] private Slider _cooldownSlider;
 
@@ -58,7 +56,7 @@ public class WeaponHolder : MonoBehaviour
         {
             if (WP.name == WepProps.name)
             {
-                Debug.Log("We already have this weapon... not picking it up again");
+                //Debug.Log("We already have this weapon... not picking it up again");
                 return;
             }
         }
@@ -116,7 +114,6 @@ public class WeaponHolder : MonoBehaviour
 
     IEnumerator UpdateCooldownBar(float cooldown)
     {
-        
         _cooldownSlider.gameObject.SetActive(true);
         while (Time.time < _nextFire)
         {
@@ -126,7 +123,6 @@ public class WeaponHolder : MonoBehaviour
         }
 
         _cooldownSlider.gameObject.SetActive(false);
-        //_cooldownSlider.value = _cooldownSlider.maxValue; // Reset to 100%
     }
 
     IEnumerator PulseCooldownBar()
@@ -135,16 +131,16 @@ public class WeaponHolder : MonoBehaviour
         Vector3 startScale = _cooldownSlider.transform.localScale;
         
         // First make it bigger
-        while (_cooldownSlider.transform.localScale.x <= (startScale.x * 3f))
+        while (_cooldownSlider.transform.localScale.x <= (startScale.x * 2f))
         {
-            _cooldownSlider.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+            _cooldownSlider.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
             yield return new WaitForFixedUpdate();
         }
         
         // Then make it smaller
         while (_cooldownSlider.transform.localScale.x >= (startScale.x))
         {
-            _cooldownSlider.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
+            _cooldownSlider.transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
             yield return new WaitForFixedUpdate();
         }
         

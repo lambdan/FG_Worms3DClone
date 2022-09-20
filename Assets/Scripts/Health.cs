@@ -10,8 +10,7 @@ public class Health : MonoBehaviour
 
     public UnityEvent healthZero;
     public UnityEvent healthChanged;
-
-
+    
     void Awake()
     {
         _health = startHealth;

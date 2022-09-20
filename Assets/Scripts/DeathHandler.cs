@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(WormInfo))]
@@ -18,6 +16,7 @@ public class DeathHandler : MonoBehaviour
     {
         if (_gameManager != null)
         {
+            // Report death in this team
             _gameManager.ReportDeath(_wormInfo.GetTeam());
         }
     }

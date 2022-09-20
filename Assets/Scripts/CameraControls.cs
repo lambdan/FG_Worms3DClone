@@ -1,26 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
-
 
 public class CameraControls : MonoBehaviour
 {
     private CameraFollow _cameraFollow;
-
     private Transform _target;
-
     private bool _active = false;
-    
     private Vector3 _moveVector;
 
-    private Vector3 _offset;
-    
     void Awake()
     {
         _cameraFollow = GetComponent<CameraFollow>(); // Get the "auto camera" system
@@ -67,11 +55,6 @@ public class CameraControls : MonoBehaviour
         _cameraFollow.InstantReset();
     }
     
-    public void MakeActive()
-    {
-        _active = true;
-    }
-
     public void MakeInactive()
     {
         _active = false;

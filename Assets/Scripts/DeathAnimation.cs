@@ -1,12 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
-
 
 [RequireComponent(typeof(Health))]
 public class DeathAnimation : MonoBehaviour

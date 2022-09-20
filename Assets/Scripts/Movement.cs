@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class Movement : MonoBehaviour
 {
@@ -19,7 +15,6 @@ public class Movement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
     
-
     public void AxisInput(Vector2 move)
     {
         transform.Translate(Vector3.forward * (move.y * movementSpeed * Time.deltaTime));

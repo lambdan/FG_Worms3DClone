@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -40,6 +38,8 @@ public class HumanInputListener : MonoBehaviour
     
     void Update()
     {
+        
+        // Check if pause button is pressed always, even when player isn't controlling a worm
         if (_kb.escapeKey.wasPressedThisFrame)
         {
             _GM.TogglePause();

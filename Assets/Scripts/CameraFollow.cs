@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -63,11 +60,6 @@ public class CameraFollow : MonoBehaviour
         _paused = false;
     }
     
-    public bool GetState()
-    {
-        return _active;
-    }
-
     public Transform GetTarget()
     {
         return _target;
@@ -78,6 +70,4 @@ public class CameraFollow : MonoBehaviour
         transform.position = _cameraDestination;
         transform.LookAt(_target);
     }
-
-
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
-
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Health _health;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,8 +42,7 @@ public class GameManager : MonoBehaviour
     private bool _paused = false;
     private bool _gameOver = false;
     
-
-    private float _turnEnds;
+    private float _turnEnds; // When the turn will end (time), used in the timer coroutine
 
     void Awake()
     {
@@ -53,8 +51,7 @@ public class GameManager : MonoBehaviour
         _wormGenerator = GetComponent<WormGenerator>();
         _HIL = GetComponent<HumanInputListener>();
         _cameraFollow = Camera.main.GetComponent<CameraFollow>();
-        Time.timeScale = 1;
-
+        Time.timeScale = 1; // Important to set here because you might come from a paused game -> main menu -> new game
     }
     
     void GenerateTeams(int humans, int ais)
@@ -67,7 +64,7 @@ public class GameManager : MonoBehaviour
             
             _teams.Add(thisTeam);
             _teamAliveWorms.Add(_wormsPerTeam);
-            _teamNames.Add("Team " + _teamsGenerated);
+            _teamNames.Add("Team " + _teamsGenerated); // +1 is added in the HUD updater to prevent "Team 0" 
             
             _teamsGenerated++;
         }
@@ -93,7 +90,7 @@ public class GameManager : MonoBehaviour
         _settingsManager = FindObjectOfType<SettingsManager>();
         if (_settingsManager != null)
         {
-            // We have a settings manager, use its settings
+            // We have a settings manager (because player came from the main menu) - use its settings
             _humanPlayers = _settingsManager.GetHumans();
             _aiPlayers = _settingsManager.GetAIs();
             _turnLength = _settingsManager.GetTurnLength();
@@ -130,12 +127,12 @@ public class GameManager : MonoBehaviour
     int GetNextTeam()
     {
         int nextTeam = _currentTeamsTurn + 1;
-        if (nextTeam >= _teams.Count)
+        if (nextTeam >= _teams.Count) // Last team - go back to first
         {
             nextTeam = 0;
         }
         
-        while (_teamAliveWorms[nextTeam] == 0)
+        while (_teamAliveWorms[nextTeam] == 0) // While we are on a team that is dead
         {
             nextTeam += 1;
             if (nextTeam >= _teams.Count)
@@ -152,9 +149,11 @@ public class GameManager : MonoBehaviour
         _gameOver = true;
         _cameraFollow.Deactivate();
         _wormManager.DisableAllActiveWorms();
-        _HUDUpdater.UpdateCurrentPlayerText("GAME OVER");
-        StartCoroutine(GameOverDelay());
+        _HIL.DisableTarget();
+        _HUDUpdater.UpdateCurrentPlayerText("Game Over!");
+        StartCoroutine(GameOverDelay()); // Start delay before going back to the main menu
     }
+    
     void TeamDefeated(int t)
     {
         Debug.Log("Team " + t + " is defeated");
@@ -196,12 +195,7 @@ public class GameManager : MonoBehaviour
             _paused = true;
         }
     }
-
-    public float GetRoundLength()
-    {
-        return _turnLength;
-    }
-
+    
     public List<List<GameObject>> GetAllTeams()
     {
         return _teams;
@@ -242,6 +236,6 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        SceneManager.LoadScene("Scenes/Menu");
+        SceneManager.LoadScene("Scenes/Menu"); // Go back to main menu
     }
 }

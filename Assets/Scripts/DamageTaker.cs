@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -7,13 +5,10 @@ using UnityEngine;
 public class DamageTaker : MonoBehaviour
 {
     private Health _health;
-    [SerializeField] HealthBar _healthBar;
 
     void Awake()
     {
         _health = GetComponent<Health>();
-        
-
     }
     
     public void TakeDamage(int amount)

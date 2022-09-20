@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MenuInputs
@@ -12,7 +9,6 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _aiMenuSelector;
     [SerializeField] private TMP_Text _turnTimeSelector;
     [SerializeField] private TMP_Text _wormsPerTeamSelector;
-
     [SerializeField] private TMP_Text _messageBox;
 
     private SettingsManager _settingsManager;
@@ -33,18 +29,22 @@ public class MenuManager : MenuInputs
 
     void AttemptStartGame()
     {
+        
+        // Make sure we don't have more players than we allow (limited by spawn points)
         if (_settingsManager.GetTotalPlayers() > _settingsManager.GetMaxPlayers())
         {
-            ErrorMessage(
-                "There can only be a total of " + _settingsManager.GetMaxPlayers().ToString() + " players.");
+            ErrorMessage("There can only be a total of " + _settingsManager.GetMaxPlayers().ToString() + " players.");
             return;
         }
-        else if (_settingsManager.GetTotalPlayers() < 2)
+        
+        // To prevent playing against no one
+        if (_settingsManager.GetTotalPlayers() < 2)
         {
             ErrorMessage("There needs to be atleast 2 players");
             return;
         }
 
+        // Load the actual scene... settings gets passed through SettingsManager (doesnt destroy on load)
         SceneManager.LoadScene("Scenes/PlayScene"); 
     }
     
@@ -82,10 +82,10 @@ public class MenuManager : MenuInputs
         _messageBox.color = Color.red;
         _messageBox.text = msg;
         _messageBox.gameObject.SetActive(true);
-        StartCoroutine(HideMessage(5));
+        StartCoroutine(HideMessageAfter(3));
     }
 
-    IEnumerator HideMessage(float duration)
+    IEnumerator HideMessageAfter(float duration)
     {
         float disappear = Time.time + duration;
         while (Time.time < disappear)
