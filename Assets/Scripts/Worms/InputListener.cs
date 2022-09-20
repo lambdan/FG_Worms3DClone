@@ -22,94 +22,35 @@ public class InputListener : MonoBehaviour
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
         _cameraControls = Camera.main.GetComponent<CameraControls>();
-        _wormManager = FindObjectOfType<WormManager>();
+    }
+    public void MovementAxis(Vector2 axises)
+    {
+        _movement.AxisInput(axises);
     }
 
-    void Start()
+    public void CameraAxis(Vector2 axises)
     {
-        _kb = Keyboard.current;
-        _mouse = Mouse.current;
-        _gamepad = Gamepad.current;
+        _cameraControls.AxisInput(axises);
+    }
+
+    public void Fire()
+    {
+        _weaponHolder.Fire();
+    }
+
+    public void NextWeapon()
+    {
+        _weaponHolder.NextWeapon();
+    }
+
+    public void Jump()
+    {
+        _movement.Jump();
+    }
+
+    public void Recenter()
+    {
+        _cameraControls.ResetCamera();
     }
     
-    void Update()
-    {
-        _movement.AxisInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        _cameraControls.AxisInput(new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")));
-        _cameraControls.AxisInput(_gamepad.rightStick.ReadValue());
-        
-        
-        
-        // Keyboard
-
-        if (_kb.anyKey.isPressed)
-        {
-            if (_kb.leftCtrlKey.wasPressedThisFrame)
-            {
-                _weaponHolder.Fire();
-            }
-
-            if (_kb.qKey.wasPressedThisFrame)
-            {
-                _weaponHolder.NextWeapon();
-            }
-
-            if (_kb.eKey.wasPressedThisFrame)
-            {
-                _wormManager.NextWorm();
-            }
-        
-            if (_kb.spaceKey.wasPressedThisFrame)
-            {
-                _movement.Jump();
-            
-            }
-        
-            if (_kb.cKey.wasPressedThisFrame)
-            {
-                _cameraControls.ResetCamera();
-            }   
-        }
-        
-
-
-        // Mouse
-        
-        if (_mouse.leftButton.wasPressedThisFrame)
-        {
-            _weaponHolder.Fire();
-        }
-
-        // Gamepad
-        if (_gamepad.wasUpdatedThisFrame)
-        {
-            if (_gamepad.buttonSouth.wasPressedThisFrame)
-            {
-                _movement.Jump();
-            }
-
-            if (_gamepad.buttonWest.wasPressedThisFrame)
-            {
-                _weaponHolder.Fire();
-            }
-
-            if (_gamepad.buttonNorth.wasPressedThisFrame)
-            {
-                _weaponHolder.NextWeapon();
-            }
-
-            if (_gamepad.rightStickButton.wasPressedThisFrame)
-            {
-                _cameraControls.ResetCamera();
-            }
-
-            if (_gamepad.rightShoulder.wasPressedThisFrame)
-            {
-                _wormManager.NextWorm();
-            }    
-        }
-        
-
-        
-    }
 }

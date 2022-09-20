@@ -6,19 +6,21 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(HUDUpdater))]
 [RequireComponent(typeof(WormGenerator))]
+[RequireComponent(typeof(WormManager))]
+[RequireComponent(typeof(HumanInputListener))]
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private HUDUpdater _HUDUpdater;
-    [SerializeField] private CameraFollow _cameraFollow;
     [SerializeField] private List<Transform> _homeBases;
-    
-    [SerializeField] private WormManager _wormManager;
-    [SerializeField] WormGenerator _wormGenerator;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private float _delayBetweenTurns;
-    
     [SerializeField] private List<Color> teamColors;
 
+    private HUDUpdater _HUDUpdater;
+    private CameraFollow _cameraFollow;
+    private WormManager _wormManager;
+    private WormGenerator _wormGenerator;
+    private HumanInputListener _HIL;
+    
     private SettingsManager _settingsManager;
     
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
@@ -34,12 +36,21 @@ public class GameManager : MonoBehaviour
 
     private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
     private int _aiPlayers = 1;
-    private int _turnLength = 10; 
-    private int _wormsPerTeam = 3;
-
+    private int _turnLength = 60; 
+    private int _wormsPerTeam = 10;
+    
     private bool _gameOver = false;
 
     private float _turnEnds;
+
+    void Awake()
+    {
+        _wormManager = GetComponent<WormManager>();
+        _HUDUpdater = GetComponent<HUDUpdater>();
+        _wormGenerator = GetComponent<WormGenerator>();
+        _HIL = GetComponent<HumanInputListener>();
+        _cameraFollow = Camera.main.GetComponent<CameraFollow>();
+    }
     
     void GenerateTeams(int humans, int ais)
     {
@@ -100,7 +111,6 @@ public class GameManager : MonoBehaviour
         _wormManager.SetActiveTeam(_currentTeam);
         _turnsPlayed += 1;
         _turnEnds = Time.time + _turnLength;
-
         StartCoroutine(TurnTimer());
     }
 

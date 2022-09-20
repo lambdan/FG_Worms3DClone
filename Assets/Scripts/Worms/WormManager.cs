@@ -3,29 +3,27 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+[RequireComponent(typeof(HUDUpdater))]
+[RequireComponent(typeof(HumanInputListener))]
 public class WormManager : MonoBehaviour
 {
     [SerializeField] private CameraFollow _cameraFollow;
-    [SerializeField] private HUDUpdater _HUDUpdater;
+    
+    private HUDUpdater _HUDUpdater;
+    private HumanInputListener _HIL;
 
     private List<GameObject> _activeWorms = new List<GameObject>();
     private int _activeWorm = 0;
-    private int _aliveWorms = 0;
+
+    void Awake()
+    {
+        _HUDUpdater = GetComponent<HUDUpdater>();
+        _HIL = GetComponent<HumanInputListener>();
+    }
 
     public void SetActiveTeam(List<GameObject> team)
     {
-        _aliveWorms = 0;
         _activeWorms = team; // Swap to the new team
-
-        for (int i = 0; i < _activeWorms.Count; i++)
-        {
-            // Count how many worms are alive
-            if (_activeWorms[i].activeSelf && _activeWorms[i].GetComponent<Health>().GetHealth() > 0) 
-            {
-                _aliveWorms += 1;
-            }
-        }
-        
         NextWorm();
     }
     
@@ -41,8 +39,21 @@ public class WormManager : MonoBehaviour
         // Update name on the HUD
         _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
         
+        // Check if worm is NOT AI controlled, if so tell HIL to send its inputs here
+        if (_activeWorms[n].GetComponent<WormInfo>().IsAIControlled() == false)
+        {
+            _HIL.SetNewTarget(_activeWorms[n].GetComponent<InputListener>());
+        }
+
+        
         // Update which worm is currently active
         _activeWorm = n;
+        
+    }
+
+    public GameObject GetCurrentWorm()
+    {
+        return _activeWorms[_activeWorm];
     }
 
     public void DisableAllActiveWorms()

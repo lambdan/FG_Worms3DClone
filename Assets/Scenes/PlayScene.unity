@@ -2340,6 +2340,7 @@ GameObject:
   - component: {fileID: 1913921541}
   - component: {fileID: 1913921545}
   - component: {fileID: 1913921542}
+  - component: {fileID: 1913921546}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -2360,7 +2361,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraFollow: {fileID: 109040654}
-  _HUDUpdater: {fileID: 1913921545}
 --- !u!114 &1913921542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,8 +2385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911c261d6229c784e84a09679daa3fb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HUDUpdater: {fileID: 1913921545}
-  _cameraFollow: {fileID: 109040654}
   _homeBases:
   - {fileID: 1551863965}
   - {fileID: 531190727}
@@ -2396,8 +2394,6 @@ MonoBehaviour:
   - {fileID: 655536100}
   - {fileID: 2037577874}
   - {fileID: 979132403}
-  _wormManager: {fileID: 1913921541}
-  _wormGenerator: {fileID: 1913921542}
   _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
   _delayBetweenTurns: 2
   teamColors:
@@ -2441,6 +2437,18 @@ MonoBehaviour:
   _turnTimeSlider: {fileID: 1158040785}
   _turnTimeSliderAnimation: {fileID: 878689044}
   _turnTimeText: {fileID: 1537163353}
+--- !u!114 &1913921546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913921540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4197fea43dc0498419ea087a94e5a03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1948967196
 GameObject:
   m_ObjectHideFlags: 0
