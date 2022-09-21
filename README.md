@@ -45,3 +45,35 @@ Aiming for grade: VG
 	- Pistol: fairly standard pistol. Deals 1 damage.
 	- Orange Rifle: fires rolling oranges. Deals 10 damage.
 	- Paper Planes: a paper plane that doesn't reach very far but deals 99 damage.
+	
+
+## Controls
+
+### Keyboard/Mouse:
+
+- WASD/Arrow Keys: movement
+- Q: switch weapon
+- E: switch worm
+- CTRL: fire weapon
+- Space: jump
+- C: recenter camera
+
+- Mouse: camera movement
+- Left Mouse Button: fire weapon
+
+### Gamepad:
+
+- Left Stick: movement
+- Right Stick: camera controls
+- Y: switch weapon
+- X: attack
+- A: jump
+- RB: switch worm
+- Right Stick Click: recenter camera
+
+
+## Screenshots
+
+![2022-09-21_08 57 10 428_Worms3DClone](https://user-images.githubusercontent.com/1690265/191438325-918786e9-23dd-4fdd-960d-b7bf7bcd8369.png)
+
+![2022-09-21_08 56 47 718_Worms3DClone](https://user-images.githubusercontent.com/1690265/191438344-afebabe2-6f61-42cd-bed9-3b23ff7ea2c8.png)
