@@ -18,13 +18,7 @@ public class HumanInputListener : MonoBehaviour
         _GM = GetComponent<GameManager>();
         _WM = GetComponent<WormManager>();
     }
-
-    void Start()
-    {
-        _kb = Keyboard.current;
-        _mouse = Mouse.current;
-        _gamepad = Gamepad.current;
-    }
+    
 
     public void SetNewTarget(InputListener target)
     {
@@ -38,6 +32,9 @@ public class HumanInputListener : MonoBehaviour
     
     void Update()
     {
+        _kb = Keyboard.current;
+        _mouse = Mouse.current;
+        _gamepad = Gamepad.current;
         
         // Check if pause button is pressed always, even when player isn't controlling a worm
         if (_kb.escapeKey.wasPressedThisFrame)
@@ -45,17 +42,14 @@ public class HumanInputListener : MonoBehaviour
             _GM.TogglePause();
         }
         
-        if (_gamepad.startButton.wasPressedThisFrame)
+        if (_gamepad != null && _gamepad.startButton.wasPressedThisFrame)
         {
             _GM.TogglePause();
         }
         
         if (_IL != null)
         {
-            // Gamepad sticks
-            _IL.MovementAxis(_gamepad.leftStick.ReadValue());
-            _IL.CameraAxis(_gamepad.rightStick.ReadValue());
-            
+
             // Mouse movement
             _IL.CameraAxis(new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 10);
         
@@ -93,37 +87,44 @@ public class HumanInputListener : MonoBehaviour
             }
 
             // Mouse
-            if (_mouse.leftButton.wasPressedThisFrame)
+            if (_mouse != null && _mouse.leftButton.wasPressedThisFrame)
             {
                 _IL.Fire();
             }
 
             // Gamepad
-            if (_gamepad.wasUpdatedThisFrame)
+
+            if (_gamepad != null)
             {
-                if (_gamepad.buttonSouth.wasPressedThisFrame)
+                _IL.MovementAxis(_gamepad.leftStick.ReadValue());
+                _IL.CameraAxis(_gamepad.rightStick.ReadValue());
+                
+                if (_gamepad.wasUpdatedThisFrame)
                 {
-                    _IL.Jump();
-                }
+                    if (_gamepad.buttonSouth.wasPressedThisFrame)
+                    {
+                        _IL.Jump();
+                    }
 
-                if (_gamepad.buttonWest.wasPressedThisFrame)
-                {
-                    _IL.Fire();
-                }
+                    if (_gamepad.buttonWest.wasPressedThisFrame)
+                    {
+                        _IL.Fire();
+                    }
 
-                if (_gamepad.buttonNorth.wasPressedThisFrame)
-                {
-                    _IL.NextWeapon();
-                }
+                    if (_gamepad.buttonNorth.wasPressedThisFrame)
+                    {
+                        _IL.NextWeapon();
+                    }
 
-                if (_gamepad.rightStickButton.wasPressedThisFrame)
-                {
-                    _IL.Recenter();
-                }
+                    if (_gamepad.rightStickButton.wasPressedThisFrame)
+                    {
+                        _IL.Recenter();
+                    }
 
-                if (_gamepad.rightShoulder.wasPressedThisFrame)
-                {
-                    _WM.NextWorm(); 
+                    if (_gamepad.rightShoulder.wasPressedThisFrame)
+                    {
+                        _WM.NextWorm();
+                    }
                 }
             }
         }

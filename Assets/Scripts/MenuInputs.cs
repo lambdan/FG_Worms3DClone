@@ -35,7 +35,7 @@ public class MenuInputs : MonoBehaviour
             }
         }
 
-        if (gp.wasUpdatedThisFrame)
+        if (gp != null && gp.wasUpdatedThisFrame)
         {
             if (gp.buttonSouth.wasPressedThisFrame)
             {
