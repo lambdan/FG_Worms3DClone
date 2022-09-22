@@ -10,6 +10,7 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _turnTimeSelector;
     [SerializeField] private TMP_Text _wormsPerTeamSelector;
     [SerializeField] private TMP_Text _messageBox;
+    [SerializeField] private TMP_Text _turnsPlayedRecord;
 
     private SettingsManager _settingsManager;
 
@@ -18,6 +19,15 @@ public class MenuManager : MenuInputs
         if (_settingsManager == null) // Only grab the settings manager if there isn't one already going (singleton)
         {
             _settingsManager = FindObjectOfType<SettingsManager>();
+        }
+
+        if (PlayerPrefs.HasKey("TurnsRecord"))
+        {
+            _turnsPlayedRecord.text = PlayerPrefs.GetInt("TurnsRecord").ToString();
+        }
+        else
+        {
+            _turnsPlayedRecord.text = "0";
         }
     }
     

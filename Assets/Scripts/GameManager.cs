@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     private int _humanPlayers = 0; // Default settings for testing... gets overriden if we have a settings manager
     private int _aiPlayers = 2;
-    private int _turnLength = 60; 
+    private int _turnLength = 5; 
     private int _wormsPerTeam = 2;
     
     private bool _paused = false;
@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
     {
         _wormManager.SetActiveTeam(_currentTeam);
         _turnsPlayed += 1;
+        _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
         _turnEnds = Time.time + _turnLength;
         StartCoroutine(TurnTimer());
     }
@@ -151,6 +152,21 @@ public class GameManager : MonoBehaviour
         _wormManager.DisableAllActiveWorms();
         _HIL.DisableTarget();
         _HUDUpdater.UpdateCurrentPlayerText("Game Over!");
+        
+        // Check if we beat the turns played high score
+        if (PlayerPrefs.HasKey("TurnsRecord"))
+        {
+            if (_turnsPlayed > PlayerPrefs.GetInt("TurnsRecord"))
+            {
+                PlayerPrefs.SetInt("TurnsRecord", _turnsPlayed);
+            }
+        }
+        else
+        {
+            // No record set
+            PlayerPrefs.SetInt("TurnsRecord", _turnsPlayed);
+        }
+        
         StartCoroutine(GameOverDelay()); // Start delay before going back to the main menu
     }
     
@@ -218,7 +234,6 @@ public class GameManager : MonoBehaviour
         // Turn over
         _cameraMan.Deactivate();
         _wormManager.DisableAllActiveWorms();
-        _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
         _HIL.DisableTarget();
 
         if (!_gameOver)
