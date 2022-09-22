@@ -7,6 +7,7 @@ TagManager:
   - World
   - Walls
   - Ground
+  - Bullet
   layers:
   - Default
   - TransparentFX

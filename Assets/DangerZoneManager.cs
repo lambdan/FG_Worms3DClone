@@ -10,7 +10,6 @@ public class DangerZoneManager : MonoBehaviour
     [SerializeField] private bool _randomOrder;
 
     private int _locationIndex = 0;
-    private float _nextSwitch = 0;
     private GameObject _currentDZ;
 
     void Start()

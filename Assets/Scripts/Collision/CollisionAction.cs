@@ -3,13 +3,21 @@ using UnityEngine;
 public class CollisionAction : MonoBehaviour
 {
     [SerializeField] private DamageGiver _damageGiver;
+    [SerializeField] private ItemGiver _itemGiver;
+    
     private bool _givesDamage = false;
-
+    private bool _givesItem = false;
+    
     void Awake()
     {
         if (_damageGiver != null)
         {
             _givesDamage = true;
+        }
+
+        if (_itemGiver != null)
+        {
+            _givesItem = true;
         }
     }
 
@@ -24,5 +32,16 @@ public class CollisionAction : MonoBehaviour
                 _dmgTaker.TakeDamage(_damageGiver.GetDamageAmount());
             }
         }
+
+        if (_givesItem)
+        {
+            ItemReceiver _itemReceiver = target.GetComponentInParent<ItemReceiver>();
+            if (_itemReceiver != null)
+            {
+                _itemReceiver.ReceiveItem( _itemGiver.GetItemProps());
+            }
+        }
+        
+        
     }
 }

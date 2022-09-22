@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2892315120720931225}
   m_Layer: 0
   m_Name: Pistol Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageGiver: {fileID: 514225864808704796}
+  _itemGiver: {fileID: 0}
 --- !u!114 &2892315120720931225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +105,7 @@ GameObject:
   - component: {fileID: 514225865798949450}
   m_Layer: 0
   m_Name: (Bullet Model) Red Sphere
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,3 +218,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colAction: {fileID: 514225864808704794}
   _destroyOnCollision: 1
+  _validColliderTags: []

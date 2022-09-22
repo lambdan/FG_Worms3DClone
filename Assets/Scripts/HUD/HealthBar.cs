@@ -46,5 +46,6 @@ public class HealthBar : MonoBehaviour
     {
         _slider.value = _health.GetHealth();
         _text.text = _health.GetHealth().ToString();
+        SetMax(_health.GetMaxHealth());
     }
 }
