@@ -3273,7 +3273,6 @@ GameObject:
   - component: {fileID: 1913921545}
   - component: {fileID: 1913921542}
   - component: {fileID: 1913921546}
-  - component: {fileID: 1913921547}
   - component: {fileID: 1913921548}
   - component: {fileID: 1913921549}
   m_Layer: 0
@@ -3385,20 +3384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4197fea43dc0498419ea087a94e5a03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1913921547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eab18223dba2ab44d9f22c8cd462f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dangerBallPrefab: {fileID: 6738712730708432723, guid: 46a47081cf0ae5545be8d1c5bdbe00b6, type: 3}
-  _amount: 1
 --- !u!114 &1913921548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3431,6 +3416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8107eb29d1a6410448cb8512c0c4782a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickupSOs: []
   _pickups:
   - {fileID: 4804350354342887509, guid: 005c44dad29b6d54989c858f3deeb054, type: 3}
   - {fileID: 4804350354342887509, guid: 25f72971bd8600347ae2b04ce4ab9399, type: 3}

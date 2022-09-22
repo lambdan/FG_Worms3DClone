@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: feee62eceb998004fb1a338527c81c7a, type: 2}
+  - {fileID: 2100000, guid: c7de678f6c63b2e4488849de57011171, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,11 +112,10 @@ GameObject:
   - component: {fileID: 4804350354342887507}
   - component: {fileID: 4804350354342887504}
   - component: {fileID: 4804350354342887502}
-  - component: {fileID: 4804350354342887505}
   - component: {fileID: 4804350354342887503}
-  - component: {fileID: 8742417275790481658}
+  - component: {fileID: -2512263810452656623}
   m_Layer: 0
-  m_Name: 50 HP Heal Pickup
+  m_Name: Bad Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colAction: {fileID: 4804350354342887502}
   _destroyOnCollision: 1
-  _validColliderTags:
+  _canCollideWithTags:
   - Player
 --- !u!114 &4804350354342887502
 MonoBehaviour:
@@ -180,20 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageGiver: {fileID: 0}
-  _itemGiver: {fileID: 4804350354342887505}
---- !u!114 &4804350354342887505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4804350354342887509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0efeed326c881c44fb665c790e5dab16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemProps: {fileID: 11400000, guid: 1b73b486d72dcb047a01793a23ca4fae, type: 2}
+  _pickup: {fileID: 11400000, guid: 5982c334e86451445bc76f5fdc13bc72, type: 2}
 --- !u!54 &4804350354342887503
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -210,7 +196,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &8742417275790481658
+--- !u!114 &-2512263810452656623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
