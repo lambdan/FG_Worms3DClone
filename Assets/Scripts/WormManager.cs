@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(HumanInputListener))]
 public class WormManager : MonoBehaviour
 {
-    [SerializeField] private CameraFollow _cameraFollow;
+    [SerializeField] private CameraManager _cameraMan;
     
     private HUDUpdater _HUDUpdater;
     private HumanInputListener _HIL;
@@ -32,8 +32,8 @@ public class WormManager : MonoBehaviour
         _activeWorms[n].GetComponent<WormState>().Activate();
         
         // Move camera to this worm
-        _cameraFollow.SetNewTarget(_activeWorms[n]);
-        _cameraFollow.Activate();
+        _cameraMan.SetNewTarget(_activeWorms[n]);
+        _cameraMan.Activate();
 
         // Update name on the HUD
         _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);

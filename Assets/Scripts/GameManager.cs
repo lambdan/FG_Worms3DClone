@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PauseMenu _pauseMenu;
 
     private HUDUpdater _HUDUpdater;
-    private CameraFollow _cameraFollow;
+    private CameraManager _cameraMan;
     private WormManager _wormManager;
     private WormGenerator _wormGenerator;
     private HumanInputListener _HIL;
@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
 
     private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
     private int _aiPlayers = 1;
-    private int _turnLength = 60; 
-    private int _wormsPerTeam = 10;
+    private int _turnLength = 10; 
+    private int _wormsPerTeam = 2;
     
     private bool _paused = false;
     private bool _gameOver = false;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         _HUDUpdater = GetComponent<HUDUpdater>();
         _wormGenerator = GetComponent<WormGenerator>();
         _HIL = GetComponent<HumanInputListener>();
-        _cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        _cameraMan = Camera.main.GetComponent<CameraManager>();
         Time.timeScale = 1; // Important to set here because you might come from a paused game -> main menu -> new game
     }
     
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         _gameOver = true;
-        _cameraFollow.Deactivate();
+        _cameraMan.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HIL.DisableTarget();
         _HUDUpdater.UpdateCurrentPlayerText("Game Over!");
@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
         }
         
         // Turn over
-        _cameraFollow.Deactivate();
+        _cameraMan.Deactivate();
         _wormManager.DisableAllActiveWorms();
         _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
         _HIL.DisableTarget();

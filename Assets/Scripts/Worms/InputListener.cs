@@ -6,13 +6,13 @@ public class InputListener : MonoBehaviour
 {
     private Movement _movement;
     private WeaponHolder _weaponHolder;
-    private CameraControls _cameraControls;
+    private CameraManager _cameraMan;
 
     void Awake()
     {
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
-        _cameraControls = Camera.main.GetComponent<CameraControls>();
+        _cameraMan = Camera.main.GetComponent<CameraManager>();
     }
 
     public void MovementAxis(Vector2 axises)
@@ -22,7 +22,7 @@ public class InputListener : MonoBehaviour
 
     public void CameraAxis(Vector2 axises)
     {
-        _cameraControls.AxisInput(axises);
+        _cameraMan.AxisInput(axises);
     }
 
     public void Fire()
@@ -42,7 +42,7 @@ public class InputListener : MonoBehaviour
 
     public void Recenter()
     {
-        _cameraControls.ResetCamera();
+        _cameraMan.InstantReset();
     }
     
 }
