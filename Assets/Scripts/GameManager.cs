@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _delayBetweenTurns;
     [SerializeField] private List<Color> teamColors;
     [SerializeField] private PauseMenu _pauseMenu;
+    
+    [Header("Test Settings")]
+    [Tooltip("These are only active for testing. Overriden by settings set in main menu in actual game")]
+    [SerializeField] private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
+    [SerializeField] private int _aiPlayers = 1;
+    [SerializeField] private int _turnLength = 30; 
+    [SerializeField] private int _wormsPerTeam = 2;
 
     private HUDUpdater _HUDUpdater;
     private CameraManager _cameraMan;
@@ -34,10 +41,7 @@ public class GameManager : MonoBehaviour
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
 
-    private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
-    private int _aiPlayers = 1;
-    private int _turnLength = 30; 
-    private int _wormsPerTeam = 2;
+
     
     private bool _paused = false;
     private bool _gameOver = false;
