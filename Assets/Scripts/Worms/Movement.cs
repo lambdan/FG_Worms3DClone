@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -10,6 +12,8 @@ public class Movement : MonoBehaviour
 
     private bool _isGrounded = true;
 
+    private Vector3 _moveAxis;
+
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -19,23 +23,33 @@ public class Movement : MonoBehaviour
     {
         if (move.magnitude > 0.1)
         {
-            transform.Translate(Vector3.forward * (move.y * movementSpeed * Time.deltaTime));
-            transform.Rotate(0, move.x * rotationSpeed * Time.deltaTime, 0); // Rotate character towards direction stick is pressed
+            _moveAxis = move;
         }
         
+    }
+
+    void FixedUpdate()
+    {
+        _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * movementSpeed)));
+        
+        Quaternion deltaRot = Quaternion.Euler(new Vector3(0,_moveAxis.x*rotationSpeed,0) * Time.fixedDeltaTime);
+        _rb.MoveRotation(_rb.rotation * deltaRot);
+        
+        _moveAxis = Vector2.zero;
     }
 
     public void MoveTowards(Vector3 pos)
     {
         RotateTowards(pos);
         transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
+        
     }
 
     public void RotateTowards(Vector3 pos)
     {
         pos = new Vector3(pos.x, 0, pos.z); // y = 0 to ignore height
         Quaternion targetRot = Quaternion.LookRotation(pos - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime);
     }
 
     public void Jump()
@@ -48,9 +62,20 @@ public class Movement : MonoBehaviour
         
     }
 
+    /*
+    private void OnCollisionStay(Collision collisionInfo)
+    {
+        if (collisionInfo.gameObject.CompareTag("Walls"))
+        {
+            Debug.Log("nope");
+            _rb.velocity = Vector3.zero;
+        }
+    }*/
+
     private void OnCollisionEnter(Collision collisionInfo)
     {
-        if (collisionInfo.gameObject.CompareTag("World"))
+        Debug.Log(collisionInfo.gameObject.name + "," + collisionInfo.gameObject.tag);
+        if (collisionInfo.gameObject.CompareTag("Ground"))
         {
             _isGrounded = true;
         }

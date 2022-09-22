@@ -13,7 +13,7 @@ public class CameraManager : MonoBehaviour
 
     private Vector3 _manualOffset;
     
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (!_manualControl && _shouldFollow) // Follow the target automatically if manual mode is not active
         {
@@ -30,7 +30,7 @@ public class CameraManager : MonoBehaviour
             _manualControl = false;
         }
         
-        transform.position = Vector3.Lerp(transform.position, _cameraDestination, Vector3.Distance(transform.position, _cameraDestination) * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, _cameraDestination, Vector3.Distance(transform.position, _cameraDestination) * Time.fixedDeltaTime);
 
         if (transform.position.y < _target.position.y + 2f)
         {
