@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
         {
             _cameraDestination = _target.position - (_target.transform.forward * 7) + (_target.transform.up * 4);
         }
-        else
+        else if (_manualControl)
         {
             _cameraDestination = _target.position + _manualOffset;
         }
