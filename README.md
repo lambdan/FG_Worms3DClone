@@ -23,6 +23,14 @@ Aiming for grade: VG
 	- No engine limit, just that the map only has 8 spawn points
 - Simple AI Opponent
 
+### Pickups
+
+- 4 different pickups:
+	- +50 Health
+	- -Poison (takes a chunk of HP and reduces your max HP)
+	- Max HP Increase
+	- Temporary Invincibility 
+
 ### Terrain
 
 - Basic Unity Terrain
