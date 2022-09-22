@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
     private int _aiPlayers = 1;
-    private int _turnLength = 10; 
+    private int _turnLength = 60; 
     private int _wormsPerTeam = 2;
     
     private bool _paused = false;

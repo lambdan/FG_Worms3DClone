@@ -5,27 +5,40 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float _timeUntilReset = 2f;
     
     private Transform _target; // Player
-    private Vector3 _cameraDestination; // Ideal position for the camera (behind the player)
-    private Vector3 _moveVector; // Right stick/mouse input
+    private Vector3 _cameraDestination;
 
     private bool _shouldFollow = false; // Auto follow the player?
     private bool _manualControl = false; // Manual control active?
     private float _manualLastTime = 0; // When was manual input last received
+
+    private Vector3 _manualOffset;
     
     void LateUpdate()
     {
         if (!_manualControl && _shouldFollow) // Follow the target automatically if manual mode is not active
         {
             _cameraDestination = _target.position - (_target.transform.forward * 7) + (_target.transform.up * 4);
-        } else if (_manualControl && (Time.time - _manualLastTime) > _timeUntilReset)
+        }
+        else
+        {
+            _cameraDestination = _target.position + _manualOffset;
+        }
+
+        if (_manualControl && (Time.time - _manualLastTime) > _timeUntilReset)
         {
             // Been a while since last manual input, go back to auto
             _manualControl = false;
         }
         
-        // Vector3 Distance to make it go faster the further away we are
         transform.position = Vector3.Lerp(transform.position, _cameraDestination, Vector3.Distance(transform.position, _cameraDestination) * Time.deltaTime);
-        transform.LookAt(_target);  
+
+        if (transform.position.y < _target.position.y + 2f)
+        {
+            transform.position = new Vector3(transform.position.x, _target.position.y + 2f, transform.position.z);
+        }
+        
+        transform.LookAt(_target);
+
     }
 
     public void SetNewTarget(GameObject go)
@@ -65,10 +78,8 @@ public class CameraManager : MonoBehaviour
 
             _manualLastTime = Time.time;
             
-            _moveVector = ( (transform.up * input.y) + (transform.right * input.x));
-            
-            _cameraDestination += _moveVector * Time.fixedDeltaTime;
-            transform.LookAt(_target);
+            transform.RotateAround(_target.position, new Vector3(input.y, -input.x, 0), 180 * Time.deltaTime);
+            _manualOffset = transform.position - _target.position;
         }
     }
 }
