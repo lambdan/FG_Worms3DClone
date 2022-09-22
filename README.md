@@ -27,6 +27,11 @@ Aiming for grade: VG
 
 - Basic Unity Terrain
 
+### Misc
+
+- High score that is kept through game sessions
+	- It records most turns played in a single game
+
 ### Player
 
 - A player only controls one worm at a time, but can switch between all the alive worms on their team
