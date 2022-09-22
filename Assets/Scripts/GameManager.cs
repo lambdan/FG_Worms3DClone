@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
 
-    private int _humanPlayers = 0; // Default settings for testing... gets overriden if we have a settings manager
-    private int _aiPlayers = 2;
-    private int _turnLength = 5; 
+    private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
+    private int _aiPlayers = 1;
+    private int _turnLength = 30; 
     private int _wormsPerTeam = 2;
     
     private bool _paused = false;
@@ -192,6 +192,12 @@ public class GameManager : MonoBehaviour
         {
             TeamDefeated(teamNumber);
         }
+        
+        // If that death was on current team, end turn
+        if (teamNumber == _currentTeamsTurn)
+        {
+            CancelRound();
+        }
     }
 
     public void TogglePause()
@@ -210,6 +216,11 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             _paused = true;
         }
+    }
+
+    public void CancelRound()
+    {
+        _turnEnds = Time.time; // Ugly hack
     }
     
     public List<List<GameObject>> GetAllTeams()
