@@ -63,17 +63,7 @@ public class Movement : MonoBehaviour
         }
         
     }
-
-    /*
-    private void OnCollisionStay(Collision collisionInfo)
-    {
-        if (collisionInfo.gameObject.CompareTag("Walls"))
-        {
-            Debug.Log("nope");
-            _rb.velocity = Vector3.zero;
-        }
-    }*/
-
+    
     private void OnCollisionEnter(Collision collisionInfo)
     {
         Debug.Log(collisionInfo.gameObject.name + "," + collisionInfo.gameObject.tag);
