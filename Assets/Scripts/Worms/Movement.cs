@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
 
     private bool _isGrounded = true;
 
-    private Vector3 _moveAxis;
+    private Vector2 _moveAxis;
 
     void Awake()
     {
@@ -30,26 +30,28 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * movementSpeed)));
+        if (_moveAxis != Vector2.zero)
+        {
+            _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * movementSpeed)));
         
-        Quaternion deltaRot = Quaternion.Euler(new Vector3(0,_moveAxis.x*rotationSpeed,0) * Time.fixedDeltaTime);
-        _rb.MoveRotation(_rb.rotation * deltaRot);
+            Quaternion deltaRot = Quaternion.Euler(new Vector3(0,_moveAxis.x*rotationSpeed,0) * Time.fixedDeltaTime);
+            _rb.MoveRotation(_rb.rotation * deltaRot);
         
-        _moveAxis = Vector2.zero;
+            _moveAxis = Vector2.zero;  
+        }
     }
 
     public void MoveTowards(Vector3 pos)
     {
         RotateTowards(pos);
-        transform.Translate(Vector3.forward * (movementSpeed * Time.deltaTime));
-        
+        _moveAxis = Vector2.up; // Simulates pressing up on a stick
     }
 
     public void RotateTowards(Vector3 pos)
     {
         pos = new Vector3(pos.x, 0, pos.z); // y = 0 to ignore height
         Quaternion targetRot = Quaternion.LookRotation(pos - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime);
+        _rb.MoveRotation(targetRot);
     }
 
     public void Jump()
