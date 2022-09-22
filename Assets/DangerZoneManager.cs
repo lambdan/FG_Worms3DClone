@@ -7,6 +7,7 @@ public class DangerZoneManager : MonoBehaviour
     [SerializeField] private GameObject _dangerZonePrefab;
     [SerializeField] private List<Transform> _dangerZoneLocations;
     [SerializeField] private float _switchAfter;
+    [SerializeField] private bool _randomOrder;
 
     private int _locationIndex = 0;
     private float _nextSwitch = 0;
@@ -33,7 +34,15 @@ public class DangerZoneManager : MonoBehaviour
     IEnumerator DangerZoneTimer()
     {
         yield return new WaitForSeconds(_switchAfter);
-        _locationIndex = NextLocationIndex();
+
+        if (_randomOrder)
+        {
+            _locationIndex = Random.Range(0, _dangerZoneLocations.Count);
+        }
+        else
+        {
+            _locationIndex = NextLocationIndex();
+        }
         _currentDZ.transform.position = _dangerZoneLocations[_locationIndex].position;
         StartCoroutine(DangerZoneTimer());
     }

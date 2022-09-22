@@ -3417,6 +3417,7 @@ MonoBehaviour:
   - {fileID: 952836536}
   - {fileID: 1326651259}
   _switchAfter: 30
+  _randomOrder: 1
 --- !u!1 &1948967196
 GameObject:
   m_ObjectHideFlags: 0
