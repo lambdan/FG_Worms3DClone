@@ -95,8 +95,11 @@ public class ControlledByAI : MonoBehaviour
                 }
                 else // ... otherwise, start firing
                 {
-                    _movement.RotateTowards(_currentTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
-                    _weaponHolder.Fire();
+                    if (Random.Range(0, 100) < 30)
+                    {
+                        _movement.RotateTowards(_currentTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
+                        _weaponHolder.Fire();
+                    }
                 }            
             }
         }

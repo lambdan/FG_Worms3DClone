@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 1643650164547525213}
   - component: {fileID: 3414428226879847738}
   - component: {fileID: 1599797495908800018}
-  - component: {fileID: 1893468016913234801}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Player
@@ -85,8 +84,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7.5
-  rotationSpeed: 90
-  jumpForce: 1500
+  rotationSpeed: 120
+  jumpForce: 2000
 --- !u!114 &473437008339127251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8bcf76fd11fb6045a8821c255da8a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invincibilityTime: 0.7
+  _invincibilityTime: 0.3
 --- !u!114 &3713165976416829121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,18 +325,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1893468016913234801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473437008339127252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583524202bf513742a05d80de7fda2ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &495646832798496716
 GameObject:
   m_ObjectHideFlags: 0

@@ -66,7 +66,7 @@ public class Movement : MonoBehaviour
     
     private void OnCollisionEnter(Collision collisionInfo)
     {
-        Debug.Log(collisionInfo.gameObject.name + "," + collisionInfo.gameObject.tag);
+        //Debug.Log(collisionInfo.gameObject.name + "," + collisionInfo.gameObject.name + " (" + collisionInfo.gameObject.tag + ")");
         if (collisionInfo.gameObject.CompareTag("Ground"))
         {
             _isGrounded = true;

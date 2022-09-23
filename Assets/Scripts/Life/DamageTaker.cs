@@ -15,7 +15,7 @@ public class DamageTaker : MonoBehaviour
     
     public void TakeDamage(int amount)
     {
-        if (_health.GetHealth() > 0 && (Time.time - _lastDamage > 2f))
+        if (_health.GetHealth() > 0 && (Time.time - _lastDamage > _invincibilityTime))
         {
             _health.ChangeHealth(-amount);
             _lastDamage = Time.time;
