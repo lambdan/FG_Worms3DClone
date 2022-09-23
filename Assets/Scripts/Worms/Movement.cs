@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class Movement : MonoBehaviour
     public float jumpForce;
 
     private bool _isGrounded = true;
+    private bool _falling = false;
+
+    public UnityEvent landedAfterLongFall;
 
     private Vector2 _moveAxis;
 
@@ -39,6 +43,11 @@ public class Movement : MonoBehaviour
         
             _moveAxis = Vector2.zero;  
         }
+
+        if (_rb.velocity.y < -10)
+        {
+            _falling = true;
+        }
     }
 
     public void MoveTowards(Vector3 pos)
@@ -66,10 +75,15 @@ public class Movement : MonoBehaviour
     
     private void OnCollisionEnter(Collision collisionInfo)
     {
-        //Debug.Log(collisionInfo.gameObject.name + "," + collisionInfo.gameObject.name + " (" + collisionInfo.gameObject.tag + ")");
-        if (collisionInfo.gameObject.CompareTag("Ground"))
+        if (_falling)
+        {
+            landedAfterLongFall.Invoke();
+        }
+        
+        if (_rb.velocity.y <= Mathf.Abs(0.1f))
         {
             _isGrounded = true;
+            _falling = false;
         }
     }
 }

@@ -24,7 +24,6 @@ public class WeaponHolder : MonoBehaviour
     private float _nextFire = 0;
     
     private float _reloadFinished = 0;
-    private int _bulletsInThisClip = 0;
     private Coroutine _reloadCoroutine = null;
 
     void Awake()
