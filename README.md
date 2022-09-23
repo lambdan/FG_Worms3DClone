@@ -25,11 +25,13 @@ Aiming for grade: VG
 
 ### Pickups
 
-- 4 different pickups:
+- 4 different pickups related to worm health:
 	- +50 Health
 	- -Poison (takes a chunk of HP and reduces your max HP)
 	- Max HP Increase
-	- Temporary Invincibility 
+	- Temporary Invincibility
+- Pickups for each weapon
+	
 
 ### Terrain
 
@@ -58,7 +60,7 @@ Aiming for grade: VG
 	- Pistol: fairly standard pistol. Deals 1 damage.
 	- Orange Rifle: fires rolling oranges. Deals 10 damage.
 	- Paper Planes: a paper plane that doesn't reach very far but deals 99 damage.
-	
+- Weapons have ammo and needs to reload
 
 ## Controls
 
