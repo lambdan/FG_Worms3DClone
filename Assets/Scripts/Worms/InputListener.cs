@@ -35,6 +35,11 @@ public class InputListener : MonoBehaviour
         _weaponHolder.NextWeapon();
     }
 
+    public void ReloadWeapon()
+    {
+        _weaponHolder.TriggerReload();
+    }
+
     public void Jump()
     {
         _movement.Jump();

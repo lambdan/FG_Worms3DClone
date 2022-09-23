@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 88238c517130c1944a0e10468caeea84, type: 2}
+  - {fileID: 2100000, guid: fa1c24f831f6a2b438a657d6c3fefc09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,12 +110,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4804350354342887506}
   - component: {fileID: 4804350354342887507}
-  - component: {fileID: 4804350354342887503}
   - component: {fileID: 4804350354342887504}
   - component: {fileID: 4804350354342887502}
-  - component: {fileID: 9098938926499229819}
+  - component: {fileID: 4804350354342887503}
+  - component: {fileID: -6319488132835782137}
   m_Layer: 0
-  m_Name: +10 Max HP
+  m_Name: Weapon_Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,22 +150,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &4804350354342887503
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4804350354342887509}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!114 &4804350354342887504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +179,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageGiver: {fileID: 0}
-  _pickup: {fileID: 11400000, guid: d50e3a48c613d5143be4c12b82bb1b09, type: 2}
---- !u!114 &9098938926499229819
+  _pickup: {fileID: 11400000, guid: 3ed0cb982480de240b545976a47d7ac7, type: 2}
+--- !u!54 &4804350354342887503
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804350354342887509}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &-6319488132835782137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,4 +208,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b0639e743262e8439760e9203afc1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 30
+  _time: 60

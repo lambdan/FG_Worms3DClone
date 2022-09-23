@@ -9,6 +9,7 @@ public class HUDUpdater : MonoBehaviour
     [SerializeField] private Slider _turnTimeSlider;
     [SerializeField] private Animation _turnTimeSliderAnimation;
     [SerializeField] private TMP_Text _turnTimeText;
+    [SerializeField] private TMP_Text _ammoText;
 
     public void UpdateCurrentPlayerText(string newText)
     {
@@ -45,5 +46,11 @@ public class HUDUpdater : MonoBehaviour
     public void SetTurnSliderMax(float max)
     {
         _turnTimeSlider.maxValue = max;
+    }
+
+    public void UpdateAmmo(int bulletsInClip,  int ammunitionHeld)
+    {
+        // Results in something like: 18 (120)
+        _ammoText.text = bulletsInClip.ToString() + " (" + ammunitionHeld.ToString() + ")";
     }
 }

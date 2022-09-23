@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca1a2035118392b45b0fde56aa248b6c, type: 3}
-  m_Name: Weapon PaperPlane
+  m_Name: Weapon Pistol
   m_EditorClassIdentifier: 
-  title: Paper Plane
-  description: 1 Paper Plane
-  _weaponProperty: {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
-  ammo: 1
+  title: Pistol
+  description: Pistol Pickup
+  _weaponProperty: {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
+  ammo: 25

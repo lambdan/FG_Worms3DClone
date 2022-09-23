@@ -83,6 +83,11 @@ public class HumanInputListener : MonoBehaviour
                     _IL.Recenter();
                 }
 
+                if (_kb.rKey.wasPressedThisFrame)
+                {
+                    _IL.ReloadWeapon();
+                }
+
 
             }
 
@@ -120,11 +125,18 @@ public class HumanInputListener : MonoBehaviour
                     {
                         _IL.Recenter();
                     }
+                    
+                    if (_gamepad.buttonEast.wasPressedThisFrame)
+                    {
+                        _IL.ReloadWeapon();
+                    }
 
                     if (_gamepad.rightShoulder.wasPressedThisFrame)
                     {
                         _WM.NextWorm();
                     }
+
+
                 }
             }
         }
