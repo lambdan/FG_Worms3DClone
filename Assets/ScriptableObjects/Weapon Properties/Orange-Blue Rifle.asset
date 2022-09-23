@@ -16,4 +16,4 @@ MonoBehaviour:
   bulletPrefab: {fileID: 514225864808704784, guid: 2c6da5e81928ad742bb88ffe33578933, type: 3}
   fireRate: 1
   clipSize: 5
-  reloadSpeed: 4
+  reloadSpeed: 2.2

@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageGiver: {fileID: 514225864808704796}
-  _itemGiver: {fileID: 0}
+  _pickup: {fileID: 0}
 --- !u!114 &2892315120720931225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc6bb879e36b9c44965939a8f630253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 100
+  _speed: 200
 --- !u!1 &514225865798949440
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,4 +218,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colAction: {fileID: 514225864808704794}
   _destroyOnCollision: 1
-  _validColliderTags: []
+  _canCollideWithTags: []
