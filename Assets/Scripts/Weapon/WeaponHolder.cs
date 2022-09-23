@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class WeaponHolder : MonoBehaviour
 {
-    [SerializeField] private List<WeaponProperties> allWeapons;
+    [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private Transform _weaponHand;
     [SerializeField] private Slider _cooldownSlider;
 
@@ -26,7 +26,7 @@ public class WeaponHolder : MonoBehaviour
 
     void Start()
     {
-        foreach (WeaponProperties WP in allWeapons)
+        foreach (WeaponProperties WP in _startingWeapons)
         {
             GetNewWeapon(WP);
         }
