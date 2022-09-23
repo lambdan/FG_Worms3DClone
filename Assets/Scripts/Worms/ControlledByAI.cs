@@ -11,12 +11,16 @@ public class ControlledByAI : MonoBehaviour
 {
     private WormInfo _wormInfo;
     private Movement _movement;
+    
     private GameManager _gameManager;
     private WeaponHolder _weaponHolder;
+    private PickupManager _pickupManager;
     
     private bool _gotInfo = false;
     private int _myTeam;
     private List<GameObject> _enemies = new List<GameObject>();
+
+    private List<GameObject> _pickups;
     
     private GameObject _currentTarget = null;
     private bool _enemiesAlive = false;
@@ -29,6 +33,7 @@ public class ControlledByAI : MonoBehaviour
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
         _gameManager = FindObjectOfType<GameManager>();
+        _pickupManager = FindObjectOfType<PickupManager>();
     }
     
     void Start()
@@ -61,6 +66,13 @@ public class ControlledByAI : MonoBehaviour
             _gotInfo = true; // So we don't go through this again next time we get activated
         }
         
+        // Find pickups
+        _pickups = new List<GameObject>(); // Clear this list each time
+        foreach (GameObject pickup in _pickupManager.GetActivePickups())
+        {
+            _pickups.Add(pickup);
+        }
+
         // Fake a thinking period
         _startedMoving = false;
         StartCoroutine(WaitBeforeMoving(Random.Range(0, 2))); 

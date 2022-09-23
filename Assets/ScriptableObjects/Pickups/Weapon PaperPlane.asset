@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Paper Plane
   description: 1 Paper Plane
+  lifetime: 30
   _weaponProperty: {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
   ammo: 1

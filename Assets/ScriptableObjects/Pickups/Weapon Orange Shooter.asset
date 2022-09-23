@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Orange Rifle
   description: Orange Rifle Description goes here
+  lifetime: 30
   _weaponProperty: {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
   ammo: 10

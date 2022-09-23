@@ -3408,8 +3408,8 @@ MonoBehaviour:
   - {r: 1, g: 0.60493195, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   _pauseMenu: {fileID: 32441689}
-  _humanPlayers: 1
-  _aiPlayers: 1
+  _humanPlayers: 0
+  _aiPlayers: 4
   _turnLength: 60
   _wormsPerTeam: 2
 --- !u!4 &1913921544
@@ -3492,12 +3492,12 @@ MonoBehaviour:
   _pickups:
   - {fileID: 4804350354342887509, guid: 005c44dad29b6d54989c858f3deeb054, type: 3}
   - {fileID: 4804350354342887509, guid: 25f72971bd8600347ae2b04ce4ab9399, type: 3}
-  - {fileID: 4804350354342887509, guid: ed689bf815301c44ca6a3c08f3d8271f, type: 3}
   - {fileID: 4804350354342887509, guid: 0442b03b25032db44a0e085994580d41, type: 3}
   - {fileID: 4804350354342887509, guid: 0621aed3ebe02864cb904351051db04b, type: 3}
   - {fileID: 4804350354342887509, guid: 0a5fb4e4aa8867b409cd7e7768b178a2, type: 3}
   - {fileID: 4804350354342887509, guid: 82331792e1aa9504d8f8e8fa67b1eb8b, type: 3}
   _spawnFrequency: 3.8
+  _activePickups: []
 --- !u!114 &1913921550
 MonoBehaviour:
   m_ObjectHideFlags: 0

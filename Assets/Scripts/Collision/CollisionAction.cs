@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollisionAction : MonoBehaviour
@@ -31,9 +32,14 @@ public class CollisionAction : MonoBehaviour
         if (_pickup != null)
         {
             _pickup.OnPickup(target);
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
         
         
+    }
+
+    public PickupSO GetPickupScript()
+    {
+        return _pickup;
     }
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Heal +25
   description: Heals you 25 HP
-  prefab: {fileID: 7783510706278580310, guid: aab510f3a00c85e4e920fb0047cbdf8b, type: 3}
+  lifetime: 30
   HealAmount: 25

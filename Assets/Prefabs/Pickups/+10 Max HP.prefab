@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 4804350354342887503}
   - component: {fileID: 4804350354342887504}
   - component: {fileID: 4804350354342887502}
-  - component: {fileID: 9098938926499229819}
   m_Layer: 0
   m_Name: +10 Max HP
   m_TagString: Untagged
@@ -179,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colAction: {fileID: 4804350354342887502}
-  _destroyOnCollision: 1
+  _destroyOnCollision: 0
   _canCollideWithTags:
   - Player
 --- !u!114 &4804350354342887502
@@ -196,16 +195,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damageGiver: {fileID: 0}
   _pickup: {fileID: 11400000, guid: d50e3a48c613d5143be4c12b82bb1b09, type: 2}
---- !u!114 &9098938926499229819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4804350354342887509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0639e743262e8439760e9203afc1f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _time: 30

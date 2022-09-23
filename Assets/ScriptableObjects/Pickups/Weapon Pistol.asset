@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Pistol
   description: Pistol Pickup
+  lifetime: 30
   _weaponProperty: {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   ammo: 25
