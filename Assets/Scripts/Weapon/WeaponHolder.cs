@@ -38,7 +38,7 @@ public class WeaponHolder : MonoBehaviour
         // TODO this should probably be in GameManager
         foreach (WeaponProperties WP in _startingWeapons)
         {
-            GetNewWeapon(WP, WP.clipSize*4); // Start with 2 clips worth of ammo
+            GetNewWeapon(WP, WP.clipSize*2); // Start with 2 clips worth of ammo
         }
     }
 
@@ -141,6 +141,42 @@ public class WeaponHolder : MonoBehaviour
             _reloadCoroutine = null;
             _cooldownSlider.gameObject.SetActive(false); // hide the slider
         }
+    }
+
+    public bool HasAmmoInAnyWeapon()
+    {
+        foreach (int i in _bulletsInClip)
+        {
+            if (i > 0)
+            {
+                return true;
+            }
+        }
+        
+        foreach (int i in _reserveAmmo)
+        {
+            if (i > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool HasAmmoInThisWeapon()
+    {
+        if (TotalAmmoThisWeapon(_currentWeaponIndex) > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    int TotalAmmoThisWeapon(int index)
+    {
+        return _bulletsInClip[index] + _reserveAmmo[index];
     }
     
     IEnumerator ReloadWeapon(float reloadTime)

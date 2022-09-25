@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour
             _moveAxis = Vector2.zero;  
         }
 
-        if (_rb.velocity.y < -10)
+        if (_rb.velocity.y < -20)
         {
             _falling = true;
         }

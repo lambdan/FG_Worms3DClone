@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Vector3 = UnityEngine.Vector3;
 
 
 [RequireComponent(typeof(WormInfo))]
@@ -11,7 +13,7 @@ public class ControlledByAI : MonoBehaviour
 {
     private WormInfo _wormInfo;
     private Movement _movement;
-    
+
     private GameManager _gameManager;
     private WeaponHolder _weaponHolder;
     private PickupManager _pickupManager;
@@ -21,11 +23,18 @@ public class ControlledByAI : MonoBehaviour
     private List<GameObject> _enemies = new List<GameObject>();
 
     private List<GameObject> _pickups;
-    
-    private GameObject _currentTarget = null;
+    private float distanceToPickup;
+    private float distanceToEnemy;
+
+    private GameObject _currentPickupTarget;
+    private GameObject _currentEnemyTarget = null;
     private bool _enemiesAlive = false;
     
     private bool _startedMoving;
+    private bool _unstucking = false;
+
+    private Vector3 _lastPosition;
+    private RaycastHit hit;
 
     void Awake()
     {
@@ -65,57 +74,75 @@ public class ControlledByAI : MonoBehaviour
 
             _gotInfo = true; // So we don't go through this again next time we get activated
         }
-        
-        // Find pickups
-        _pickups = new List<GameObject>(); // Clear this list each time
-        foreach (GameObject pickup in _pickupManager.GetActivePickups())
-        {
-            _pickups.Add(pickup);
-        }
 
         // Fake a thinking period
         _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(0, 2))); 
+        StartCoroutine(WaitBeforeMoving(Random.Range(1, 2))); 
         
     }
-    
+
     void Update()
     {
         if (!_startedMoving)
         {
             return; // The fake thinking period is still active: do nothing
         }
-        
-        if (Random.Range(0, 500) < 1) // Switch weapons occasionally
-        {
-            _weaponHolder.NextWeapon();
-        }
-        
-        if (_enemiesAlive)
-        {
-            if (_currentTarget == null || _currentTarget.GetComponent<Health>().GetHealth() <= 0) // Current target not set or dead, get a new one
-            {
-                _currentTarget = FindNearestEnemy();
-            }
 
-            if (_currentTarget != null) // We got a target
-            {
-                // Move closer to our target if we are far away...
-                if (Vector3.Distance(_currentTarget.transform.position, transform.position) > 5f)
-                {
-                    _movement.MoveTowards(_currentTarget.transform.position);
-                }
-                else // ... otherwise, start firing
-                {
-                    if (Random.Range(0, 100) < 30)
-                    {
-                        _movement.RotateTowards(_currentTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
-                        _weaponHolder.Fire();
-                    }
-                }            
-            }
+        if (_unstucking)
+        {
+            return;
         }
+
+
+        _currentPickupTarget = FindNearestPickup();
+        _currentEnemyTarget = FindNearestEnemy();
+
+        if (_currentPickupTarget != null)
+        {
+            distanceToPickup = Vector3.Distance(transform.position, _currentPickupTarget.transform.position);
+        }
+
+        if (_currentEnemyTarget != null)
+        {
+            distanceToEnemy = Vector3.Distance(transform.position, _currentEnemyTarget.transform.position);
+        }
+
+        //Debug.Log("distance to pickup: " + distanceToPickup);
+        //Debug.Log("distance to enemy: " + distanceToEnemy);
         
+        
+        // Anything in front of us?
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5) && hit.transform.CompareTag("Obstacle"))
+        {
+            Debug.Log("hittin " + hit.transform.tag + "," + hit.transform.name);
+            StartCoroutine(Unstucking());
+        }
+        else if ((_currentPickupTarget != null) && (distanceToPickup < 10f || _weaponHolder.HasAmmoInAnyWeapon() == false))
+        {
+            // We're close to a pickup or we're out of ammo = go for pickup
+            _movement.MoveTowards(_currentPickupTarget.transform.position);
+        }
+        else if (_enemiesAlive)
+        {
+            if (_weaponHolder.HasAmmoInThisWeapon() == false)
+            {
+                _weaponHolder.NextWeapon();
+            }
+            
+            if (distanceToEnemy > 6f) // Move closer to our target if we are far away...
+            {
+                _movement.MoveTowards(_currentEnemyTarget.transform.position);
+            }
+            else // ... otherwise, start firing
+            {
+                if (Random.Range(0, 100) < 30)
+                {
+                    _movement.RotateTowards(_currentEnemyTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
+                    _weaponHolder.Fire();
+                }
+            }            
+        }
+
     }
 
     GameObject FindNearestEnemy()
@@ -145,10 +172,49 @@ public class ControlledByAI : MonoBehaviour
 
         return nearestEnemy;
     }
+
+    GameObject FindNearestPickup()
+    {
+        GameObject nearestPickup = null;
+        float nearestPickupDistance = 0;
+        foreach (GameObject pickup in _pickupManager.GetActivePickups())
+        {
+            if (pickup == null || pickup.activeSelf == false)
+            {
+                continue; // Not active pickup, go to next
+            }
+            
+            // Find nearest pickup
+            float distance = Vector3.Distance(transform.position, pickup.transform.position);
+            if (nearestPickup == null || distance < nearestPickupDistance)
+            {
+                nearestPickup = pickup.gameObject;
+                nearestPickupDistance = distance;
+            }
+        }
+
+        return nearestPickup;
+    }
     
     IEnumerator WaitBeforeMoving(float delay)
     {
         yield return new WaitForSeconds(delay);
         _startedMoving = true;
+    }
+
+    IEnumerator Unstucking()
+    {
+        Debug.Log("Start unstuck");
+        _unstucking = true;
+        Vector3 destination = transform.position + (transform.right * -10);
+
+        while (Vector3.Distance(transform.position, destination) > 3)
+        {
+            _movement.MoveTowards(destination);
+            yield return new WaitForFixedUpdate();
+        }
+
+        _unstucking = false;
+        Debug.Log("End unstuck");
     }
 }
