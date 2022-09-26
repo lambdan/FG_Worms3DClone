@@ -12,7 +12,7 @@ public class WormManager : MonoBehaviour
     private HumanInputListener _HIL;
 
     private List<GameObject> _activeWorms = new List<GameObject>();
-    private int _activeWorm = 0;
+    private int _activeWormIndex = 0;
 
     void Awake()
     {
@@ -23,7 +23,7 @@ public class WormManager : MonoBehaviour
     public void SetActiveTeam(List<GameObject> team)
     {
         _activeWorms = team; // Swap to the new team
-        NextWorm();
+        NextWorm(); // BUG: first round always starts with "Worm 2"
     }
     
     void SetActiveWorm(int n)
@@ -38,22 +38,19 @@ public class WormManager : MonoBehaviour
         // Update name on the HUD
         _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
         
-        
         // Check if worm is NOT AI controlled, if so tell HIL to send its inputs here
         if (_activeWorms[n].GetComponent<WormInfo>().IsAIControlled() == false)
         {
             _HIL.SetNewTarget(_activeWorms[n].GetComponent<InputListener>());
         }
-
         
         // Update which worm is currently active
-        _activeWorm = n;
-        
+        _activeWormIndex = n;
     }
 
     public GameObject GetCurrentWorm()
     {
-        return _activeWorms[_activeWorm];
+        return _activeWorms[_activeWormIndex];
     }
 
     public void DisableAllActiveWorms()
@@ -71,7 +68,7 @@ public class WormManager : MonoBehaviour
     
     public void NextWorm()
     {
-        int next = _activeWorm + 1;
+        int next = _activeWormIndex + 1;
         if (next >= _activeWorms.Count)
         {
             next = 0;
@@ -86,7 +83,7 @@ public class WormManager : MonoBehaviour
             }
         }
         
-        DisableWorm(_activeWorm);
+        DisableWorm(_activeWormIndex);
         SetActiveWorm(next);
     }
     

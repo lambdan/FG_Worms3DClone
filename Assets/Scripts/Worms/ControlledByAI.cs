@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
@@ -41,8 +43,8 @@ public class ControlledByAI : MonoBehaviour
         _wormInfo = GetComponent<WormInfo>();
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
-        _gameManager = FindObjectOfType<GameManager>();
-        _pickupManager = FindObjectOfType<PickupManager>();
+        _gameManager = FindObjectOfType<GameManager>(); // We need this to get info about all worms
+        _pickupManager = FindObjectOfType<PickupManager>(); // We need this to know about pickups
     }
     
     void Start()
@@ -83,16 +85,14 @@ public class ControlledByAI : MonoBehaviour
 
     void Update()
     {
-        if (!_startedMoving)
+        if (!_startedMoving || _unstucking)
         {
-            return; // The fake thinking period is still active: do nothing
+            // The fake thinking period is still active
+            // or
+            // We are in the process of getting unstuck
+            // = dont do any other movement
+            return; 
         }
-
-        if (_unstucking)
-        {
-            return;
-        }
-
 
         _currentPickupTarget = FindNearestPickup();
         _currentEnemyTarget = FindNearestEnemy();
@@ -106,18 +106,16 @@ public class ControlledByAI : MonoBehaviour
         {
             distanceToEnemy = Vector3.Distance(transform.position, _currentEnemyTarget.transform.position);
         }
-
-        //Debug.Log("distance to pickup: " + distanceToPickup);
-        //Debug.Log("distance to enemy: " + distanceToEnemy);
         
-        
-        // Anything in front of us?
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 5) && hit.transform.CompareTag("Obstacle"))
+        // Any obstacles in front of us?
+        Debug.DrawRay(transform.position, transform.forward*2, Color.magenta);
+        if (Physics.SphereCast(transform.position, 3, transform.forward - transform.up, out RaycastHit hitinfo, 2) && hitinfo.transform.CompareTag("Obstacle"))
         {
-            Debug.Log("hittin " + hit.transform.tag + "," + hit.transform.name);
-            StartCoroutine(Unstucking());
+            Debug.DrawRay(transform.position, hitinfo.transform.position-transform.position, Color.yellow);
+            Debug.Log(hitinfo.transform.tag);
+            StartCoroutine(AvoidObstacle(hitinfo.transform));
         }
-        else if ((_currentPickupTarget != null) && (distanceToPickup < 10f || _weaponHolder.HasAmmoInAnyWeapon() == false))
+        else if ((_currentPickupTarget != null) && (distanceToPickup < 5f || _weaponHolder.HasAmmoInAnyWeapon() == false))
         {
             // We're close to a pickup or we're out of ammo = go for pickup
             _movement.MoveTowards(_currentPickupTarget.transform.position);
@@ -202,19 +200,37 @@ public class ControlledByAI : MonoBehaviour
         _startedMoving = true;
     }
 
-    IEnumerator Unstucking()
+    IEnumerator AvoidObstacle(Transform danger)
     {
-        Debug.Log("Start unstuck");
         _unstucking = true;
-        Vector3 destination = transform.position + (transform.right * -10);
-
-        while (Vector3.Distance(transform.position, destination) > 3)
+        
+        float distanceToDanger = Vector3.Distance(transform.position, danger.position);
+        
+        
+        Vector3 dest = transform.position + (transform.right * -distanceToDanger/2);
+        Vector3 dest2 = dest + (transform.right * -distanceToDanger/2) + (transform.forward * distanceToDanger/2);
+        Vector3 dest3 = dest2 + (transform.forward * distanceToDanger);
+        
+        while (Vector3.Distance(transform.position, dest) > 2)
         {
-            _movement.MoveTowards(destination);
-            yield return new WaitForFixedUpdate();
+            _movement.MoveTowards(dest);
+            yield return new WaitForEndOfFrame();
+        }
+        
+        while (Vector3.Distance(transform.position, dest2) > 2)
+        {
+            _movement.MoveTowards(dest2);
+            yield return new WaitForEndOfFrame();
+        }
+        
+        while (Vector3.Distance(transform.position, dest3) > 2)
+        {
+            _movement.MoveTowards(dest3);
+            yield return new WaitForEndOfFrame();
         }
 
+        // We should be in the clear now??
+        
         _unstucking = false;
-        Debug.Log("End unstuck");
     }
 }

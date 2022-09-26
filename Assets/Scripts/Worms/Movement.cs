@@ -58,7 +58,7 @@ public class Movement : MonoBehaviour
 
     public void RotateTowards(Vector3 pos)
     {
-        pos = new Vector3(pos.x, 0, pos.z); // y = 0 to ignore height
+        pos = new Vector3(pos.x, transform.position.y, pos.z); // y = 0 to ignore height
         Quaternion targetRot = Quaternion.LookRotation(pos - transform.position);
         _rb.MoveRotation(targetRot);
     }

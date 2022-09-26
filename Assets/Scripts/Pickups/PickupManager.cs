@@ -8,7 +8,8 @@ public class PickupManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _pickups;
     [SerializeField] private float _spawnFrequency;
-    [SerializeField] private List<GameObject> _activePickups;
+    
+    private List<GameObject> _activePickups = new List<GameObject>();
     
     // Start is called before the first frame update
     void Start()

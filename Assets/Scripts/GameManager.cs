@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PauseMenu _pauseMenu;
     
     [Header("Test Settings")]
-    [Tooltip("These are only active for testing. Overriden by settings set in main menu in actual game")]
+    [Tooltip("These are only used when starting the PlayScene directly")]
     [SerializeField] private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
     [SerializeField] private int _aiPlayers = 1;
     [SerializeField] private int _turnLength = 30; 
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     private WormManager _wormManager;
     private WormGenerator _wormGenerator;
     private HumanInputListener _HIL;
-    
     private SettingsManager _settingsManager;
     
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
@@ -40,8 +39,6 @@ public class GameManager : MonoBehaviour
     private int _currentTeamsTurn = 0;
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
-
-
     
     private bool _paused = false;
     private bool _gameOver = false;

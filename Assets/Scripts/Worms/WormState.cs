@@ -46,8 +46,15 @@ public class WormState : MonoBehaviour
     public void Deactivate()
     {
         _active = false;
+
+        if (_wormInfo.IsAIControlled())
+        {
+            _controlledByAI.StopAllCoroutines();
+        }
+        
         _controlledByAI.enabled = false;
         _inputListener.enabled = false;
+        
         deactivated.Invoke();
     }
 }

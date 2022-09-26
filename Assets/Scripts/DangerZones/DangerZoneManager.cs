@@ -14,7 +14,11 @@ public class DangerZoneManager : MonoBehaviour
 
     void Start()
     {
-        _locationIndex = Random.Range(0, _dangerZoneLocations.Count); // Randomly select first location
+        if (_randomOrder)
+        {
+            _locationIndex = Random.Range(0, _dangerZoneLocations.Count); // Randomly select first location
+        }
+        
         _currentDZ = Instantiate(_dangerZonePrefab, _dangerZoneLocations[_locationIndex].position, Quaternion.identity);
         StartCoroutine(DangerZoneTimer());
     }
