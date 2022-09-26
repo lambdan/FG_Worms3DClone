@@ -108,11 +108,8 @@ public class ControlledByAI : MonoBehaviour
         }
         
         // Any obstacles in front of us?
-        Debug.DrawRay(transform.position, transform.forward*2, Color.magenta);
-        if (Physics.SphereCast(transform.position, 3, transform.forward - transform.up, out RaycastHit hitinfo, 2) && hitinfo.transform.CompareTag("Obstacle"))
+        if (Physics.SphereCast(transform.position, 2, transform.forward - transform.up, out RaycastHit hitinfo, 1.5f) && hitinfo.transform.CompareTag("Obstacle"))
         {
-            Debug.DrawRay(transform.position, hitinfo.transform.position-transform.position, Color.yellow);
-            Debug.Log(hitinfo.transform.tag);
             StartCoroutine(AvoidObstacle(hitinfo.transform));
         }
         else if ((_currentPickupTarget != null) && (distanceToPickup < 5f || _weaponHolder.HasAmmoInAnyWeapon() == false))
@@ -207,23 +204,23 @@ public class ControlledByAI : MonoBehaviour
         float distanceToDanger = Vector3.Distance(transform.position, danger.position);
         
         
-        Vector3 dest = transform.position + (transform.right * -distanceToDanger/2);
-        Vector3 dest2 = dest + (transform.right * -distanceToDanger/2) + (transform.forward * distanceToDanger/2);
-        Vector3 dest3 = dest2 + (transform.forward * distanceToDanger);
+        Vector3 dest = transform.position + (transform.right * -distanceToDanger/2); // To the left
+        Vector3 dest2 = dest + (transform.right * -distanceToDanger/2) + (transform.forward * distanceToDanger/2); // Up left
+        Vector3 dest3 = dest2 + (transform.forward * distanceToDanger); // Straight ahead
         
-        while (Vector3.Distance(transform.position, dest) > 2)
+        while (Vector3.Distance(transform.position, dest) > 1)
         {
             _movement.MoveTowards(dest);
             yield return new WaitForEndOfFrame();
         }
         
-        while (Vector3.Distance(transform.position, dest2) > 2)
+        while (Vector3.Distance(transform.position, dest2) > 1)
         {
             _movement.MoveTowards(dest2);
             yield return new WaitForEndOfFrame();
         }
         
-        while (Vector3.Distance(transform.position, dest3) > 2)
+        while (Vector3.Distance(transform.position, dest3) > 1)
         {
             _movement.MoveTowards(dest3);
             yield return new WaitForEndOfFrame();
