@@ -200,11 +200,12 @@ public class ControlledByAI : MonoBehaviour
     IEnumerator AvoidObstacle(Transform danger)
     {
         _unstucking = true;
+
+        var position = transform.position;
+        float distanceToDanger = Vector3.Distance(position, danger.position);
         
-        float distanceToDanger = Vector3.Distance(transform.position, danger.position);
         
-        
-        Vector3 dest = transform.position + (transform.right * -distanceToDanger/2); // To the left
+        Vector3 dest = position + (transform.right * -distanceToDanger/2); // To the left
         Vector3 dest2 = dest + (transform.right * -distanceToDanger/2) + (transform.forward * distanceToDanger/2); // Up left
         Vector3 dest3 = dest2 + (transform.forward * distanceToDanger); // Straight ahead
         
