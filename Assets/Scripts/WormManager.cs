@@ -38,6 +38,7 @@ public class WormManager : MonoBehaviour
         // Update name on the HUD
         _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
         
+        
         // Check if worm is NOT AI controlled, if so tell HIL to send its inputs here
         if (_activeWorms[n].GetComponent<WormInfo>().IsAIControlled() == false)
         {

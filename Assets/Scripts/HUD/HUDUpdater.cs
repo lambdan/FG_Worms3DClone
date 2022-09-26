@@ -53,4 +53,14 @@ public class HUDUpdater : MonoBehaviour
         // Results in something like: 18 (120)
         _ammoText.text = bulletsInClip.ToString() + " (" + ammunitionHeld.ToString() + ")";
     }
+
+    public void HideAmmo()
+    {
+        _ammoText.gameObject.SetActive(false);
+    }
+
+    public void ShowAmmo()
+    {
+        _ammoText.gameObject.SetActive(true);
+    }
 }

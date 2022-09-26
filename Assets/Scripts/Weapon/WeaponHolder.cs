@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,10 +29,7 @@ public class WeaponHolder : MonoBehaviour
     {
         _HUDUpdater = FindObjectOfType<HUDUpdater>();
         _cooldownSlider.gameObject.SetActive(false); // Hide cooldown slider
-    }
-
-    void Start()
-    {
+        
         // Give weapons listed in starting weapons
         // TODO this should probably be in GameManager
         foreach (WeaponProperties WP in _startingWeapons)
@@ -44,8 +40,6 @@ public class WeaponHolder : MonoBehaviour
 
     public void SwitchWeapon(int index)
     {
-        Debug.Log("Switching to weapon " + index);
-        
         // Stop reloading (but dont reset bulletsFiredThisClip var)
         StopReload();
 
@@ -204,9 +198,18 @@ public class WeaponHolder : MonoBehaviour
         }
         
         _HUDUpdater.UpdateAmmo(_bulletsInClip[_currentWeaponIndex],  _reserveAmmo[_currentWeaponIndex]);
-
-        Debug.Log("Reload coroutine finished");
         StopReload();
+    }
+
+    public void HideAmmo()
+    {
+        _HUDUpdater.HideAmmo();
+    }
+
+    public void ShowAmmo()
+    {
+        _HUDUpdater.UpdateAmmo(_bulletsInClip[_currentWeaponIndex],  _reserveAmmo[_currentWeaponIndex]);
+        _HUDUpdater.ShowAmmo();
     }
     
 }

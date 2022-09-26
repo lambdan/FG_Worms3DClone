@@ -3428,9 +3428,9 @@ MonoBehaviour:
   - {r: 1, g: 0.60493195, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   _pauseMenu: {fileID: 32441689}
-  _humanPlayers: 0
-  _aiPlayers: 2
-  _turnLength: 60
+  _humanPlayers: 1
+  _aiPlayers: 1
+  _turnLength: 10
   _wormsPerTeam: 3
 --- !u!4 &1913921544
 Transform:
