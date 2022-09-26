@@ -3421,6 +3421,7 @@ GameObject:
   - component: {fileID: 1913921548}
   - component: {fileID: 1913921549}
   - component: {fileID: 1913921550}
+  - component: {fileID: 1913921551}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3487,9 +3488,9 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   _pauseMenu: {fileID: 32441689}
   _humanPlayers: 1
-  _aiPlayers: 1
+  _aiPlayers: 2
   _turnLength: 60
-  _wormsPerTeam: 3
+  _wormsPerTeam: 4
 --- !u!4 &1913921544
 Transform:
   m_ObjectHideFlags: 0
@@ -3591,6 +3592,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
   - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   - {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
+--- !u!114 &1913921551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913921540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e1368f4d1d4614e9ce5cd0424513a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test: 0
 --- !u!1 &1948967196
 GameObject:
   m_ObjectHideFlags: 0

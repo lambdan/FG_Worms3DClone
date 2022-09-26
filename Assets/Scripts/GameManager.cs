@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private WormGenerator _wormGenerator;
     private HumanInputListener _HIL;
     private SettingsManager _settingsManager;
+    private HighScoreManager _highScoreManager;
     
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
     private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         _wormGenerator = GetComponent<WormGenerator>();
         _HIL = GetComponent<HumanInputListener>();
         _cameraMan = Camera.main.GetComponent<CameraManager>();
+        _highScoreManager = GetComponent<HighScoreManager>();
         Time.timeScale = 1; // Important to set here because you might come from a paused game -> main menu -> new game
     }
     
@@ -154,19 +156,9 @@ public class GameManager : MonoBehaviour
         _HIL.DisableTarget();
         _HUDUpdater.UpdateCurrentPlayerText("Game Over!");
         
-        // Check if we beat the turns played high score
-        if (PlayerPrefs.HasKey("TurnsRecord"))
-        {
-            if (_turnsPlayed > PlayerPrefs.GetInt("TurnsRecord"))
-            {
-                PlayerPrefs.SetInt("TurnsRecord", _turnsPlayed);
-            }
-        }
-        else
-        {
-            // No record set
-            PlayerPrefs.SetInt("TurnsRecord", _turnsPlayed);
-        }
+        // Record high score
+        _highScoreManager.RecordNewScore("Name goes here", _turnsPlayed);
+        
         
         StartCoroutine(GameOverDelay()); // Start delay before going back to the main menu
     }

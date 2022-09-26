@@ -10,9 +10,10 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _turnTimeSelector;
     [SerializeField] private TMP_Text _wormsPerTeamSelector;
     [SerializeField] private TMP_Text _messageBox;
-    [SerializeField] private TMP_Text _turnsPlayedRecord;
+    [SerializeField] private TMP_Text _highScoreList;
 
     private SettingsManager _settingsManager;
+    private HighScoreManager _highScoreManager;
 
     void Awake()
     {
@@ -21,14 +22,8 @@ public class MenuManager : MenuInputs
             _settingsManager = FindObjectOfType<SettingsManager>();
         }
 
-        if (PlayerPrefs.HasKey("TurnsRecord"))
-        {
-            _turnsPlayedRecord.text = PlayerPrefs.GetInt("TurnsRecord").ToString();
-        }
-        else
-        {
-            _turnsPlayedRecord.text = "0";
-        }
+        _highScoreManager = GetComponent<HighScoreManager>();
+        _highScoreList.text = _highScoreManager.GetRecords();
     }
     
     void Start()
