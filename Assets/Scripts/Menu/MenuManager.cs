@@ -29,7 +29,8 @@ public class MenuManager : MenuInputs
     
     void Start()
     {
-        _highScoreManager.PopulateList(_highScoreManager.GetRecords(), _highScoreContainer);
+        _highScoreManager.SetContainer(_highScoreContainer);
+        _highScoreManager.PopulateList(_highScoreManager.GetRecords());
         
         newSelection(0); // Focus "Start Game"
         RefreshMenu();

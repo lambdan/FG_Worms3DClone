@@ -5,13 +5,17 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class HighScoreManager : MonoBehaviour
 {
     private string saveFile;
     private List<HighScoreData> _highScores;
 
-    public bool test = false;
+    private GameObject _container;
+    
+    public bool testRecord = false;
+    public bool testClear = false;
     
     void Awake()
     {
@@ -21,11 +25,24 @@ public class HighScoreManager : MonoBehaviour
 
     void Update()
     {
-        if (test)
+        if (testRecord)
         {
             RecordNewScore("abc", 123456);
-            test = false;
+            testRecord = false;
         }
+
+        if (testClear)
+        {
+            ClearRecords();
+            ClearContainer();
+            testClear = false;
+        }
+        
+    }
+
+    public void SetContainer(GameObject target)
+    {
+        _container = target;
     }
     
     public HighScoreDataList GetRecords()
@@ -37,6 +54,10 @@ public class HighScoreManager : MonoBehaviour
         {
             fileContents = File.ReadAllText(saveFile);
             HSDL = JsonUtility.FromJson<HighScoreDataList>(fileContents);
+        }
+        else
+        {
+            HSDL.highScoreDataList = new List<HighScoreData>();
         }
         
         return HSDL;
@@ -66,6 +87,21 @@ public class HighScoreManager : MonoBehaviour
         Debug.Log("wrote to " + saveFile);
     }
 
+    void ClearRecords()
+    {
+        HighScoreDataList HSDL = new HighScoreDataList();
+        string newJSON = JsonUtility.ToJson(HSDL);
+        File.WriteAllText(saveFile, newJSON);
+    }
+
+    void ClearContainer()
+    {
+        foreach (Transform child in _container.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
     HighScoreDataList SortByScore(HighScoreDataList unsortedHSDL)
     {
         List<HighScoreData> sorted = unsortedHSDL.highScoreDataList.OrderByDescending(order => order.score).ToList();
@@ -74,13 +110,13 @@ public class HighScoreManager : MonoBehaviour
         return sortedHSDL;
     }
 
-    public void PopulateList(HighScoreDataList HSDL, GameObject target)
+    public void PopulateList(HighScoreDataList HSDL)
     {
         HighScoreDataList sorted = SortByScore(HSDL);
         foreach (HighScoreData hsd in sorted.highScoreDataList)
         {
             GameObject tgo = new GameObject();
-            tgo.transform.parent = target.transform;
+            tgo.transform.parent = _container.transform;
             TMP_Text txt = tgo.AddComponent<TMPro.TextMeshProUGUI>(); // Add text component to it
             txt.text = hsd.score.ToString();
         }
