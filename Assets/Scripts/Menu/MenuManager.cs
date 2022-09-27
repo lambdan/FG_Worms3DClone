@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,11 +11,16 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _turnTimeSelector;
     [SerializeField] private TMP_Text _wormsPerTeamSelector;
     [SerializeField] private TMP_Text _messageBox;
+
+    [SerializeField] private GameObject _playerNameRoot;
+    [SerializeField] private GameObject _playerNameContainer;
     
+    [SerializeField] private GameObject _highScoreRoot;
     [SerializeField] private GameObject _highScoreContainer;
 
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
+    private PlayerNameManager _playerNameManager;
 
     void Awake()
     {
@@ -24,13 +30,25 @@ public class MenuManager : MenuInputs
         }
 
         _highScoreManager = GetComponent<HighScoreManager>();
+        _playerNameManager = GetComponent<PlayerNameManager>();
 
+        
     }
     
     void Start()
     {
         _highScoreManager.SetContainer(_highScoreContainer);
-        _highScoreManager.PopulateList(_highScoreManager.GetRecords());
+        if (_highScoreManager.GetRecords().highScoreDataList.Count > 0)
+        {
+            _highScoreManager.PopulateList(_highScoreManager.GetRecords());
+        }
+        else
+        {
+            _highScoreRoot.SetActive(false); // Hide high scores if none
+        }
+
+        _playerNameManager.SetContainer(_playerNameContainer);
+        _playerNameManager.SetNames(_settingsManager.GetNames());
         
         newSelection(0); // Focus "Start Game"
         RefreshMenu();
@@ -53,8 +71,9 @@ public class MenuManager : MenuInputs
             return;
         }
 
-        // Load the actual scene... settings gets passed through SettingsManager (doesnt destroy on load)
-        SceneManager.LoadScene("Scenes/PlayScene"); 
+        // We can start !
+        _settingsManager.SetNames(_playerNameManager.GetAllNames()); // Grab names from PlayerNameManager and give it to settings manager
+        SceneManager.LoadScene("Scenes/PlayScene");  // Load the actual scene... settings gets passed through SettingsManager (doesnt destroy on load)
     }
     
     public override void Select()
@@ -84,6 +103,17 @@ public class MenuManager : MenuInputs
         _aiMenuSelector.text = _settingsManager.GetAIs().ToString();
         _turnTimeSelector.text = _settingsManager.GetTurnLength().ToString();
         _wormsPerTeamSelector.text = _settingsManager.GetWormsPerTeam().ToString();
+
+        // Show name input if there are human players
+        if (_settingsManager.GetHumans() <= 0)
+        {
+            _playerNameRoot.SetActive(false);
+        }
+        else
+        {
+            _playerNameRoot.SetActive(true);
+            _playerNameManager.RefreshInputContainer();
+        }
     }
 
     void ErrorMessage(string msg)

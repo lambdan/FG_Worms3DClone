@@ -98,6 +98,11 @@ public class GameManager : MonoBehaviour
             _aiPlayers = _settingsManager.GetAIs();
             _turnLength = _settingsManager.GetTurnLength();
             _wormsPerTeam = _settingsManager.GetWormsPerTeam();
+            
+            foreach (string name in _settingsManager.GetNames())
+            {
+                Debug.Log(name);
+            }
         }
 
         GenerateTeams(_humanPlayers, _aiPlayers);

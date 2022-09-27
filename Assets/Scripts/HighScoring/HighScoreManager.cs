@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 
 public class HighScoreManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _prefab;
+    [SerializeField] private TMP_Text _listEntryPrefab;
     
     private string saveFile;
     private List<HighScoreData> _highScores;
@@ -117,7 +117,7 @@ public class HighScoreManager : MonoBehaviour
         HighScoreDataList sorted = SortByScore(HSDL);
         foreach (HighScoreData hsd in sorted.highScoreDataList)
         {
-            TMP_Text t = Instantiate(_prefab, _container.transform);
+            TMP_Text t = Instantiate(_listEntryPrefab, _container.transform);
             t.text = hsd.name + ": " + hsd.score.ToString();
         }
     }

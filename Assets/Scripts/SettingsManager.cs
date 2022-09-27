@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
@@ -10,7 +11,18 @@ public class SettingsManager : MonoBehaviour
     private int _aiPlayers = 1;
     private int _turnLength = 15;
     private int _wormsPerTeam = 3;
+    private List<string> _names = new List<string>();
 
+    public void SetNames(List<string> newNames)
+    {
+        _names = newNames;
+    }
+
+    public List<string> GetNames()
+    {
+        return _names;
+    }
+    
     public void IncrementHumans()
     {
         if (_humanPlayers >= 8)
