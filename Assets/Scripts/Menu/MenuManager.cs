@@ -10,6 +10,7 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _turnTimeSelector;
     [SerializeField] private TMP_Text _wormsPerTeamSelector;
     [SerializeField] private TMP_Text _messageBox;
+    
     [SerializeField] private GameObject _highScoreContainer;
 
     private SettingsManager _settingsManager;
@@ -29,7 +30,8 @@ public class MenuManager : MenuInputs
     void Start()
     {
         _highScoreManager.PopulateList(_highScoreManager.GetRecords(), _highScoreContainer);
-        newSelection(0);
+        
+        newSelection(0); // Focus "Start Game"
         RefreshMenu();
     }
 

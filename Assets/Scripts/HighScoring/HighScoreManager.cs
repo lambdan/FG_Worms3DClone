@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 
@@ -65,11 +66,21 @@ public class HighScoreManager : MonoBehaviour
         Debug.Log("wrote to " + saveFile);
     }
 
+    HighScoreDataList SortByScore(HighScoreDataList unsortedHSDL)
+    {
+        List<HighScoreData> sorted = unsortedHSDL.highScoreDataList.OrderByDescending(order => order.score).ToList();
+        HighScoreDataList sortedHSDL = new HighScoreDataList();
+        sortedHSDL.highScoreDataList = sorted;
+        return sortedHSDL;
+    }
+
     public void PopulateList(HighScoreDataList HSDL, GameObject target)
     {
-        foreach (HighScoreData hsd in HSDL.highScoreDataList)
+        HighScoreDataList sorted = SortByScore(HSDL);
+        foreach (HighScoreData hsd in sorted.highScoreDataList)
         {
-            GameObject tgo = Instantiate(new GameObject(), target.transform); // Add empty game object to list
+            GameObject tgo = new GameObject();
+            tgo.transform.parent = target.transform;
             TMP_Text txt = tgo.AddComponent<TMPro.TextMeshProUGUI>(); // Add text component to it
             txt.text = hsd.score.ToString();
         }
