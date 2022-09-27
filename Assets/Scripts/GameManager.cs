@@ -62,12 +62,13 @@ public class GameManager : MonoBehaviour
         // Generate teams/worms for human players (aiControlled = false)
         for (int t = 0; t < humans; t++)
         {
+            string teamName = _settingsManager.GetHumanNames()[t];
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
-                _homeBases[_teams.Count].position, teamColors[_teamsGenerated]);
+                _homeBases[_teams.Count].position, teamColors[_teamsGenerated], teamName);
             
             _teams.Add(thisTeam);
             _teamAliveWorms.Add(_wormsPerTeam);
-            _teamNames.Add("Team " + _teamsGenerated); // +1 is added in the HUD updater to prevent "Team 0" 
+            _teamNames.Add(teamName);
             
             _teamsGenerated++;
         }
@@ -75,12 +76,13 @@ public class GameManager : MonoBehaviour
         // Generate teams/worms for AI players (aiControlled = true)
         for (int t = 0; t < ais; t++)
         {
+            string teamName = "AI Team " + (t + 1);
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, true,
-                _homeBases[_teams.Count].position, teamColors[_teamsGenerated]);
+                _homeBases[_teams.Count].position, teamColors[_teamsGenerated], teamName);
             
             _teams.Add(thisTeam);
             _teamAliveWorms.Add(_wormsPerTeam);
-            _teamNames.Add("Team " + _teamsGenerated);
+            _teamNames.Add(teamName);
             
             _teamsGenerated++;
         }
@@ -99,7 +101,7 @@ public class GameManager : MonoBehaviour
             _turnLength = _settingsManager.GetTurnLength();
             _wormsPerTeam = _settingsManager.GetWormsPerTeam();
             
-            foreach (string name in _settingsManager.GetNames())
+            foreach (string name in _settingsManager.GetHumanNames())
             {
                 Debug.Log(name);
             }

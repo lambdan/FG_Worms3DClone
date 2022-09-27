@@ -18,7 +18,7 @@ public class SettingsManager : MonoBehaviour
         _names = newNames;
     }
 
-    public List<string> GetNames()
+    public List<string> GetHumanNames()
     {
         return _names;
     }

@@ -82,7 +82,7 @@ public class ControlledByAI : MonoBehaviour
         StartCoroutine(WaitBeforeMoving(Random.Range(1, 2))); 
         
     }
-
+    
     void Update()
     {
         if (!_startedMoving || _unstucking)

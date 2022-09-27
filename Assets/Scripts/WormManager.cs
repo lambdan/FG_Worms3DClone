@@ -36,7 +36,8 @@ public class WormManager : MonoBehaviour
         _cameraMan.Activate();
 
         // Update name on the HUD
-        _HUDUpdater.UpdateCurrentPlayerText(_activeWorms[n].name);
+        WormInfo thisWorm = _activeWorms[n].GetComponent<WormInfo>();
+        _HUDUpdater.UpdateCurrentPlayerText(thisWorm.GetTeamName() + "/" + thisWorm.GetName());
         
         // Check if worm is NOT AI controlled, if so tell HIL to send its inputs here
         if (_activeWorms[n].GetComponent<WormInfo>().IsAIControlled() == false)

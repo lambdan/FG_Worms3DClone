@@ -3,6 +3,7 @@ using UnityEngine;
 public class WormInfo : MonoBehaviour
 {
     private string _name;
+    private string _teamName;
     private int _team;
     private bool _isAIControlled;
     
@@ -11,16 +12,14 @@ public class WormInfo : MonoBehaviour
         return _name;
     }
 
+    public string GetTeamName()
+    {
+        return _teamName;
+    }
+
     public void SetName(string newName)
     {
         _name = newName;
-
-        if (_isAIControlled)
-        {
-            _name = _name + " [AI]";
-        }
-        
-        UpdateName();
     }
 
     public int GetTeam()
@@ -31,14 +30,13 @@ public class WormInfo : MonoBehaviour
     public void SetTeam(int newTeam)
     {
         _team = newTeam;
-        UpdateName();
     }
 
-    public void UpdateName()
+    public void SetTeamName(string newTeamName)
     {
-        this.name = "Team " + (_team+1) + " - " + _name;
+        _teamName = newTeamName;
     }
-
+    
     public void SetAIControlled(bool state)
     {
         _isAIControlled = state;

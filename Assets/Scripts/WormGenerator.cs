@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WormGenerator : MonoBehaviour
 {
-    public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase, Color teamColor)
+    public List<GameObject> GenerateTeam(GameObject wormPrefab, int amount, int teamNumber, bool aiControlled, Vector3 homebase, Color teamColor, string teamName)
     {
         List<GameObject> thisTeam = new List<GameObject>();
         
@@ -20,6 +20,7 @@ public class WormGenerator : MonoBehaviour
             // Set name and team assignment to worm
             WormInfo wormInfo = worm.GetComponent<WormInfo>();
             wormInfo.SetAIControlled(aiControlled);
+            wormInfo.SetTeamName(teamName);
             wormInfo.SetName("Worm " + (i+1));
             wormInfo.SetTeam(teamNumber);
             
@@ -30,7 +31,7 @@ public class WormGenerator : MonoBehaviour
                 
             thisTeam.Add(worm);
         }
-
+    
         return thisTeam;
     }
 
