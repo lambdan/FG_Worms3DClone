@@ -10,7 +10,7 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _turnTimeSelector;
     [SerializeField] private TMP_Text _wormsPerTeamSelector;
     [SerializeField] private TMP_Text _messageBox;
-    [SerializeField] private TMP_Text _highScoreList;
+    [SerializeField] private GameObject _highScoreContainer;
 
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
@@ -23,11 +23,12 @@ public class MenuManager : MenuInputs
         }
 
         _highScoreManager = GetComponent<HighScoreManager>();
-        _highScoreList.text = _highScoreManager.GetRecords();
+
     }
     
     void Start()
     {
+        _highScoreManager.PopulateList(_highScoreManager.GetRecords(), _highScoreContainer);
         newSelection(0);
         RefreshMenu();
     }

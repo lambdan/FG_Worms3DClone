@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using TMPro;
 
 public class HighScoreManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class HighScoreManager : MonoBehaviour
     {
         saveFile = Application.persistentDataPath + "/highscores.json";
     }
+    
 
     void Update()
     {
@@ -23,6 +25,20 @@ public class HighScoreManager : MonoBehaviour
             RecordNewScore("abc", 123456);
             test = false;
         }
+    }
+    
+    public HighScoreDataList GetRecords()
+    {
+        string fileContents;
+        HighScoreDataList HSDL = new HighScoreDataList();
+        
+        if (File.Exists(saveFile))
+        {
+            fileContents = File.ReadAllText(saveFile);
+            HSDL = JsonUtility.FromJson<HighScoreDataList>(fileContents);
+        }
+        
+        return HSDL;
     }
     
     public void RecordNewScore(string name, int score)
@@ -37,15 +53,7 @@ public class HighScoreManager : MonoBehaviour
 
     void SaveData(HighScoreData newScore)
     {
-        string fileContents;
-        HighScoreDataList HSDL = new HighScoreDataList();
-
-        // Read old data if any
-        if (File.Exists(saveFile))
-        {
-            fileContents = File.ReadAllText(saveFile);
-            HSDL = JsonUtility.FromJson<HighScoreDataList>(fileContents);
-        }
+        HighScoreDataList HSDL = GetRecords();
 
         // Update with new score
         HSDL.highScoreDataList.Add(newScore);
@@ -57,29 +65,14 @@ public class HighScoreManager : MonoBehaviour
         Debug.Log("wrote to " + saveFile);
     }
 
-    public string GetRecords()
+    public void PopulateList(HighScoreDataList HSDL, GameObject target)
     {
-        string fileContents;
-        HighScoreDataList HSDL = new HighScoreDataList();
-        
-        if (File.Exists(saveFile))
+        foreach (HighScoreData hsd in HSDL.highScoreDataList)
         {
-            fileContents = File.ReadAllText(saveFile);
-            HSDL = JsonUtility.FromJson<HighScoreDataList>(fileContents);
+            GameObject tgo = Instantiate(new GameObject(), target.transform); // Add empty game object to list
+            TMP_Text txt = tgo.AddComponent<TMPro.TextMeshProUGUI>(); // Add text component to it
+            txt.text = hsd.score.ToString();
         }
-
-        if (HSDL.highScoreDataList.Count == 0)
-        {
-            return "No high scores set";
-        }
-
-        string records = "";
-        foreach (HighScoreData highScore in HSDL.highScoreDataList)
-        {
-            records = records + highScore.score.ToString() + ",";
-        }
-
-        return records;
     }
     
 }
