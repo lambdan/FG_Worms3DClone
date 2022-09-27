@@ -29,11 +29,14 @@ public class GameManager : MonoBehaviour
     private HumanInputListener _HIL;
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
-    
+    private List<int> _scores = new List<int>();
+
     private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
     private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
 
+    
     private List<int> _teamAliveWorms = new List<int>();
+    private List<string> _humanNames = new List<string> { "a", "b", "c", "d", "e", "f", "g" };
     private List<string> _teamNames = new List<string>();
 
     private int _teamsAlive = 0;
@@ -48,6 +51,17 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        _settingsManager = FindObjectOfType<SettingsManager>();
+        if (_settingsManager != null)
+        {
+            // We have a settings manager (because player came from the main menu) - use its settings
+            _humanPlayers = _settingsManager.GetHumans();
+            _aiPlayers = _settingsManager.GetAIs();
+            _turnLength = _settingsManager.GetTurnLength();
+            _wormsPerTeam = _settingsManager.GetWormsPerTeam();
+            _humanNames = _settingsManager.GetHumanNames();
+        }
+        
         _wormManager = GetComponent<WormManager>();
         _HUDUpdater = GetComponent<HUDUpdater>();
         _wormGenerator = GetComponent<WormGenerator>();
@@ -62,7 +76,7 @@ public class GameManager : MonoBehaviour
         // Generate teams/worms for human players (aiControlled = false)
         for (int t = 0; t < humans; t++)
         {
-            string teamName = _settingsManager.GetHumanNames()[t];
+            string teamName = _humanNames[t];
             List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
                 _homeBases[_teams.Count].position, teamColors[_teamsGenerated], teamName);
             
@@ -88,25 +102,16 @@ public class GameManager : MonoBehaviour
         }
 
         _teamsAlive = _teamsGenerated;
+        
+        // Init scores
+        for (int t = 0; t < _teamsGenerated; t++)
+        {
+            _scores.Add(0);
+        }
     }
     
     void Start()
     {
-        _settingsManager = FindObjectOfType<SettingsManager>();
-        if (_settingsManager != null)
-        {
-            // We have a settings manager (because player came from the main menu) - use its settings
-            _humanPlayers = _settingsManager.GetHumans();
-            _aiPlayers = _settingsManager.GetAIs();
-            _turnLength = _settingsManager.GetTurnLength();
-            _wormsPerTeam = _settingsManager.GetWormsPerTeam();
-            
-            foreach (string name in _settingsManager.GetHumanNames())
-            {
-                Debug.Log(name);
-            }
-        }
-
         GenerateTeams(_humanPlayers, _aiPlayers);
         
         _currentTeam = _teams[0];
@@ -163,10 +168,9 @@ public class GameManager : MonoBehaviour
         _HIL.DisableTarget();
         _HUDUpdater.UpdateCurrentPlayerText("Game Over!");
         
-        // Record high score
-        _highScoreManager.RecordNewScore("Name goes here", _turnsPlayed);
-        
-        
+        // Record high score for the team that won
+        _highScoreManager.RecordNewScore(_teamNames[_currentTeamsTurn], _scores[_currentTeamsTurn]);
+
         StartCoroutine(GameOverDelay()); // Start delay before going back to the main menu
     }
     
@@ -184,6 +188,10 @@ public class GameManager : MonoBehaviour
 
     public void ReportDeath(int teamNumber)
     {
+        // Award team that was active with the kill
+        _scores[_currentTeamsTurn] += 1000;
+        Debug.Log("team " + _currentTeamsTurn + " now has " + _scores[_currentTeamsTurn] + " points");
+        
         // -1 alive worms of that team
         _teamAliveWorms[teamNumber] -= 1;
         
@@ -198,6 +206,8 @@ public class GameManager : MonoBehaviour
         {
             CancelRound();
         }
+        
+
     }
 
     public void TogglePause()

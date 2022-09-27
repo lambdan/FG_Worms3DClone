@@ -3488,9 +3488,9 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   _pauseMenu: {fileID: 32441689}
   _humanPlayers: 1
-  _aiPlayers: 2
+  _aiPlayers: 1
   _turnLength: 60
-  _wormsPerTeam: 4
+  _wormsPerTeam: 1
 --- !u!4 &1913921544
 Transform:
   m_ObjectHideFlags: 0
@@ -3604,7 +3604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e1368f4d1d4614e9ce5cd0424513a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 0
+  _listEntryPrefab: {fileID: 0}
+  testRecord: 0
+  testClear: 0
 --- !u!1 &1948967196
 GameObject:
   m_ObjectHideFlags: 0
