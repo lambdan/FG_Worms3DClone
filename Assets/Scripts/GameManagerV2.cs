@@ -19,15 +19,18 @@ public class GameManagerV2 : MonoBehaviour
     
     [SerializeField] private List<string> _wormNames;
     [SerializeField] private GameObject _wormPrefab;
+    [SerializeField] private GameObject _HUDPrefab;
     [SerializeField] private GameObject _loadingScreenPrefab;
     [SerializeField] private GameObject _pauseMenuPrefab;
 
+    private GameObject _HUD;
     private GameObject _loadingScreen;
     private GameObject _pauseMenu;
 
     private CameraManager _cameraManager;
     private PickupManager _pickupManager;
     private HumanInputListener _humanInputListener;
+    private HUDUpdater _hudUpdater;
 
     private GameObject _level;
     private LevelInfo _levelInfo;
@@ -161,9 +164,12 @@ public class GameManagerV2 : MonoBehaviour
     {
         _loadingScreen = Instantiate(_loadingScreenPrefab);
         _pauseMenu = Instantiate(_pauseMenuPrefab);
+        _HUD = Instantiate(_HUDPrefab);
+        
         _cameraManager = Camera.main.GetComponent<CameraManager>();
         _pickupManager = GetComponent<PickupManager>();
         _humanInputListener = GetComponent<HumanInputListener>();
+        _hudUpdater = _HUD.GetComponent<HUDUpdater>();
     }
 
     void Start()

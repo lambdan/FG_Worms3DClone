@@ -31,12 +31,7 @@ public class Worm
 
     public bool IsAlive()
     {
-        if (_health.GetHealth() > 0)
-        {
-            return true;
-        }
-
-        return false;
+        return _health.GetHealth() > 0;
     }
 
     public GameObject GetGameObject()
