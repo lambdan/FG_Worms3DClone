@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Worm
 {
     private string _wormName = "Unknown Worm";
 
     private GameObject _wormGameObject;
-    private InputListener _wormInputListener;
+    private PlayerInput _wormPlayerInput;
     private ControlledByAI _wormAIController;
     private WormColor _wormColor;
     private GameManagerV2 _gameManager;
@@ -21,7 +22,7 @@ public class Worm
     public void SetWormGameObject(GameObject newGameObject)
     {
         _wormGameObject = newGameObject;
-        _wormInputListener = _wormGameObject.GetComponent<InputListener>();
+        _wormPlayerInput = _wormGameObject.GetComponent<PlayerInput>();
         _wormAIController = _wormGameObject.GetComponent<ControlledByAI>();
         _wormColor = _wormGameObject.GetComponent<WormColor>();
         _health = _wormGameObject.GetComponent<Health>();
@@ -61,9 +62,9 @@ public class Worm
         return GetGameObject().transform;
     }
     
-    public InputListener GetInputListener()
+    public PlayerInput GetPlayerInput()
     {
-        return _wormInputListener;
+        return _wormPlayerInput;
     }
 
     public ControlledByAI GetAIController()
@@ -85,23 +86,28 @@ public class Worm
     {
         return _weaponHolder;
     }
+
+    public Health GetHealth()
+    {
+        return _health;
+    }
     
     // State
     public void ActivateAI()
     {
         _wormAIController.enabled = true;
-        _wormInputListener.enabled = false;
+        _wormPlayerInput.enabled = false;
     }
 
     public void ActivateHumanInput()
     {
         _wormAIController.enabled = false;
-        _wormInputListener.enabled = true;
+        _wormPlayerInput.enabled = true;
     }
 
     public void Deactivate()
     {
         _wormAIController.enabled = false;
-        _wormInputListener.enabled = false;
+        _wormPlayerInput.enabled = false;
     }
 }

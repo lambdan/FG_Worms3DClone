@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MenuInputs
 {
+    private GameManagerV2 _gameManager;
     [SerializeField] private Canvas _canvas;
 
     public override void Select()
@@ -11,7 +12,7 @@ public class PauseMenu : MenuInputs
         switch (GetSelectionIndex())
             {
                 case 0: // Resume game
-                    FindObjectOfType<GameManager>().TogglePause();
+                    _gameManager.TogglePause();
                     break;
                 case 1: // Restart
                     SceneManager.LoadScene("Scenes/PlayScene");
@@ -25,6 +26,11 @@ public class PauseMenu : MenuInputs
     void Awake()
     {
         newSelection(0); // To make the first item be hovered
+    }
+
+    public void SetGameManager(GameManagerV2 gameManager)
+    {
+        _gameManager = gameManager;
     }
     
     private void OnEnable()

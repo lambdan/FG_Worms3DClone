@@ -4,13 +4,13 @@ using UnityEngine;
 public class CheatManager : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> _allWeapons;
-    
-    private WormManager _WM;
+
+    private GameManagerV2 _gameManager;
     
     // Update is called once per frame
     void Awake()
     {
-        _WM = GetComponent<WormManager>();
+        _gameManager = GetComponent<GameManagerV2>();
     }
     
     void Update()
@@ -30,12 +30,12 @@ public class CheatManager : MonoBehaviour
     {
         foreach (WeaponProperties wp in _allWeapons)
         {
-            _WM.GetCurrentWorm().GetComponent<WeaponHolder>().GetNewWeapon(wp, 999);
+            _gameManager.GetCurrentWorm().GetWeaponHolder().GetNewWeapon(wp, 999);
         }
     }
 
     void GiveInvincibility()
     {
-        _WM.GetCurrentWorm().GetComponent<Health>().StartInvincibility(999);
+        _gameManager.GetCurrentWorm().GetHealth().StartInvincibility(999);
     }
 }

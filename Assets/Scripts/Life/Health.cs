@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     private int _maxHealth;
     private bool _invincible = false;
 
+    private GameManagerV2 _gameManager;
     public UnityEvent healthZero;
     public UnityEvent healthChanged;
     
@@ -21,11 +22,7 @@ public class Health : MonoBehaviour
 
     public int GetHealth()
     {
-        if (_health < 0)
-        {
-            return 0;
-        }
-        return _health;
+        return _health < 0 ? 0 : _health;
     }
 
     public int GetMaxHealth()
@@ -46,6 +43,7 @@ public class Health : MonoBehaviour
         if (_health <= 0)
         {
             healthZero.Invoke();
+            _gameManager.DeathReport();
         }
 
         if (_health > _maxHealth)
@@ -59,12 +57,8 @@ public class Health : MonoBehaviour
     public void ChangeMaxHealth(int amount)
     {
         // Check if health is full...
-        bool wasFull = false;
-        if (_health == _maxHealth)
-        {
-            wasFull = true;
-        }
-        
+        bool wasFull = _health == _maxHealth;
+
         _maxHealth += amount;
 
         if (wasFull) // ...  because if it was, set health to new max 
@@ -82,6 +76,11 @@ public class Health : MonoBehaviour
             _invincible = true;
             StartCoroutine(InvincibilityTimer(duration));
         }
+    }
+
+    public void SetGameManager(GameManagerV2 gameManager)
+    {
+        _gameManager = gameManager;
     }
 
     IEnumerator InvincibilityTimer(float duration)

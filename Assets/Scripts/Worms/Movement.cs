@@ -2,6 +2,8 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Composites;
 
 public class Movement : MonoBehaviour
 {
@@ -15,34 +17,26 @@ public class Movement : MonoBehaviour
     private bool _falling = false;
 
     public UnityEvent landedAfterLongFall;
-
     private Vector2 _moveAxis;
+    private Vector2 _controllerAxisInput;
+
+    private bool _stickEnabled;
 
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
     
-    public void AxisInput(Vector2 move)
+    public void AxisInput(Vector2 vec)
     {
-        if (move.magnitude > 0.1)
-        {
-            _moveAxis = move;
-        }
-        
+        _moveAxis = vec;
     }
 
     void FixedUpdate()
     {
-        if (_moveAxis != Vector2.zero)
-        {
-            _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * movementSpeed)));
-        
-            Quaternion deltaRot = Quaternion.Euler(new Vector3(0,_moveAxis.x*rotationSpeed,0) * Time.fixedDeltaTime);
-            _rb.MoveRotation(_rb.rotation * deltaRot);
-        
-            _moveAxis = Vector2.zero;  
-        }
+        _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * movementSpeed)));
+        Quaternion deltaRot = Quaternion.Euler(new Vector3(0, _moveAxis.x * rotationSpeed, 0) * Time.fixedDeltaTime);
+        _rb.MoveRotation(_rb.rotation * deltaRot);
 
         if (_rb.velocity.y < -20)
         {

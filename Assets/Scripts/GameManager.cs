@@ -1,11 +1,9 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(HUDUpdater))]
-[RequireComponent(typeof(WormGenerator))]
-[RequireComponent(typeof(WormManager))]
 [RequireComponent(typeof(HumanInputListener))]
 public class GameManager : MonoBehaviour
 {
@@ -24,8 +22,6 @@ public class GameManager : MonoBehaviour
 
     private HUDUpdater _HUDUpdater;
     private CameraManager _cameraMan;
-    private WormManager _wormManager;
-    private WormGenerator _wormGenerator;
     private HumanInputListener _HIL;
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
@@ -226,6 +222,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             _paused = true;
         }*/
+/*
     }
 
     public void CancelRound()
@@ -275,3 +272,4 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Scenes/Menu"); // Go back to main menu
     }
 }
+*/

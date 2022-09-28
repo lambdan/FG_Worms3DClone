@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class HumanInputListener : MonoBehaviour
@@ -86,7 +86,7 @@ public class HumanInputListener : MonoBehaviour
         _mouse = Mouse.current;
         _gamepad = Gamepad.current;
         
-        CheckPause(); // Always check if pause button is pressed
+        //CheckPause(); // Always check if pause button is pressed
 
         if (_IL != null) // Only go through worm inputs if we have a human controlled worm active
         {
@@ -109,3 +109,4 @@ public class HumanInputListener : MonoBehaviour
         }
     }
 }
+*/

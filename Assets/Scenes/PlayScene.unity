@@ -288,8 +288,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1125836905}
   - component: {fileID: 1125836904}
-  - component: {fileID: 1125836907}
   - component: {fileID: 1125836908}
+  - component: {fileID: 1125836909}
+  - component: {fileID: 1125836910}
+  - component: {fileID: 1125836911}
   m_Layer: 0
   m_Name: Game Manager v2
   m_TagString: Untagged
@@ -309,10 +311,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efde88110f40b4a4a910339a8d66a2a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelPrefab: {fileID: 4549259294423954129, guid: 95a94cc40744ece4686e810c4942610a, type: 3}
-  humans: 2
-  ais: 0
+  _levelPrefab: {fileID: 4549259294423954129, guid: 96a7e8f889deb1e4586783afe4d296fc, type: 3}
+  humans: 1
+  ais: 1
   perteam: 3
+  _turnLength: 66
   teamnames:
   - Bakas
   - Idiots
@@ -337,6 +340,9 @@ MonoBehaviour:
   _HUDPrefab: {fileID: 8296666507057083477, guid: d1a382bc7bd07a140808430a0f2e99da, type: 3}
   _loadingScreenPrefab: {fileID: 3732195232622258693, guid: 8912b7ad7c8746e41ba6658af108aef9, type: 3}
   _pauseMenuPrefab: {fileID: 5493970555347930685, guid: 5e33a6ac5330a3249b6012975735ebc3, type: 3}
+  _deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1125836905
 Transform:
   m_ObjectHideFlags: 0
@@ -344,26 +350,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125836903}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1125836907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125836903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4197fea43dc0498419ea087a94e5a03c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1125836908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,201 +378,13 @@ MonoBehaviour:
   - {fileID: 4804350354342887509, guid: 0a5fb4e4aa8867b409cd7e7768b178a2, type: 3}
   - {fileID: 4804350354342887509, guid: 82331792e1aa9504d8f8e8fa67b1eb8b, type: 3}
   _spawnFrequency: 1
---- !u!1 &1913921540
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1913921544}
-  - component: {fileID: 1913921543}
-  - component: {fileID: 1913921541}
-  - component: {fileID: 1913921545}
-  - component: {fileID: 1913921542}
-  - component: {fileID: 1913921546}
-  - component: {fileID: 1913921548}
-  - component: {fileID: 1913921549}
-  - component: {fileID: 1913921550}
-  - component: {fileID: 1913921551}
-  m_Layer: 0
-  m_Name: Game Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1913921541
+--- !u!114 &1125836909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8025bd30844d774aa591611ee4bbd86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cameraMan: {fileID: 109040654}
---- !u!114 &1913921542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ca99aff09b2b64439448b1103c78d33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1913921543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911c261d6229c784e84a09679daa3fb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _homeBases:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _wormPrefab: {fileID: 473437008339127252, guid: 86a6fad53d38cb3448771af1cbe5e718, type: 3}
-  _delayBetweenTurns: 2
-  teamColors:
-  - {r: 0, g: 0.0005545616, b: 1, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.016897917, a: 0}
-  - {r: 0.999694, g: 1, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0.99247026, a: 0}
-  - {r: 0, g: 1, b: 0.99999976, a: 0}
-  - {r: 1, g: 0.60493195, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  _pauseMenu: {fileID: 0}
-  _humanPlayers: 1
-  _aiPlayers: 1
-  _turnLength: 60
-  _wormsPerTeam: 1
---- !u!4 &1913921544
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04867287, y: 59.3, z: 8.2287445}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1913921545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945d0e291cc1f014eb57d72d56dd5028, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentPlayerText: {fileID: 0}
-  _turnsPlayedText: {fileID: 0}
-  _turnTimeSlider: {fileID: 0}
-  _turnTimeSliderAnimation: {fileID: 0}
-  _turnTimeText: {fileID: 0}
-  _ammoText: {fileID: 0}
---- !u!114 &1913921546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4197fea43dc0498419ea087a94e5a03c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1913921548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f7ffe1ee3979404790b502bd451dc65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dangerZonePrefab: {fileID: 9037591524251778087, guid: 6e94f51bac604f34ea5e2d4cd226580b, type: 3}
-  _dangerZoneLocations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _switchAfter: 30
-  _randomOrder: 0
---- !u!114 &1913921549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8107eb29d1a6410448cb8512c0c4782a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pickups:
-  - {fileID: 4804350354342887509, guid: 005c44dad29b6d54989c858f3deeb054, type: 3}
-  - {fileID: 4804350354342887509, guid: 25f72971bd8600347ae2b04ce4ab9399, type: 3}
-  - {fileID: 4804350354342887509, guid: 0442b03b25032db44a0e085994580d41, type: 3}
-  - {fileID: 4804350354342887509, guid: 0621aed3ebe02864cb904351051db04b, type: 3}
-  - {fileID: 4804350354342887509, guid: 0a5fb4e4aa8867b409cd7e7768b178a2, type: 3}
-  - {fileID: 4804350354342887509, guid: 82331792e1aa9504d8f8e8fa67b1eb8b, type: 3}
-  _spawnFrequency: 3.8
---- !u!114 &1913921550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 956c58db41997cb4abadd8fb5ba99d7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _allWeapons:
-  - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
-  - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
-  - {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
---- !u!114 &1913921551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913921540}
+  m_GameObject: {fileID: 1125836903}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5e1368f4d1d4614e9ce5cd0424513a5, type: 3}
@@ -587,6 +393,104 @@ MonoBehaviour:
   _listEntryPrefab: {fileID: 0}
   testRecord: 0
   testClear: 0
+--- !u!114 &1125836910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125836903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956c58db41997cb4abadd8fb5ba99d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allWeapons:
+  - {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
+  - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
+  - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
+--- !u!114 &1125836911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125836903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: e818ad52707626040a76ef880ae08097, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4f2f58e6-2fcd-46c4-ac98-ad2120f4680b
+    m_ActionName: Player/Fire[/XInputControllerWindows/buttonWest,/Keyboard/leftCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c6c469e-88bc-438c-a46c-3838a250a193
+    m_ActionName: Player/Movement[/XInputControllerWindows/leftStick,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0cc8bd0f-7a1d-4761-9c36-93b8e83caa81
+    m_ActionName: Player/Weapon Switch[/Keyboard/q,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb081b56-64a4-49f8-9601-c01d9f31fe94
+    m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1125836904}
+        m_TargetAssemblyTypeName: GameManagerV2, Assembly-CSharp
+        m_MethodName: InputPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1d591db4-91e1-4960-9c0a-de8d9367ee06
+    m_ActionName: Game Actions/Pause Menu[/XInputControllerWindows/start,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1125836904}
+        m_TargetAssemblyTypeName: GameManagerV2, Assembly-CSharp
+        m_MethodName: InputNextWorm
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b6b4a878-dac7-4f2f-8c23-242e52b89c7c
+    m_ActionName: Game Actions/Worm Switch[/Keyboard/e,/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc480a5b-1218-4070-90d7-b1ac18f03ecc
+    m_ActionName: Player/Camera Movement[/Mouse/delta,/XInputControllerWindows/rightStick]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Game Actions
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1992698772
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,5 +557,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

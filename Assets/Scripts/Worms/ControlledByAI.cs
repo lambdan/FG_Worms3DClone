@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
@@ -6,15 +7,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
+using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 
-[RequireComponent(typeof(WormInfo))]
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(WeaponHolder))]
 public class ControlledByAI : MonoBehaviour
 {
-    private WormInfo _wormInfo;
     private Movement _movement;
 
     private GameManagerV2 _gameManager;
@@ -39,20 +39,8 @@ public class ControlledByAI : MonoBehaviour
 
     void Awake()
     {
-        _wormInfo = GetComponent<WormInfo>();
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
-    }
-    
-    void Start()
-    {
-        // This gets run everytime AI script gets enabled
-        _currentEnemy = GetNearestEnemy();
-        
-        // Fake a thinking period
-        _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(0, 1))); 
-        
     }
     
     void Update()
@@ -107,7 +95,21 @@ public class ControlledByAI : MonoBehaviour
     Worm GetNearestEnemy()
     {
         _aliveEnemies = _gameManager.GetAliveEnemiesOfTeam(_myTeam);
-        return _aliveEnemies[Random.Range(0, _aliveEnemies.Count)];
+        Worm nearestEnemy = null;
+        foreach (Worm enemy in _aliveEnemies)
+        {
+            if (nearestEnemy == null || DistanceTo(enemy.GetTransform()) < DistanceTo(nearestEnemy.GetTransform()))
+            {
+                nearestEnemy = enemy;
+            } 
+        }
+
+        return nearestEnemy;
+    }
+
+    float DistanceTo(Transform target)
+    {
+        return Vector3.Distance(transform.position, target.position);
     }
     
     GameObject FindNearestPickup()
@@ -187,5 +189,21 @@ public class ControlledByAI : MonoBehaviour
     public void SetTeam(Team newTeam)
     {
         _myTeam = newTeam;
+    }
+
+    void OnEnable()
+    {
+        // This gets run everytime AI script gets enabled
+        _currentEnemy = GetNearestEnemy();
+        
+        // Fake a thinking period
+        _startedMoving = false;
+        StartCoroutine(WaitBeforeMoving(Random.Range(0, 1)));
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
+        _movement.AxisInput(Vector2.zero);
     }
 }
