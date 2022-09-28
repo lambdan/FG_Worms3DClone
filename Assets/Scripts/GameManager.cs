@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -49,9 +48,7 @@ public class GameManager : MonoBehaviour
 
     private int _turnsPlayed;
     private float _turnEnds;
-
-    public UnityEvent _deathEvent = new UnityEvent();
-
+    
     // Level initialization
 
     void SetLevel(GameObject levelPrefab)
@@ -280,7 +277,6 @@ public class GameManager : MonoBehaviour
     // Deaths and high score
     public void DeathReport()
     {
-        Debug.Log("Death report");
         _currentTeam.AddScore(1000);
         if (TeamsAlive() <= 1)
         {
@@ -336,9 +332,6 @@ public class GameManager : MonoBehaviour
 
         _currentTeam = _teams[0];
         StartTurn();
-
-        _deathEvent.AddListener(DeathReport);
-
         Destroy(_loadingScreen);
     }
 

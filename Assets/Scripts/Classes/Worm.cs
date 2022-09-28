@@ -38,6 +38,7 @@ public class Worm
     {
         _gameManager = gameManager;
         _weaponHolder.SetGameManager(gameManager);
+        _health.SetGameManager(gameManager);
     }
     
 
