@@ -18,6 +18,7 @@ public class GameManagerV2 : MonoBehaviour
     // End settings
     
     [SerializeField] private List<string> _wormNames;
+    [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private GameObject _HUDPrefab;
     [SerializeField] private GameObject _loadingScreenPrefab;
@@ -77,7 +78,9 @@ public class GameManagerV2 : MonoBehaviour
             newTeam.SetTeamColor(teamcolors[_teams.Count]);
             foreach (Worm worm in newTeam.GetWorms())
             {
+                worm.SetGameManager(this);
                 worm.SetWormColor(newTeam.GetTeamColor());
+                GiveStartingWeapons(worm);
             }
             _teams.Add(newTeam);
         }
@@ -90,12 +93,23 @@ public class GameManagerV2 : MonoBehaviour
             newTeam.SetTeamColor(teamcolors[_teams.Count]);
             foreach (Worm worm in newTeam.GetWorms())
             {
+                worm.SetGameManager(this);
                 worm.SetWormColor(newTeam.GetTeamColor());
+                GiveStartingWeapons(worm);
+                
                 worm.GetAIController().SetGameManager(this);
                 worm.GetAIController().SetPickupManager(_pickupManager);
                 worm.GetAIController().SetTeam(newTeam);
             }
             _teams.Add(newTeam); 
+        }
+    }
+
+    void GiveStartingWeapons(Worm worm)
+    {
+        foreach (WeaponProperties weapon in _startingWeapons)
+        {
+            worm.GetWeaponHolder().GetNewWeapon(weapon, 2 * weapon.clipSize);
         }
     }
     
@@ -136,7 +150,7 @@ public class GameManagerV2 : MonoBehaviour
         }
     }
 
-    // AI will ask for enemies
+    // Getters
     public List<Worm> GetAliveEnemiesOfTeam(Team myTeam)
     {
         List<Worm> aliveEnemies = new List<Worm>();
@@ -158,6 +172,11 @@ public class GameManagerV2 : MonoBehaviour
         return aliveEnemies;
     }
 
+    public HUDUpdater GetHUDUpdater()
+    {
+        return _hudUpdater;
+    }
+    
     // MonoBehaviours
     
     void Awake()

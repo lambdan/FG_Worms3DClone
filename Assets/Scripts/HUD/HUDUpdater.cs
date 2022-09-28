@@ -16,7 +16,6 @@ public class HUDUpdater : MonoBehaviour
         _currentPlayerText.text = newText;
     }
     
-
     public void UpdateTurnsPlayed(int rounds)
     {
         _turnsPlayedText.text = "Turn: " + rounds;

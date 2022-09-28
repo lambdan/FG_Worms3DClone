@@ -11,6 +11,7 @@ public class Team
 
     private int _currentWormIndex;
 
+    // Setters
     public void AddWormToTeam(Worm newWorm)
     {
         _teamWorms.Add(newWorm);
@@ -36,6 +37,7 @@ public class Team
         _score += amount;
     }
 
+    // Getters
     public List<Worm> GetWorms()
     {
         return _teamWorms;

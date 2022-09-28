@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efde88110f40b4a4a910339a8d66a2a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelPrefab: {fileID: 4549259294423954129, guid: 96a7e8f889deb1e4586783afe4d296fc, type: 3}
+  _levelPrefab: {fileID: 4549259294423954129, guid: 95a94cc40744ece4686e810c4942610a, type: 3}
   humans: 2
   ais: 0
   perteam: 3
@@ -331,6 +331,8 @@ MonoBehaviour:
   - Erkki
   - Fredrik
   - "G\xF6ran"
+  _startingWeapons:
+  - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _wormPrefab: {fileID: 473437008339127252, guid: 07a7405ad236f944a9514fc9537715bf, type: 3}
   _HUDPrefab: {fileID: 8296666507057083477, guid: d1a382bc7bd07a140808430a0f2e99da, type: 3}
   _loadingScreenPrefab: {fileID: 3732195232622258693, guid: 8912b7ad7c8746e41ba6658af108aef9, type: 3}
