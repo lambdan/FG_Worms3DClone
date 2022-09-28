@@ -51,6 +51,11 @@ public class ControlledByAI : MonoBehaviour
             return; 
         }
         
+        if (_currentEnemy.IsAlive() == false)
+        {
+            _currentEnemy = GetNearestEnemy();
+        }
+        
         distanceToEnemy = Vector3.Distance(transform.position, _currentEnemy.GetTransform().position);
         _currentPickupTarget = FindNearestPickup();
         distanceToPickup = Vector3.Distance(transform.position, _currentPickupTarget.transform.position);
@@ -72,7 +77,7 @@ public class ControlledByAI : MonoBehaviour
                 _weaponHolder.NextWeapon();
             }
             
-            if (distanceToEnemy > 6f) // Move closer to our target if we are far away...
+            if (distanceToEnemy > 7f) // Move closer to our target if we are far away...
             {
                 _movement.MoveTowards(_currentEnemy.GetTransform().position);
             }
@@ -83,13 +88,15 @@ public class ControlledByAI : MonoBehaviour
                     _movement.RotateTowards(_currentEnemy.GetTransform().position); // Since the bullets push the worms slightly, make sure we keep looking at them
                     _weaponHolder.Fire();
                 }
+
+                if (distanceToEnemy < 3f)
+                {
+                    _movement.MoveTowards(transform.position - (transform.forward * 5));
+                }
             }            
         }
 
-        if (_currentEnemy.IsAlive() == false)
-        {
-            _currentEnemy = GetNearestEnemy();
-        }
+
     }
 
     Worm GetNearestEnemy()

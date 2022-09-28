@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int perteam = 3;
     [SerializeField] private float _turnLength;
     [SerializeField] private List<string> teamnames;
-
     [SerializeField] private List<Color> teamcolors;
     // End settings
 
@@ -149,7 +148,7 @@ public class GameManager : MonoBehaviour
 
     void FocusNewWorm(Worm newWorm)
     {
-        _cameraManager.SetNewTarget(newWorm.GetGameObject());
+        _cameraManager.SetNewTarget(newWorm.GetGameObject(), newWorm.GetCameraGlue());
         if (_currentTeam.IsAIControlled())
         {
             newWorm.ActivateAI();
@@ -191,6 +190,11 @@ public class GameManager : MonoBehaviour
     public HUDUpdater GetHUDUpdater()
     {
         return _hudUpdater;
+    }
+
+    public LevelInfo GetLevelInfo()
+    {
+        return _levelInfo;
     }
 
     // Turn based

@@ -4921,4 +4921,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f5aac67f490024b98e3520df162ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colAction: {fileID: 9037591524251778256}
+  _collisionAction: {fileID: 9037591524251778256}

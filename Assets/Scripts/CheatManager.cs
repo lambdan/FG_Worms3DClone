@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CheatManager : MonoBehaviour
 {
@@ -7,25 +8,21 @@ public class CheatManager : MonoBehaviour
 
     private GameManager _gameManager;
     
-    // Update is called once per frame
     void Awake()
     {
         _gameManager = GetComponent<GameManager>();
     }
     
-    void Update()
+    public void InvincibilityCheat (InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            GiveInvincibility();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            GiveAllWeapons();
-        }
+        GiveInvincibility();
     }
 
+    public void WeaponsCheat(InputAction.CallbackContext context)
+    {
+        GiveAllWeapons();
+    }
+    
     void GiveAllWeapons()
     {
         foreach (WeaponProperties wp in _allWeapons)

@@ -6,17 +6,35 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float _timeUntilReset = 2f;
     
     private Transform _target; // Player
+    private CameraGlue _cameraGlue;
     private Vector3 _cameraDestination;
 
-    private bool _shouldFollow = false; // Auto follow the player?
-    private bool _manualControl = false; // Manual control active?
-    private float _manualLastTime = 0; // When was manual input last received
+    private bool _shouldFollow;
+    private bool _manualControl;
+    private float _manualLastTime;
 
     private Vector3 _manualOffset;
     private Vector2 _axisInput;
     
     void FixedUpdate()
     {
+        if (_manualControl)
+        {
+            _cameraGlue.GetTransform().RotateAround(_target.position, new Vector3(_axisInput.y, -_axisInput.x, 0), 180 * Time.deltaTime);
+
+            if (_cameraGlue.GetTransform().position.y < _target.position.y + 2f) // Prevent going under
+            {
+                _cameraGlue.GetTransform().position = new Vector3(transform.position.x, _target.position.y + 2f, transform.position.z);
+            }
+            
+        }
+        
+
+        transform.position = _cameraGlue.GetTransform().position;
+        transform.LookAt(_target);
+        
+        
+        /*
         if (_manualControl){
             transform.RotateAround(_target.position, new Vector3(_axisInput.y, -_axisInput.x, 0), 180 * Time.deltaTime);
             _manualOffset = transform.position - _target.position;
@@ -40,13 +58,14 @@ public class CameraManager : MonoBehaviour
             transform.position = new Vector3(transform.position.x, _target.position.y + 2f, transform.position.z);
         }
         
-        transform.LookAt(_target);
+        transform.LookAt(_target);*/
 
     }
 
-    public void SetNewTarget(GameObject go)
+    public void SetNewTarget(GameObject go, CameraGlue glue)
     {
         _target = go.transform;
+        _cameraGlue = glue;
         _shouldFollow = true;
     }
     
@@ -64,8 +83,10 @@ public class CameraManager : MonoBehaviour
     
     public void InstantReset()
     {
+        /*
         transform.position = _cameraDestination;
-        transform.LookAt(_target);
+        transform.LookAt(_target);*/
+        _cameraGlue.Reset();
         _manualControl = false;
         _shouldFollow = true;
         _axisInput = Vector2.zero;

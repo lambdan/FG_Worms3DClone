@@ -1,14 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CollisionAction))]
 public class DangerZone : MonoBehaviour
 {
-    [SerializeField] private CollisionAction _colAction;
-
+    private CollisionAction _collisionAction;
+    void Awake()
+    {
+        _collisionAction = GetComponent<CollisionAction>();
+    }
     private void OnCollisionStay(Collision collisionInfo)
     {
-        _colAction.Action(collisionInfo.gameObject);
+        _collisionAction.Action(collisionInfo.gameObject);
     }
 }

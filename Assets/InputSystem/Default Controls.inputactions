@@ -94,6 +94,17 @@
                 },
                 {
                     "name": "",
+                    "id": "435d9c83-1a76-4344-8816-cbbe69cb39bb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d1996817-6eb4-4396-a4f5-329eec8e3882",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
@@ -390,6 +401,54 @@
                     "processors": "",
                     "groups": "",
                     "action": "Worm Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cheats",
+            "id": "8c7f4d7c-111c-4876-8e48-573ea3665a58",
+            "actions": [
+                {
+                    "name": "Invincibility Cheat",
+                    "type": "Button",
+                    "id": "d6cf0874-fa7d-4692-8a93-4c61b53e4472",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Weapon Cheat",
+                    "type": "Button",
+                    "id": "a97fa64d-1573-4754-bd61-af4effd42850",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "38425b5c-ee73-4327-8921-bfb7c1ced142",
+                    "path": "<Keyboard>/f1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Invincibility Cheat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b17bc9fd-4dd3-4871-82e2-0e5f1e9912b5",
+                    "path": "<Keyboard>/f2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Weapon Cheat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

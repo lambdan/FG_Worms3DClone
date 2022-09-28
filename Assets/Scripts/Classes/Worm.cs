@@ -12,6 +12,7 @@ public class Worm
     private GameManager _gameManager;
     private Health _health;
     private WeaponHolder _weaponHolder;
+    private CameraGlue _cameraGlue;
 
     // Setters
     public void SetWormName(string newName)
@@ -27,6 +28,7 @@ public class Worm
         _wormColor = _wormGameObject.GetComponent<WormColor>();
         _health = _wormGameObject.GetComponent<Health>();
         _weaponHolder = _wormGameObject.GetComponent<WeaponHolder>();
+        _cameraGlue = _wormGameObject.GetComponent<CameraGlue>();
     }
     
     public void SetWormColor(Color newColor)
@@ -91,6 +93,11 @@ public class Worm
     public Health GetHealth()
     {
         return _health;
+    }
+
+    public CameraGlue GetCameraGlue()
+    {
+        return _cameraGlue;
     }
     
     // State
