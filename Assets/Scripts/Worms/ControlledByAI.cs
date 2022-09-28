@@ -17,7 +17,7 @@ public class ControlledByAI : MonoBehaviour
 {
     private Movement _movement;
 
-    private GameManagerV2 _gameManager;
+    private GameManager _gameManager;
     private WeaponHolder _weaponHolder;
     private PickupManager _pickupManager;
     
@@ -176,7 +176,7 @@ public class ControlledByAI : MonoBehaviour
         _unstucking = false;
     }
 
-    public void SetGameManager(GameManagerV2 gameManager)
+    public void SetGameManager(GameManager gameManager)
     {
         _gameManager = gameManager;
     }

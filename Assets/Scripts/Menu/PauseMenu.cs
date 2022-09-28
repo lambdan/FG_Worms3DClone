@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MenuInputs
 {
-    private GameManagerV2 _gameManager;
+    private GameManager _gameManager;
     [SerializeField] private Canvas _canvas;
 
     public override void Select()
@@ -28,7 +28,7 @@ public class PauseMenu : MenuInputs
         newSelection(0); // To make the first item be hovered
     }
 
-    public void SetGameManager(GameManagerV2 gameManager)
+    public void SetGameManager(GameManager gameManager)
     {
         _gameManager = gameManager;
     }

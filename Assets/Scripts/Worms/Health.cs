@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     private int _maxHealth;
     private bool _invincible = false;
 
-    private GameManagerV2 _gameManager;
+    private GameManager _gameManager;
     public UnityEvent healthZero;
     public UnityEvent healthChanged;
     
@@ -78,7 +78,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void SetGameManager(GameManagerV2 gameManager)
+    public void SetGameManager(GameManager gameManager)
     {
         _gameManager = gameManager;
     }

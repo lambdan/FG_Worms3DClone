@@ -9,7 +9,7 @@ public class Worm
     private PlayerInput _wormPlayerInput;
     private ControlledByAI _wormAIController;
     private WormColor _wormColor;
-    private GameManagerV2 _gameManager;
+    private GameManager _gameManager;
     private Health _health;
     private WeaponHolder _weaponHolder;
 
@@ -34,7 +34,7 @@ public class Worm
         _wormColor.SetNewColor(newColor);
     }
 
-    public void SetGameManager(GameManagerV2 gameManager)
+    public void SetGameManager(GameManager gameManager)
     {
         _gameManager = gameManager;
         _weaponHolder.SetGameManager(gameManager);
@@ -77,7 +77,7 @@ public class Worm
         return _wormColor;
     }
 
-    public GameManagerV2 GetGameManager()
+    public GameManager GetGameManager()
     {
         return _gameManager;
     }

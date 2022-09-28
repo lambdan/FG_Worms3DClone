@@ -5,12 +5,12 @@ public class CheatManager : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> _allWeapons;
 
-    private GameManagerV2 _gameManager;
+    private GameManager _gameManager;
     
     // Update is called once per frame
     void Awake()
     {
-        _gameManager = GetComponent<GameManagerV2>();
+        _gameManager = GetComponent<GameManager>();
     }
     
     void Update()

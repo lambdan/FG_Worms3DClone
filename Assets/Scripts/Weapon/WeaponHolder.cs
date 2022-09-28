@@ -9,7 +9,7 @@ public class WeaponHolder : MonoBehaviour
     [SerializeField] private Transform _weaponHand;
     [SerializeField] private Slider _cooldownSlider;
 
-    private GameManagerV2 _gameManager;
+    private GameManager _gameManager;
     private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
     private List<int> _bulletsInClip = new List<int>();
     private List<int> _reserveAmmo = new List<int>();
@@ -204,7 +204,7 @@ public class WeaponHolder : MonoBehaviour
         _gameManager.GetHUDUpdater().ShowAmmo();
     }
 
-    public void SetGameManager(GameManagerV2 gameManager)
+    public void SetGameManager(GameManager gameManager)
     {
         _gameManager = gameManager;
     }
