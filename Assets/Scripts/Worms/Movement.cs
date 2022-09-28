@@ -1,9 +1,5 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Composites;
 
 public class Movement : MonoBehaviour
 {
@@ -13,14 +9,11 @@ public class Movement : MonoBehaviour
     public float rotationSpeed;
     public float jumpForce;
 
-    private bool _isGrounded = true;
-    private bool _falling = false;
+    private bool _isGrounded;
+    private bool _fastFalling;
 
     public UnityEvent landedAfterLongFall;
     private Vector2 _moveAxis;
-    private Vector2 _controllerAxisInput;
-
-    private bool _stickEnabled;
 
     void Awake()
     {
@@ -40,7 +33,7 @@ public class Movement : MonoBehaviour
 
         if (_rb.velocity.y < -20)
         {
-            _falling = true;
+            _fastFalling = true;
         }
     }
 
@@ -69,7 +62,7 @@ public class Movement : MonoBehaviour
     
     private void OnCollisionEnter(Collision collisionInfo)
     {
-        if (_falling)
+        if (_fastFalling)
         {
             landedAfterLongFall.Invoke();
         }
@@ -77,7 +70,7 @@ public class Movement : MonoBehaviour
         if (_rb.velocity.y <= Mathf.Abs(0.1f))
         {
             _isGrounded = true;
-            _falling = false;
+            _fastFalling = false;
         }
     }
 }
