@@ -76,6 +76,5 @@ public class CameraManager : MonoBehaviour
         _axisInput = input;
         _manualLastTime = Time.time;
         _manualControl = true;
-        Debug.Log("got axis input in camera " + input);
     }
 }
