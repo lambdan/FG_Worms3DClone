@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
@@ -16,24 +17,22 @@ public class ControlledByAI : MonoBehaviour
     private WormInfo _wormInfo;
     private Movement _movement;
 
-    private GameManager _gameManager;
+    private GameManagerV2 _gameManager;
     private WeaponHolder _weaponHolder;
     private PickupManager _pickupManager;
     
-    private bool _gotInfo = false;
-    private int _myTeam;
-    private List<GameObject> _enemies = new List<GameObject>();
+    private Team _myTeam;
+    private List<Worm> _aliveEnemies;
+    private Worm _currentEnemy;
 
     private List<GameObject> _pickups;
     private float distanceToPickup;
     private float distanceToEnemy;
 
     private GameObject _currentPickupTarget;
-    private GameObject _currentEnemyTarget = null;
-    private bool _enemiesAlive = false;
-    
+
     private bool _startedMoving;
-    private bool _unstucking = false;
+    private bool _unstucking;
 
     private Vector3 _lastPosition;
     private RaycastHit hit;
@@ -43,69 +42,30 @@ public class ControlledByAI : MonoBehaviour
         _wormInfo = GetComponent<WormInfo>();
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
-        _gameManager = FindObjectOfType<GameManager>(); // We need this to get info about all worms
-        _pickupManager = FindObjectOfType<PickupManager>(); // We need this to know about pickups
     }
     
     void Start()
     {
-        // Start() gets triggered everytime we re-activate the AI control, so make sure we only get info about ourselves once
-        // (Cant do it in awake because worms haven't been generated yet)
-        if (!_gotInfo) 
-        {
-            // Get what team I'm playing for
-            _myTeam = _wormInfo.GetTeam();
-
-            // Go through every team...
-            foreach (List<GameObject> team in _gameManager.GetAllTeams())
-            {
-                foreach (GameObject worm in team) // ... every worm ...
-                {
-                    // ... add everyone who's not on my team and has >0 HP to my enemy list
-                    if (worm.GetComponent<WormInfo>().GetTeam() != _myTeam && worm.GetComponent<Health>().GetHealth() > 0)
-                    {
-                        _enemies.Add(worm);
-                    }
-                }
-            }
-
-            if (_enemies.Count > 0)
-            {
-                _enemiesAlive = true;
-            }
-
-            _gotInfo = true; // So we don't go through this again next time we get activated
-        }
-
+        // This gets run everytime AI script gets enabled
+        _currentEnemy = GetNearestEnemy();
+        
         // Fake a thinking period
         _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(1, 2))); 
+        StartCoroutine(WaitBeforeMoving(Random.Range(0, 1))); 
         
     }
     
     void Update()
     {
+        
         if (!_startedMoving || _unstucking)
         {
-            // The fake thinking period is still active
-            // or
-            // We are in the process of getting unstuck
-            // = dont do any other movement
             return; 
         }
-
+        
+        distanceToEnemy = Vector3.Distance(transform.position, _currentEnemy.GetTransform().position);
         _currentPickupTarget = FindNearestPickup();
-        _currentEnemyTarget = FindNearestEnemy();
-
-        if (_currentPickupTarget != null)
-        {
-            distanceToPickup = Vector3.Distance(transform.position, _currentPickupTarget.transform.position);
-        }
-
-        if (_currentEnemyTarget != null)
-        {
-            distanceToEnemy = Vector3.Distance(transform.position, _currentEnemyTarget.transform.position);
-        }
+        distanceToPickup = Vector3.Distance(transform.position, _currentPickupTarget.transform.position);
         
         // Any obstacles in front of us?
         if (Physics.SphereCast(transform.position, 2, transform.forward - transform.up, out RaycastHit hitinfo, 1.5f) && hitinfo.transform.CompareTag("Obstacle"))
@@ -117,7 +77,7 @@ public class ControlledByAI : MonoBehaviour
             // We're close to a pickup or we're out of ammo = go for pickup
             _movement.MoveTowards(_currentPickupTarget.transform.position);
         }
-        else if (_enemiesAlive)
+        else if (_aliveEnemies.Count > 0)
         {
             if (_weaponHolder.HasAmmoInThisWeapon() == false)
             {
@@ -126,48 +86,30 @@ public class ControlledByAI : MonoBehaviour
             
             if (distanceToEnemy > 6f) // Move closer to our target if we are far away...
             {
-                _movement.MoveTowards(_currentEnemyTarget.transform.position);
+                _movement.MoveTowards(_currentEnemy.GetTransform().position);
             }
             else // ... otherwise, start firing
             {
                 if (Random.Range(0, 100) < 30)
                 {
-                    _movement.RotateTowards(_currentEnemyTarget.transform.position); // Since the bullets push the worms slightly, make sure we keep looking at them
+                    _movement.RotateTowards(_currentEnemy.GetTransform().position); // Since the bullets push the worms slightly, make sure we keep looking at them
                     _weaponHolder.Fire();
                 }
             }            
         }
 
+        if (_currentEnemy.IsAlive() == false)
+        {
+            _currentEnemy = GetNearestEnemy();
+        }
     }
 
-    GameObject FindNearestEnemy()
+    Worm GetNearestEnemy()
     {
-        GameObject nearestEnemy = null;
-        float nearestEnemyDistance = 0;
-        float distance;
-
-        foreach (GameObject enemy in _enemies)
-        {
-            if (enemy.activeSelf && enemy.GetComponent<Health>().GetHealth() > 0) // Enemy is active and not dead
-            {
-                distance = Vector3.Distance(transform.position, enemy.transform.position);
-                if (nearestEnemy == null || distance < nearestEnemyDistance)
-                {
-                    nearestEnemyDistance = distance;
-                    nearestEnemy = enemy;
-                }      
-            }
-        }
-        
-        // If we're still null here, it means there are no enemies left
-        if (nearestEnemy == null)
-        {
-            _enemiesAlive = false;
-        }
-
-        return nearestEnemy;
+        _aliveEnemies = _gameManager.GetAliveEnemiesOfTeam(_myTeam);
+        return _aliveEnemies[Random.Range(0, _aliveEnemies.Count)];
     }
-
+    
     GameObject FindNearestPickup()
     {
         GameObject nearestPickup = null;
@@ -230,5 +172,20 @@ public class ControlledByAI : MonoBehaviour
         // We should be in the clear now??
         
         _unstucking = false;
+    }
+
+    public void SetGameManager(GameManagerV2 gameManager)
+    {
+        _gameManager = gameManager;
+    }
+
+    public void SetPickupManager(PickupManager pickupManager)
+    {
+        _pickupManager = pickupManager;
+    }
+
+    public void SetTeam(Team newTeam)
+    {
+        _myTeam = newTeam;
     }
 }

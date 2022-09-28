@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -19,10 +20,13 @@ public class GameManagerV2 : MonoBehaviour
     [SerializeField] private List<string> _wormNames;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private GameObject _loadingScreenPrefab;
+    [SerializeField] private GameObject _pauseMenuPrefab;
 
     private GameObject _loadingScreen;
+    private GameObject _pauseMenu;
 
     private CameraManager _cameraManager;
+    private PickupManager _pickupManager;
     private HumanInputListener _humanInputListener;
 
     private GameObject _level;
@@ -32,11 +36,15 @@ public class GameManagerV2 : MonoBehaviour
     private Team _currentTeam;
     private Worm _currentWorm;
 
+    // Level initialization
+    
     void SetLevel(GameObject levelPrefab)
     {
         _level = Instantiate(levelPrefab);
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
+    
+    // Team generation
     
     Team GenerateTeam(int amount, Transform homebase)
     {
@@ -64,6 +72,10 @@ public class GameManagerV2 : MonoBehaviour
             Team newTeam = GenerateTeam(perteam, _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetTeamName(teamnames[_teams.Count]);
             newTeam.SetTeamColor(teamcolors[_teams.Count]);
+            foreach (Worm worm in newTeam.GetWorms())
+            {
+                worm.SetWormColor(newTeam.GetTeamColor());
+            }
             _teams.Add(newTeam);
         }
 
@@ -73,34 +85,26 @@ public class GameManagerV2 : MonoBehaviour
             newTeam.SetAIControlled(true);
             newTeam.SetTeamName("AI Team " + (i + 1));
             newTeam.SetTeamColor(teamcolors[_teams.Count]);
+            foreach (Worm worm in newTeam.GetWorms())
+            {
+                worm.SetWormColor(newTeam.GetTeamColor());
+                worm.GetAIController().SetGameManager(this);
+                worm.GetAIController().SetPickupManager(_pickupManager);
+                worm.GetAIController().SetTeam(newTeam);
+            }
             _teams.Add(newTeam); 
         }
     }
     
-    void Awake()
-    {
-        _loadingScreen = Instantiate(_loadingScreenPrefab);
-        _cameraManager = Camera.main.GetComponent<CameraManager>();
-        _humanInputListener = GetComponent<HumanInputListener>();
-    }
-
-    void Start()
-    {
-        _teams = new List<Team>();
-        SetLevel(_levelPrefab);
-        GenerateTeams();
-
-        _currentTeam = _teams[0];
-        _currentWorm = _currentTeam.GetWorm(0);
-        FocusNewWorm(_currentWorm);
-        
-        Destroy(_loadingScreen);
-    }
-
+    // Pausing
+    
     public void TogglePause()
     {
-        Time.timeScale = 1 - Time.timeScale;
+        _pauseMenu.SetActive(!_pauseMenu.activeSelf);
+
     }
+    
+    // Worm switching
 
     public void NextWorm()
     {
@@ -127,6 +131,52 @@ public class GameManagerV2 : MonoBehaviour
             newWorm.ActivateHumanInput();
             _humanInputListener.SetNewTarget(newWorm.GetInputListener());
         }
+    }
+
+    // AI will ask for enemies
+    public List<Worm> GetAliveEnemiesOfTeam(Team myTeam)
+    {
+        List<Worm> aliveEnemies = new List<Worm>();
+        foreach (Team team in _teams)
+        {
+            if (team == myTeam)
+            {
+                continue;
+            }
+
+            foreach (Worm worm in team.GetWorms())
+            {
+                if (worm.IsAlive())
+                {
+                    aliveEnemies.Add(worm);
+                }
+            }
+        }
+        return aliveEnemies;
+    }
+
+    // MonoBehaviours
+    
+    void Awake()
+    {
+        _loadingScreen = Instantiate(_loadingScreenPrefab);
+        _pauseMenu = Instantiate(_pauseMenuPrefab);
+        _cameraManager = Camera.main.GetComponent<CameraManager>();
+        _pickupManager = GetComponent<PickupManager>();
+        _humanInputListener = GetComponent<HumanInputListener>();
+    }
+
+    void Start()
+    {
+        _teams = new List<Team>();
+        SetLevel(_levelPrefab);
+        GenerateTeams();
+
+        _currentTeam = _teams[0];
+        _currentWorm = _currentTeam.GetWorm(0);
+        FocusNewWorm(_currentWorm);
+        
+        Destroy(_loadingScreen);
     }
     
 }

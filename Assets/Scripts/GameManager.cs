@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     private int _turnsPlayed = 0;
     private int _teamsGenerated = 0;
     
-    private bool _paused = false;
     private bool _gameOver = false;
     
     private float _turnEnds; // When the turn will end (time), used in the timer coroutine
@@ -212,6 +211,7 @@ public class GameManager : MonoBehaviour
 
     public void TogglePause()
     {
+        /*
         if (_paused)
         {
             // Unpause
@@ -225,7 +225,7 @@ public class GameManager : MonoBehaviour
             _pauseMenu.Activate();
             Time.timeScale = 0;
             _paused = true;
-        }
+        }*/
     }
 
     public void CancelRound()

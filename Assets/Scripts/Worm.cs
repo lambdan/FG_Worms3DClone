@@ -3,20 +3,16 @@ using UnityEngine;
 public class Worm
 {
     private string _wormName = "Unknown Worm";
-    private bool _alive = true;
-    
+
     private GameObject _wormGameObject;
     private InputListener _wormInputListener;
     private ControlledByAI _wormAIController;
+    private WormColor _wormColor;
+    private Health _health;
 
     public void SetWormName(string newName)
     {
         _wormName = newName;
-    }
-
-    public void SetAlive(bool newState)
-    {
-        _alive = newState;
     }
 
     public void SetWormGameObject(GameObject newGameObject)
@@ -24,6 +20,8 @@ public class Worm
         _wormGameObject = newGameObject;
         _wormInputListener = _wormGameObject.GetComponent<InputListener>();
         _wormAIController = _wormGameObject.GetComponent<ControlledByAI>();
+        _wormColor = _wormGameObject.GetComponent<WormColor>();
+        _health = _wormGameObject.GetComponent<Health>();
     }
 
     public string GetWormName()
@@ -33,12 +31,22 @@ public class Worm
 
     public bool IsAlive()
     {
-        return _alive;
+        if (_health.GetHealth() > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public GameObject GetGameObject()
     {
         return _wormGameObject;
+    }
+
+    public Transform GetTransform()
+    {
+        return GetGameObject().transform;
     }
 
     public void ActivateAI()
@@ -62,5 +70,20 @@ public class Worm
     public InputListener GetInputListener()
     {
         return _wormInputListener;
+    }
+
+    public ControlledByAI GetAIController()
+    {
+        return _wormAIController;
+    }
+
+    public WormColor GetWormColor()
+    {
+        return _wormColor;
+    }
+
+    public void SetWormColor(Color newColor)
+    {
+        _wormColor.SetNewColor(newColor);
     }
 }
