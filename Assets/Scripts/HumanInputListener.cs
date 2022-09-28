@@ -1,22 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(GameManager))]
-[RequireComponent(typeof(WormManager))]
 public class HumanInputListener : MonoBehaviour
 {
     private Keyboard _kb;
     private Mouse _mouse;
     private Gamepad _gamepad;
 
-    private GameManager _GM;
-    private WormManager _WM;
     private InputListener _IL;
-    
+    private GameManagerV2 _GM;
+
     void Awake()
     {
-        _GM = GetComponent<GameManager>();
-        _WM = GetComponent<WormManager>();
+        _GM = GetComponent<GameManagerV2>();
     }
     public void SetNewTarget(InputListener target)
     {
@@ -80,7 +76,7 @@ public class HumanInputListener : MonoBehaviour
     {
         if (_kb.eKey.wasPressedThisFrame || (_gamepad != null && _gamepad.rightShoulder.wasPressedThisFrame))
         {
-            _WM.NextWorm();
+            _GM.NextWorm();
         } 
     }
 

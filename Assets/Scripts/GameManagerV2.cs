@@ -23,7 +23,8 @@ public class GameManagerV2 : MonoBehaviour
     private GameObject _loadingScreen;
 
     private CameraManager _cameraManager;
-    
+    private HumanInputListener _humanInputListener;
+
     private GameObject _level;
     private LevelInfo _levelInfo;
 
@@ -78,23 +79,54 @@ public class GameManagerV2 : MonoBehaviour
     
     void Awake()
     {
+        _loadingScreen = Instantiate(_loadingScreenPrefab);
         _cameraManager = Camera.main.GetComponent<CameraManager>();
+        _humanInputListener = GetComponent<HumanInputListener>();
     }
 
     void Start()
     {
-        _loadingScreen = Instantiate(_loadingScreenPrefab);
-        
         _teams = new List<Team>();
         SetLevel(_levelPrefab);
         GenerateTeams();
 
         _currentTeam = _teams[0];
-        _currentWorm = _currentTeam.GetWorms()[0];
-
-        _cameraManager.SetNewTarget(_currentWorm.GetGameObject());
+        _currentWorm = _currentTeam.GetWorm(0);
+        FocusNewWorm(_currentWorm);
         
         Destroy(_loadingScreen);
+    }
+
+    public void TogglePause()
+    {
+        Time.timeScale = 1 - Time.timeScale;
+    }
+
+    public void NextWorm()
+    {
+        DeactivateCurrentWorm();
+        _currentWorm = _currentTeam.GetNextWorm();
+        FocusNewWorm(_currentWorm);
+    }
+
+    void DeactivateCurrentWorm()
+    {
+        _currentWorm.Deactivate();
+        _humanInputListener.DisableTarget();
+    }
+    
+    void FocusNewWorm(Worm newWorm)
+    {
+        _cameraManager.SetNewTarget(newWorm.GetGameObject());
+        if (_currentTeam.IsAIControlled())
+        {
+            newWorm.ActivateAI();
+        }
+        else
+        {
+            newWorm.ActivateHumanInput();
+            _humanInputListener.SetNewTarget(newWorm.GetInputListener());
+        }
     }
     
 }

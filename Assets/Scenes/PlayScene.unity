@@ -1276,6 +1276,7 @@ GameObject:
   - component: {fileID: 1125836905}
   - component: {fileID: 1125836904}
   - component: {fileID: 1125836906}
+  - component: {fileID: 1125836907}
   m_Layer: 0
   m_Name: Game Manager v2
   m_TagString: Untagged
@@ -1296,8 +1297,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelPrefab: {fileID: 4549259294423954129, guid: 95a94cc40744ece4686e810c4942610a, type: 3}
-  humans: 1
-  ais: 1
+  humans: 0
+  ais: 2
   perteam: 10
   teamnames:
   - Bakas
@@ -1352,6 +1353,18 @@ MonoBehaviour:
   _turnTimeSliderAnimation: {fileID: 878689044}
   _turnTimeText: {fileID: 1537163353}
   _ammoText: {fileID: 667454466}
+--- !u!114 &1125836907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125836903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4197fea43dc0498419ea087a94e5a03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1158040783
 GameObject:
   m_ObjectHideFlags: 0
