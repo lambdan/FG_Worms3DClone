@@ -5,22 +5,24 @@ public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance { get; private set; }
 
-    [SerializeField] private int _maxPlayers;
-
+    private int _maxPlayers = 8;
     private int _humanPlayers = 1;
     private int _aiPlayers = 1;
     private int _turnLength = 15;
     private int _wormsPerTeam = 3;
-    private List<string> _names = new List<string>();
+
+    private List<Color> _teamColors = new List<Color>()
+        { Color.blue, Color.red, Color.green, Color.yellow, Color.cyan, Color.magenta, Color.black, Color.gray };
+    private List<string> _playerNames = new List<string>() {"Human 1", "Human 2", "Human 3", "Human 4", "Human 5", "Human 6", "Human 7", "Human 8"};
 
     public void SetNames(List<string> newNames)
     {
-        _names = newNames;
+        _playerNames = newNames;
     }
 
-    public List<string> GetHumanNames()
+    public List<string> GetPlayerNames()
     {
-        return _names;
+        return _playerNames;
     }
     
     public void IncrementHumans()
@@ -93,6 +95,11 @@ public class SettingsManager : MonoBehaviour
     public int GetWormsPerTeam()
     {
         return _wormsPerTeam;
+    }
+
+    public List<Color> GetTeamColors()
+    {
+        return _teamColors;
     }
 
     void Awake()

@@ -220,7 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb0f55c0fe3acb4d8c3e58a46d26313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeUntilReset: 2
 --- !u!1001 &618147657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,10 +311,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelPrefab: {fileID: 4549259294423954129, guid: 96a7e8f889deb1e4586783afe4d296fc, type: 3}
-  humans: 1
-  ais: 1
-  perteam: 3
-  _turnLength: 30
+  humans: 0
+  ais: 2
+  perteam: 1
+  _turnLength: 20
   teamnames:
   - Bakas
   - Idiots
@@ -375,7 +374,7 @@ MonoBehaviour:
   - {fileID: 4804350354342887509, guid: 0a5fb4e4aa8867b409cd7e7768b178a2, type: 3}
   - {fileID: 4804350354342887509, guid: 82331792e1aa9504d8f8e8fa67b1eb8b, type: 3}
   _pickupsEnabled: 1
-  _spawnFrequency: 0.1
+  _spawnFrequency: 1
 --- !u!114 &1125836909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,7 +429,19 @@ MonoBehaviour:
       m_Calls: []
   m_ControlsChangedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1125836903}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
@@ -496,22 +507,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1125836910}
         m_TargetAssemblyTypeName: CheatManager, Assembly-CSharp
-        m_MethodName: InvincibilityCheat
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d6cf0874-fa7d-4692-8a93-4c61b53e4472
-    m_ActionName: Cheats/Invincibility Cheat[/Keyboard/f1]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1125836910}
-        m_TargetAssemblyTypeName: CheatManager, Assembly-CSharp
         m_MethodName: WeaponsCheat
         m_Mode: 0
         m_Arguments:
@@ -522,8 +517,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: a97fa64d-1573-4754-bd61-af4effd42850
-    m_ActionName: Cheats/Weapon Cheat[/Keyboard/f2]
+    m_ActionId: 80141b17-8941-49e4-8477-d360ccaab932
+    m_ActionName: Game Actions/Weapon Cheat[/Keyboard/f2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1125836910}
+        m_TargetAssemblyTypeName: CheatManager, Assembly-CSharp
+        m_MethodName: InvincibilityCheat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 58be5343-b183-4016-8485-c2293775b9fd
+    m_ActionName: Game Actions/Invincibility Cheat[/Keyboard/f1]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game Actions

@@ -13,12 +13,6 @@ public class GameManager : MonoBehaviour
 {
     // Settings (these should be gotten through settings manager)
     [SerializeField] private GameObject _levelPrefab;
-    [SerializeField] private int humans = 1;
-    [SerializeField] private int ais = 1;
-    [SerializeField] private int perteam = 3;
-    [SerializeField] private float _turnLength;
-    [SerializeField] private List<string> teamnames;
-    [SerializeField] private List<Color> teamcolors;
     // End settings
 
     [SerializeField] private List<string> _wormNames;
@@ -32,6 +26,7 @@ public class GameManager : MonoBehaviour
     private GameObject _loadingScreen;
     private GameObject _pauseMenu;
 
+    private SettingsManager _settingsManager;
     private CameraManager _cameraManager;
     private PickupManager _pickupManager;
     private HighScoreManager _highScoreManager;
@@ -81,11 +76,11 @@ public class GameManager : MonoBehaviour
 
     void GenerateTeams()
     {
-        for (int i = 0; i < humans; i++)
+        for (int i = 0; i < _settingsManager.GetHumans(); i++)
         {
-            Team newTeam = GenerateTeam(perteam, _levelInfo.GetSpawnBases()[_teams.Count]);
-            newTeam.SetTeamName(teamnames[_teams.Count]);
-            newTeam.SetTeamColor(teamcolors[_teams.Count]);
+            Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
+            newTeam.SetTeamName(_settingsManager.GetPlayerNames()[_teams.Count]);
+            newTeam.SetTeamColor(_settingsManager.GetTeamColors()[_teams.Count]);
             foreach (Worm worm in newTeam.GetWorms())
             {
                 worm.SetGameManager(this);
@@ -96,12 +91,12 @@ public class GameManager : MonoBehaviour
             _teams.Add(newTeam);
         }
 
-        for (int i = 0; i < ais; i++)
+        for (int i = 0; i < _settingsManager.GetAIs(); i++)
         {
-            Team newTeam = GenerateTeam(perteam, _levelInfo.GetSpawnBases()[_teams.Count]);
+            Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetAIControlled(true);
             newTeam.SetTeamName("AI Team " + (i + 1));
-            newTeam.SetTeamColor(teamcolors[_teams.Count]);
+            newTeam.SetTeamColor(_settingsManager.GetTeamColors()[_teams.Count]);
             foreach (Worm worm in newTeam.GetWorms())
             {
                 worm.SetGameManager(this);
@@ -230,7 +225,7 @@ public class GameManager : MonoBehaviour
     {
         UpdateTurnsPlayed();
         SetNewWorm(_currentTeam.GetNextWorm());
-        _turnEnds = Time.time + _turnLength;
+        _turnEnds = Time.time + _settingsManager.GetTurnLength();
         StartCoroutine(TurnTimer());
     }
 
@@ -291,6 +286,7 @@ public class GameManager : MonoBehaviour
     // Game inputs
     public void InputPause(InputAction.CallbackContext context)
     {
+        //Debug.Log(context.control.device.name);
         if (context.started)
         {
             TogglePause();
@@ -310,11 +306,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ControlsChanged(InputAction.CallbackContext context)
+    {
+        Debug.Log(context);
+    }
+
     // MonoBehaviours
 
     void Awake()
     {
         _loadingScreen = Instantiate(_loadingScreenPrefab);
+        
+        _settingsManager = FindObjectOfType<SettingsManager>();
+        if (_settingsManager == null)
+        {
+            _settingsManager = new SettingsManager();
+        }
+        
         _pauseMenu = Instantiate(_pauseMenuPrefab);
         _pauseMenu.GetComponent<PauseMenu>().SetGameManager(this);
 
@@ -325,7 +333,7 @@ public class GameManager : MonoBehaviour
         _highScoreManager = GetComponent<HighScoreManager>();
         _hudUpdater = _HUD.GetComponent<HUDUpdater>();
 
-        _hudUpdater.SetTurnSliderMax(_turnLength);
+        _hudUpdater.SetTurnSliderMax(_settingsManager.GetTurnLength());
     }
 
     void Start()

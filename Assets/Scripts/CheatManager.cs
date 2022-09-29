@@ -15,12 +15,18 @@ public class CheatManager : MonoBehaviour
     
     public void InvincibilityCheat (InputAction.CallbackContext context)
     {
-        GiveInvincibility();
+        if (context.started)
+        {
+            GiveInvincibility();
+        }
     }
 
     public void WeaponsCheat(InputAction.CallbackContext context)
     {
-        GiveAllWeapons();
+        if (context.started)
+        {
+            GiveAllWeapons();
+        }
     }
     
     void GiveAllWeapons()

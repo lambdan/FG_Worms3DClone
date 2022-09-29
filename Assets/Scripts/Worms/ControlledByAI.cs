@@ -45,7 +45,6 @@ public class ControlledByAI : MonoBehaviour
     
     void Update()
     {
-        
         if (!_startedMoving || _unstucking)
         {
             return; 
@@ -55,19 +54,24 @@ public class ControlledByAI : MonoBehaviour
         {
             _currentEnemy = GetNearestEnemy();
         }
-        
         distanceToEnemy = Vector3.Distance(transform.position, _currentEnemy.GetTransform().position);
-        _currentPickupTarget = FindNearestPickup();
-        distanceToPickup = Vector3.Distance(transform.position, _currentPickupTarget.transform.position);
+        
+        if (_currentPickupTarget != null && _currentPickupTarget.activeSelf)
+        {
+            distanceToPickup = Vector3.Distance(transform.position, _currentPickupTarget.transform.position);
+        }
+        else
+        {
+            _currentPickupTarget = FindNearestPickup();
+        }
         
         // Any obstacles in front of us?
         if (Physics.SphereCast(transform.position, 2, transform.forward - transform.up, out RaycastHit hitinfo, 1.5f) && hitinfo.transform.CompareTag("Obstacle"))
         {
             StartCoroutine(AvoidObstacle(hitinfo.transform));
         }
-        else if ((_currentPickupTarget != null) && (distanceToPickup < 5f || _weaponHolder.HasAmmoInAnyWeapon() == false))
+        else if (_currentPickupTarget != null && _weaponHolder.HasAmmoInAnyWeapon() == false)
         {
-            // We're close to a pickup or we're out of ammo = go for pickup
             _movement.MoveTowards(_currentPickupTarget.transform.position);
         }
         else if (_aliveEnemies.Count > 0)
@@ -77,26 +81,17 @@ public class ControlledByAI : MonoBehaviour
                 _weaponHolder.NextWeapon();
             }
             
-            if (distanceToEnemy > 7f) // Move closer to our target if we are far away...
+            if (distanceToEnemy > 6f) // Move closer to our target if we are far away...
             {
                 _movement.MoveTowards(_currentEnemy.GetTransform().position);
             }
             else // ... otherwise, start firing
             {
-                if (Random.Range(0, 100) < 30)
-                {
-                    _movement.RotateTowards(_currentEnemy.GetTransform().position); // Since the bullets push the worms slightly, make sure we keep looking at them
-                    _weaponHolder.Fire();
-                }
-
-                if (distanceToEnemy < 3f)
-                {
-                    _movement.MoveTowards(transform.position - (transform.forward * 5));
-                }
+                _movement.AxisInput(Vector2.zero); // To stop moving
+                _movement.RotateTowards(_currentEnemy.GetTransform().position); // Since the bullets push the worms slightly, make sure we keep looking at them
+                _weaponHolder.Fire();
             }            
         }
-
-
     }
 
     Worm GetNearestEnemy()
@@ -155,7 +150,6 @@ public class ControlledByAI : MonoBehaviour
         var position = transform.position;
         float distanceToDanger = Vector3.Distance(position, danger.position);
         
-        
         Vector3 dest = position + (transform.right * -distanceToDanger/2); // To the left
         Vector3 dest2 = dest + (transform.right * -distanceToDanger/2) + (transform.forward * distanceToDanger/2); // Up left
         Vector3 dest3 = dest2 + (transform.forward * distanceToDanger); // Straight ahead
@@ -179,7 +173,6 @@ public class ControlledByAI : MonoBehaviour
         }
 
         // We should be in the clear now??
-        
         _unstucking = false;
     }
 
@@ -200,12 +193,12 @@ public class ControlledByAI : MonoBehaviour
 
     void OnEnable()
     {
-        // This gets run everytime AI script gets enabled
         _currentEnemy = GetNearestEnemy();
+        _currentPickupTarget = FindNearestPickup();
         
         // Fake a thinking period
         _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(0, 1)));
+        StartCoroutine(WaitBeforeMoving(Random.Range(1, 2)));
     }
 
     void OnDisable()

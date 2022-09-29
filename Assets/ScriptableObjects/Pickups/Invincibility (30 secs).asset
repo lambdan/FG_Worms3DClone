@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3982d317053734191c86c58dfce3d5, type: 3}
   m_Name: Invincibility (30 secs)
   m_EditorClassIdentifier: 
-  title: Invincibility (30 secs)
-  description: Makes you invincible for 30 secs. Go nuts!
+  title: Invincibility (10 secs)
+  description: Makes you invincible for 10 secs
   lifetime: 30
-  duration: 30
+  duration: 10

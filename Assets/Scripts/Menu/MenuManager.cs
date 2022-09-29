@@ -48,7 +48,7 @@ public class MenuManager : MenuInputs
         }
 
         _playerNameManager.SetContainer(_playerNameContainer);
-        _playerNameManager.SetNames(_settingsManager.GetHumanNames());
+        _playerNameManager.SetNames(_settingsManager.GetPlayerNames());
         
         newSelection(0); // Focus "Start Game"
         RefreshMenu();

@@ -379,6 +379,24 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon Cheat"",
+                    ""type"": ""Button"",
+                    ""id"": ""80141b17-8941-49e4-8477-d360ccaab932"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Invincibility Cheat"",
+                    ""type"": ""Button"",
+                    ""id"": ""58be5343-b183-4016-8485-c2293775b9fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -406,6 +424,28 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""870b3725-a832-4382-948f-87315632975a"",
+                    ""path"": ""<Keyboard>/f1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Invincibility Cheat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a136d177-700b-462c-ae83-4ad579e11d27"",
+                    ""path"": ""<Keyboard>/f2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon Cheat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""422b0e36-4d7a-485b-8373-3e482f09f861"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
@@ -427,54 +467,6 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Cheats"",
-            ""id"": ""8c7f4d7c-111c-4876-8e48-573ea3665a58"",
-            ""actions"": [
-                {
-                    ""name"": ""Invincibility Cheat"",
-                    ""type"": ""Button"",
-                    ""id"": ""d6cf0874-fa7d-4692-8a93-4c61b53e4472"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Weapon Cheat"",
-                    ""type"": ""Button"",
-                    ""id"": ""a97fa64d-1573-4754-bd61-af4effd42850"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""38425b5c-ee73-4327-8921-bfb7c1ced142"",
-                    ""path"": ""<Keyboard>/f1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Invincibility Cheat"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b17bc9fd-4dd3-4871-82e2-0e5f1e9912b5"",
-                    ""path"": ""<Keyboard>/f2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Weapon Cheat"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
@@ -492,10 +484,8 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         m_GameActions = asset.FindActionMap("Game Actions", throwIfNotFound: true);
         m_GameActions_PauseMenu = m_GameActions.FindAction("Pause Menu", throwIfNotFound: true);
         m_GameActions_WormSwitch = m_GameActions.FindAction("Worm Switch", throwIfNotFound: true);
-        // Cheats
-        m_Cheats = asset.FindActionMap("Cheats", throwIfNotFound: true);
-        m_Cheats_InvincibilityCheat = m_Cheats.FindAction("Invincibility Cheat", throwIfNotFound: true);
-        m_Cheats_WeaponCheat = m_Cheats.FindAction("Weapon Cheat", throwIfNotFound: true);
+        m_GameActions_WeaponCheat = m_GameActions.FindAction("Weapon Cheat", throwIfNotFound: true);
+        m_GameActions_InvincibilityCheat = m_GameActions.FindAction("Invincibility Cheat", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -638,12 +628,16 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
     private IGameActionsActions m_GameActionsActionsCallbackInterface;
     private readonly InputAction m_GameActions_PauseMenu;
     private readonly InputAction m_GameActions_WormSwitch;
+    private readonly InputAction m_GameActions_WeaponCheat;
+    private readonly InputAction m_GameActions_InvincibilityCheat;
     public struct GameActionsActions
     {
         private @DefaultControls m_Wrapper;
         public GameActionsActions(@DefaultControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PauseMenu => m_Wrapper.m_GameActions_PauseMenu;
         public InputAction @WormSwitch => m_Wrapper.m_GameActions_WormSwitch;
+        public InputAction @WeaponCheat => m_Wrapper.m_GameActions_WeaponCheat;
+        public InputAction @InvincibilityCheat => m_Wrapper.m_GameActions_InvincibilityCheat;
         public InputActionMap Get() { return m_Wrapper.m_GameActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -659,6 +653,12 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @WormSwitch.started -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnWormSwitch;
                 @WormSwitch.performed -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnWormSwitch;
                 @WormSwitch.canceled -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnWormSwitch;
+                @WeaponCheat.started -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnWeaponCheat;
+                @WeaponCheat.performed -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnWeaponCheat;
+                @WeaponCheat.canceled -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnWeaponCheat;
+                @InvincibilityCheat.started -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnInvincibilityCheat;
+                @InvincibilityCheat.performed -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnInvincibilityCheat;
+                @InvincibilityCheat.canceled -= m_Wrapper.m_GameActionsActionsCallbackInterface.OnInvincibilityCheat;
             }
             m_Wrapper.m_GameActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -669,51 +669,16 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @WormSwitch.started += instance.OnWormSwitch;
                 @WormSwitch.performed += instance.OnWormSwitch;
                 @WormSwitch.canceled += instance.OnWormSwitch;
+                @WeaponCheat.started += instance.OnWeaponCheat;
+                @WeaponCheat.performed += instance.OnWeaponCheat;
+                @WeaponCheat.canceled += instance.OnWeaponCheat;
+                @InvincibilityCheat.started += instance.OnInvincibilityCheat;
+                @InvincibilityCheat.performed += instance.OnInvincibilityCheat;
+                @InvincibilityCheat.canceled += instance.OnInvincibilityCheat;
             }
         }
     }
     public GameActionsActions @GameActions => new GameActionsActions(this);
-
-    // Cheats
-    private readonly InputActionMap m_Cheats;
-    private ICheatsActions m_CheatsActionsCallbackInterface;
-    private readonly InputAction m_Cheats_InvincibilityCheat;
-    private readonly InputAction m_Cheats_WeaponCheat;
-    public struct CheatsActions
-    {
-        private @DefaultControls m_Wrapper;
-        public CheatsActions(@DefaultControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @InvincibilityCheat => m_Wrapper.m_Cheats_InvincibilityCheat;
-        public InputAction @WeaponCheat => m_Wrapper.m_Cheats_WeaponCheat;
-        public InputActionMap Get() { return m_Wrapper.m_Cheats; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CheatsActions set) { return set.Get(); }
-        public void SetCallbacks(ICheatsActions instance)
-        {
-            if (m_Wrapper.m_CheatsActionsCallbackInterface != null)
-            {
-                @InvincibilityCheat.started -= m_Wrapper.m_CheatsActionsCallbackInterface.OnInvincibilityCheat;
-                @InvincibilityCheat.performed -= m_Wrapper.m_CheatsActionsCallbackInterface.OnInvincibilityCheat;
-                @InvincibilityCheat.canceled -= m_Wrapper.m_CheatsActionsCallbackInterface.OnInvincibilityCheat;
-                @WeaponCheat.started -= m_Wrapper.m_CheatsActionsCallbackInterface.OnWeaponCheat;
-                @WeaponCheat.performed -= m_Wrapper.m_CheatsActionsCallbackInterface.OnWeaponCheat;
-                @WeaponCheat.canceled -= m_Wrapper.m_CheatsActionsCallbackInterface.OnWeaponCheat;
-            }
-            m_Wrapper.m_CheatsActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @InvincibilityCheat.started += instance.OnInvincibilityCheat;
-                @InvincibilityCheat.performed += instance.OnInvincibilityCheat;
-                @InvincibilityCheat.canceled += instance.OnInvincibilityCheat;
-                @WeaponCheat.started += instance.OnWeaponCheat;
-                @WeaponCheat.performed += instance.OnWeaponCheat;
-                @WeaponCheat.canceled += instance.OnWeaponCheat;
-            }
-        }
-    }
-    public CheatsActions @Cheats => new CheatsActions(this);
     public interface IPlayerActions
     {
         void OnFire(InputAction.CallbackContext context);
@@ -728,10 +693,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
     {
         void OnPauseMenu(InputAction.CallbackContext context);
         void OnWormSwitch(InputAction.CallbackContext context);
-    }
-    public interface ICheatsActions
-    {
-        void OnInvincibilityCheat(InputAction.CallbackContext context);
         void OnWeaponCheat(InputAction.CallbackContext context);
+        void OnInvincibilityCheat(InputAction.CallbackContext context);
     }
 }

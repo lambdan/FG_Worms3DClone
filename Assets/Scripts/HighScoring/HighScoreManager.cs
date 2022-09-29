@@ -67,6 +67,8 @@ public class HighScoreManager : MonoBehaviour
     
     public void RecordNewScore(string name, int score)
     {
+        Debug.Log("recording score: " + name + " - " + score);
+        
         HighScoreData _highScoreData = new HighScoreData();
         _highScoreData.date = DateTime.Now.ToLocalTime().ToString();
         _highScoreData.name = name;
