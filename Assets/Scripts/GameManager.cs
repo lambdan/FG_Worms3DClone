@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     void GenerateTeams()
     {
-        for (int i = 0; i < _settingsManager.GetHumans(); i++)
+        for (int i = 0; i < _settingsManager.HowManyHumans(); i++)
         {
             Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetTeamName(_settingsManager.GetPlayerNames()[_teams.Count]);
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             _teams.Add(newTeam);
         }
 
-        for (int i = 0; i < _settingsManager.GetAIs(); i++)
+        for (int i = 0; i < _settingsManager.HowManyAIs(); i++)
         {
             Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetAIControlled(true);

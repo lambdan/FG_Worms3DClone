@@ -15,11 +15,8 @@ public class MenuManager : MenuInputs
     [SerializeField] private TMP_Text _messageBox;
 
     [SerializeField] private GameObject _playerNameRoot;
-    [SerializeField] private GameObject _playerNameContainer;
-    
     [SerializeField] private GameObject _highScoreRoot;
-    [SerializeField] private GameObject _highScoreContainer;
-    
+
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
     private PlayerNameManager _playerNameManager;
@@ -38,7 +35,6 @@ public class MenuManager : MenuInputs
     
     void Start()
     {
-        _highScoreManager.SetContainer(_highScoreContainer);
         if (_highScoreManager.GetRecords().highScoreDataList.Count > 0)
         {
             _highScoreManager.PopulateList(_highScoreManager.GetRecords());
@@ -47,10 +43,8 @@ public class MenuManager : MenuInputs
         {
             _highScoreRoot.SetActive(false); // Hide high scores if none
         }
-
-        _playerNameManager.SetContainer(_playerNameContainer);
-        _playerNameManager.SetNames(_settingsManager.GetPlayerNames());
         
+
         newSelection(0); // Focus "Start Game"
         RefreshMenu();
     }
@@ -73,8 +67,7 @@ public class MenuManager : MenuInputs
         }
 
         // We can start !
-        _settingsManager.SetNames(_playerNameManager.GetAllNames()); // Grab names from PlayerNameManager and give it to settings manager
-        SceneManager.LoadScene("Scenes/PlayScene");  // Load the actual scene... settings gets passed through SettingsManager (doesnt destroy on load)
+        SceneManager.LoadScene("Scenes/PlayScene");
     }
     
     public override void Select()
@@ -104,13 +97,13 @@ public class MenuManager : MenuInputs
     {
         UpdateLevelPreview(_settingsManager.GetLevel());
         _levelText.text = _settingsManager.GetLevel().name;
-        _humanMenuSelector.text = _settingsManager.GetHumans().ToString();
-        _aiMenuSelector.text = _settingsManager.GetAIs().ToString();
+        _humanMenuSelector.text = _settingsManager.HowManyHumans().ToString();
+        _aiMenuSelector.text = _settingsManager.HowManyAIs().ToString();
         _turnTimeSelector.text = _settingsManager.GetTurnLength().ToString();
         _wormsPerTeamSelector.text = _settingsManager.GetWormsPerTeam().ToString();
 
         // Show name input if there are human players
-        if (_settingsManager.GetHumans() <= 0)
+        if (_settingsManager.HowManyHumans() <= 0)
         {
             _playerNameRoot.SetActive(false);
         }

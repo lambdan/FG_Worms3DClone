@@ -31,14 +31,7 @@ public class SettingsManager : MonoBehaviour
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
 
-    public List<string> GetPlayerNames()
-    {
-        while (_playerNames.Count < GetMaxPlayers())
-        {
-            _playerNames.Add("Player " + (_playerNames.Count + 1).ToString());
-        }
-        return _playerNames;
-    }
+
     
     public void IncrementHumans()
     {
@@ -93,12 +86,12 @@ public class SettingsManager : MonoBehaviour
         SetLevel(_levelIndex);
     }
 
-    public int GetHumans()
+    public int HowManyHumans()
     {
         return _humanPlayers;
     }
 
-    public int GetAIs()
+    public int HowManyAIs()
     {
         return _aiPlayers;
     }
@@ -132,6 +125,25 @@ public class SettingsManager : MonoBehaviour
     public GameObject GetLevel()
     {
         return _levels[_levelIndex];
+    }
+    
+    public List<string> GetPlayerNames()
+    {
+        while (_playerNames.Count < HowManyHumans())
+        {
+            _playerNames.Add("Player " + (_playerNames.Count + 1).ToString());
+        }
+        return _playerNames;
+    }
+
+    public string GetPlayerName(int index)
+    {
+        return GetPlayerNames()[index];
+    }
+
+    public void SetPlayerName(int index, string newName)
+    {
+        _playerNames[index] = newName;
     }
 
     void Awake()

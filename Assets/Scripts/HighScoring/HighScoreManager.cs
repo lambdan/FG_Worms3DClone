@@ -8,23 +8,16 @@ using TMPro;
 public class HighScoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _listEntryPrefab;
+    [SerializeField] private GameObject _listContainer;
     
     private string saveFile;
     private List<HighScoreData> _highScores;
-
-    private GameObject _container;
-
     
     void Awake()
     {
         saveFile = Application.persistentDataPath + "/highscores.json";
     }
-    
-    public void SetContainer(GameObject target)
-    {
-        _container = target;
-    }
-    
+
     public HighScoreDataList GetRecords()
     {
         string fileContents;
@@ -78,7 +71,7 @@ public class HighScoreManager : MonoBehaviour
 
     void ClearContainer()
     {
-        foreach (Transform child in _container.transform)
+        foreach (Transform child in _listContainer.transform)
         {
             Destroy(child.gameObject);
         }
@@ -97,7 +90,7 @@ public class HighScoreManager : MonoBehaviour
         HighScoreDataList sorted = SortByScore(HSDL);
         foreach (HighScoreData hsd in sorted.highScoreDataList)
         {
-            TMP_Text t = Instantiate(_listEntryPrefab, _container.transform);
+            TMP_Text t = Instantiate(_listEntryPrefab, _listContainer.transform);
             t.text = hsd.score.ToString() + " (" + hsd.name + ", " + hsd.date + ")";
         }
     }
