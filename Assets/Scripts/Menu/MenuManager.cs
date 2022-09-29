@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MenuInputs
 {
+    [SerializeField] private TMP_Text _levelText;
     [SerializeField] private TMP_Text _humanMenuSelector;
     [SerializeField] private TMP_Text _aiMenuSelector;
     [SerializeField] private TMP_Text _turnTimeSelector;
@@ -83,15 +84,17 @@ public class MenuManager : MenuInputs
         {
             case 0: AttemptStartGame();
                 break;
-            case 1: _settingsManager.IncrementHumans();
+            case 1: _settingsManager.IncrementLevel();
                 break;
-            case 2: _settingsManager.IncrementAIs();
+            case 2: _settingsManager.IncrementHumans();
                 break;
-            case 3: _settingsManager.IncrementTurnTime();
+            case 3: _settingsManager.IncrementAIs();
                 break;
-            case 4: _settingsManager.IncrementWorms();
+            case 4: _settingsManager.IncrementTurnTime();
                 break;
-            case 5: Application.Quit();
+            case 5: _settingsManager.IncrementWorms();
+                break;
+            case 6: Application.Quit();
                 break;
         }
         
@@ -100,6 +103,7 @@ public class MenuManager : MenuInputs
 
     void RefreshMenu()
     {
+        _levelText.text = _settingsManager.GetLevel().name;
         _humanMenuSelector.text = _settingsManager.GetHumans().ToString();
         _aiMenuSelector.text = _settingsManager.GetAIs().ToString();
         _turnTimeSelector.text = _settingsManager.GetTurnLength().ToString();
