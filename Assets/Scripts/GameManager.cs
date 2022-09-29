@@ -254,6 +254,7 @@ public class GameManager : MonoBehaviour
         _cameraManager.Deactivate();
         DeactivateCurrentWorm();
         _highScoreManager.RecordNewScore(_currentTeam.GetTeamName(), _currentTeam.GetScore());
+        _hudUpdater.SetGameOver();
         StartCoroutine(GameOverDelay());
     }
 

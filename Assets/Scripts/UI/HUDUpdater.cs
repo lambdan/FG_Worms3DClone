@@ -78,4 +78,10 @@ public class HUDUpdater : MonoBehaviour
 
         _aliveCount.text = newText;
     }
+
+    public void SetGameOver()
+    {
+        _aliveCount.text = "GAME OVER";
+        _aliveCount.color = Color.red;
+    }
 }
