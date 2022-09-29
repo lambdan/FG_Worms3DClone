@@ -98,7 +98,7 @@ public class HighScoreManager : MonoBehaviour
         foreach (HighScoreData hsd in sorted.highScoreDataList)
         {
             TMP_Text t = Instantiate(_listEntryPrefab, _container.transform);
-            t.text = hsd.name + ": " + hsd.score.ToString();
+            t.text = hsd.score.ToString() + " (" + hsd.name + ", " + hsd.date + ")";
         }
     }
     
