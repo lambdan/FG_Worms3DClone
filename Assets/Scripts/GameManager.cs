@@ -11,10 +11,6 @@ using Vector3 = UnityEngine.Vector3;
 
 public class GameManager : MonoBehaviour
 {
-    // Settings (these should be gotten through settings manager)
-    [SerializeField] private GameObject _levelPrefab;
-    // End settings
-    
     [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private GameObject _HUDPrefab;
