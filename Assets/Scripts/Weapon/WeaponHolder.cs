@@ -112,6 +112,11 @@ public class WeaponHolder : MonoBehaviour
 
     public void TriggerReload()
     {
+        if (_bulletsInClip[_currentWeaponIndex] == _currentWeaponProperties.clipSize)
+        {
+            return;
+        }
+        
         if (_reloadCoroutine == null && _reserveAmmo[_currentWeaponIndex] > 0)
         {
             _reloadFinished = Time.time + _currentWeaponProperties.reloadSpeed;
