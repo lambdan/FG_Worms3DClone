@@ -7,7 +7,7 @@ public class WeaponHolder : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private Transform _weaponHand;
-    [SerializeField] private Slider _cooldownSlider;
+    [SerializeField] private Slider _reloadBar;
 
     private GameManager _gameManager;
     private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
@@ -26,8 +26,7 @@ public class WeaponHolder : MonoBehaviour
 
     void Awake()
     {
-        _cooldownSlider.gameObject.SetActive(false); // Hide cooldown slider
-        
+        _reloadBar.gameObject.SetActive(false);
     }
 
     public void SwitchWeapon(int index)
@@ -130,7 +129,7 @@ public class WeaponHolder : MonoBehaviour
         {
             StopCoroutine(_reloadCoroutine);
             _reloadCoroutine = null;
-            _cooldownSlider.gameObject.SetActive(false); // hide the slider
+            _reloadBar.gameObject.SetActive(false); // hide the slider
         }
     }
 
@@ -172,11 +171,11 @@ public class WeaponHolder : MonoBehaviour
     
     IEnumerator ReloadWeapon(float reloadTime)
     {
-        _cooldownSlider.gameObject.SetActive(true);
+        _reloadBar.gameObject.SetActive(true);
         while (Time.time < _reloadFinished)
         {
-            _cooldownSlider.maxValue = reloadTime;
-            _cooldownSlider.value = _reloadFinished - Time.time;
+            _reloadBar.maxValue = reloadTime;
+            _reloadBar.value = _reloadFinished - Time.time;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 

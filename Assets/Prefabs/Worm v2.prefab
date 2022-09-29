@@ -206,12 +206,12 @@ MonoBehaviour:
     m_ActionName: Player/Reload[/Keyboard/r,/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: d6cf0874-fa7d-4692-8a93-4c61b53e4472
-    m_ActionName: Cheats/Invincibility Cheat[/Keyboard/f1]
+    m_ActionId: 80141b17-8941-49e4-8477-d360ccaab932
+    m_ActionName: Game Actions/Weapon Cheat[/Keyboard/f2]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a97fa64d-1573-4754-bd61-af4effd42850
-    m_ActionName: Cheats/Weapon Cheat[/Keyboard/f2]
+    m_ActionId: 58be5343-b183-4016-8485-c2293775b9fd
+    m_ActionName: Game Actions/Invincibility Cheat[/Keyboard/f1]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -331,7 +331,7 @@ MonoBehaviour:
   _startingWeapons:
   - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _weaponHand: {fileID: 134202490290356421}
-  _cooldownSlider: {fileID: 5973061251489488857}
+  _reloadBar: {fileID: 5973061251489488857}
 --- !u!114 &4513286937411717522
 MonoBehaviour:
   m_ObjectHideFlags: 0
