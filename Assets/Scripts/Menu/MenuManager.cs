@@ -24,9 +24,10 @@ public class MenuManager : MenuInputs
 
     void Awake()
     {
-        if (_settingsManager == null) // Only grab the settings manager if there isn't one already going (singleton)
+        _settingsManager = FindObjectOfType<SettingsManager>();
+        if (_settingsManager == null)
         {
-            _settingsManager = FindObjectOfType<SettingsManager>();
+            _settingsManager = new GameObject("Settings Manager").AddComponent<SettingsManager>();
         }
 
         _highScoreManager = GetComponent<HighScoreManager>();

@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
         _settingsManager = FindObjectOfType<SettingsManager>();
         if (_settingsManager == null)
         {
-            _settingsManager = new SettingsManager();
+            _settingsManager = new GameObject("Settings Manager").AddComponent<SettingsManager>();
         }
         
         _pauseMenu = Instantiate(_pauseMenuPrefab);
