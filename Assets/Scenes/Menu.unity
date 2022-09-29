@@ -3595,8 +3595,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _listEntryPrefab: {fileID: 8770729693637035647, guid: 0d8aed4948504be4ea379b20ad44128e, type: 3}
-  testRecord: 0
-  testClear: 0
 --- !u!114 &1641084618
 MonoBehaviour:
   m_ObjectHideFlags: 0
