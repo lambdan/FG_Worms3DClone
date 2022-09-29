@@ -142,6 +142,11 @@ public class GameManager : MonoBehaviour
     void FocusNewWorm(Worm newWorm)
     {
         _cameraManager.SetNewTarget(newWorm.GetGameObject(), newWorm.GetCameraGlue());
+        
+        _hudUpdater.SetTeamText(_currentTeam.GetTeamName());
+        _hudUpdater.SetTeamColor(_currentTeam.GetTeamColor());
+        _hudUpdater.SetPlayerText(newWorm.GetWormName());
+        
         if (_currentTeam.IsAIControlled())
         {
             newWorm.ActivateAI();

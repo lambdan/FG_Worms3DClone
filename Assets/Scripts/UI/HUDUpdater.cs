@@ -4,16 +4,28 @@ using Slider = UnityEngine.UI.Slider;
 
 public class HUDUpdater : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _currentPlayerText;
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _teamText;
     [SerializeField] private TMP_Text _turnsPlayedText;
     [SerializeField] private Slider _turnTimeSlider;
     [SerializeField] private Animation _turnTimeSliderAnimation;
     [SerializeField] private TMP_Text _turnTimeText;
     [SerializeField] private TMP_Text _ammoText;
 
-    public void UpdateCurrentPlayerText(string newText)
+
+    public void SetTeamText(string newText)
     {
-        _currentPlayerText.text = newText;
+        _teamText.text = newText;
+    }
+
+    public void SetTeamColor(Color newColor)
+    {
+        _teamText.color = newColor;
+    }
+    
+    public void SetPlayerText(string newText)
+    {
+        _nameText.text = newText;
     }
     
     public void UpdateTurnsPlayed(int rounds)
