@@ -339,7 +339,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _teams = new List<Team>();
-        SetLevel(_levelPrefab);
+        SetLevel(_settingsManager.GetLevel());
         GenerateTeams();
 
         _currentTeam = _teams[0];

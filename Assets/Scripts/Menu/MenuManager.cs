@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MenuInputs
 {
     [SerializeField] private TMP_Text _levelText;
+    [SerializeField] private GameObject _levelPreviewParent;
     [SerializeField] private TMP_Text _humanMenuSelector;
     [SerializeField] private TMP_Text _aiMenuSelector;
     [SerializeField] private TMP_Text _turnTimeSelector;
@@ -19,6 +20,7 @@ public class MenuManager : MenuInputs
     [SerializeField] private GameObject _highScoreRoot;
     [SerializeField] private GameObject _highScoreContainer;
 
+    private GameObject _levelPreviewObject;
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
     private PlayerNameManager _playerNameManager;
@@ -103,6 +105,7 @@ public class MenuManager : MenuInputs
 
     void RefreshMenu()
     {
+        UpdateLevelPreview(_settingsManager.GetLevel());
         _levelText.text = _settingsManager.GetLevel().name;
         _humanMenuSelector.text = _settingsManager.GetHumans().ToString();
         _aiMenuSelector.text = _settingsManager.GetAIs().ToString();
@@ -126,11 +129,24 @@ public class MenuManager : MenuInputs
         _messageBox.color = Color.red;
         _messageBox.text = msg;
         _messageBox.gameObject.SetActive(true);
-        StartCoroutine(HideMessageAfter(3));
+        StartCoroutine(ShowErrorMessage(3));
     }
 
-    IEnumerator HideMessageAfter(float duration)
+    void UpdateLevelPreview(GameObject newLevel)
     {
+        if (_levelPreviewObject == null || newLevel.name != _levelPreviewObject.name)
+        {
+            // It's not the same level
+            Destroy(_levelPreviewObject);
+            _levelPreviewObject = Instantiate(_settingsManager.GetLevel(), _levelPreviewParent.transform);
+        }
+    }
+
+    IEnumerator ShowErrorMessage(float duration)
+    {
+        bool _highScoreVisibleBefore = _highScoreRoot.activeSelf;
+        _highScoreRoot.SetActive(false);
+        
         float disappear = Time.time + duration;
         while (Time.time < disappear)
         {
@@ -138,5 +154,7 @@ public class MenuManager : MenuInputs
         }
 
         _messageBox.gameObject.SetActive(false);
+        
+        _highScoreRoot.SetActive(_highScoreVisibleBefore);
     }
 }
