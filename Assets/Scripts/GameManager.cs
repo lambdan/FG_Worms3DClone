@@ -14,8 +14,7 @@ public class GameManager : MonoBehaviour
     // Settings (these should be gotten through settings manager)
     [SerializeField] private GameObject _levelPrefab;
     // End settings
-
-    [SerializeField] private List<string> _wormNames;
+    
     [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private GameObject _HUDPrefab;
@@ -61,8 +60,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             Worm worm = new Worm();
-            worm.SetWormName(_wormNames[Random.Range(0, _wormNames.Count)]);
-
             Vector3 spawnPoint = homebase.position +
                                  6 * new Vector3(Mathf.Cos(spawnAngle * i), 0, Mathf.Sin(spawnAngle * i));
             worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity));

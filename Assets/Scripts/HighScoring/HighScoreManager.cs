@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
 
 public class HighScoreManager : MonoBehaviour
 {
@@ -15,33 +13,13 @@ public class HighScoreManager : MonoBehaviour
     private List<HighScoreData> _highScores;
 
     private GameObject _container;
-    
-    public bool testRecord = false;
-    public bool testClear = false;
+
     
     void Awake()
     {
         saveFile = Application.persistentDataPath + "/highscores.json";
     }
     
-
-    void Update()
-    {
-        if (testRecord)
-        {
-            RecordNewScore("abc", 123456);
-            testRecord = false;
-        }
-
-        if (testClear)
-        {
-            ClearRecords();
-            ClearContainer();
-            testClear = false;
-        }
-        
-    }
-
     public void SetContainer(GameObject target)
     {
         _container = target;

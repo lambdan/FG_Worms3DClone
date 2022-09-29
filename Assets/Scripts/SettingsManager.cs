@@ -35,7 +35,7 @@ public class SettingsManager : MonoBehaviour
     {
         while (_playerNames.Count < GetMaxPlayers())
         {
-            _playerNames.Add("Human " + (_playerNames.Count + 1).ToString());
+            _playerNames.Add("Player " + (_playerNames.Count + 1).ToString());
         }
         return _playerNames;
     }
