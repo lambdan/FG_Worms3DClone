@@ -33,11 +33,6 @@ public class SettingsManager : MonoBehaviour
 
     public List<string> GetPlayerNames()
     {
-        /* BUGBUG: Start Game on Flatland ->
-         Quit to menu ->
-         Start game on Forest ->
-         Quit to menu ->
-         OutOfRange error here */
         while (_playerNames.Count < GetMaxPlayers())
         {
             _playerNames.Add("Player " + (_playerNames.Count + 1).ToString());

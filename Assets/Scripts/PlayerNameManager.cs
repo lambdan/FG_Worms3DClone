@@ -35,7 +35,7 @@ public class PlayerNameManager : MonoBehaviour
             GameObject textFieldGO = Instantiate(_inputFieldPrefab);
             TMP_InputField textField = textFieldGO.GetComponent<TMP_InputField>();
 
-            textField.text = "Human " + i.ToString();
+            textField.text = "Player " + i.ToString();
 
             _playerInputFieldGameObjects.Add(textFieldGO);
             _playerInputFields.Add(textField);
@@ -99,7 +99,7 @@ public class PlayerNameManager : MonoBehaviour
 
     public void SetNames(List<string> newNames)
     {
-        for (int i = 0; i < newNames.Count; i++)
+        for (int i = 0; i < _settingsManager.GetHumans(); i++)
         {
             _playerInputFields[i].text = newNames[i];
         }
