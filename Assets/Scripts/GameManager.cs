@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour
         _hudUpdater.SetTeamColor(_currentTeam.GetTeamColor());
         _hudUpdater.SetPlayerText(newWorm.GetWormName());
         
+        newWorm.GetWeaponHolder().UpdateAmmoHUD();
+        
         if (_currentTeam.IsAIControlled())
         {
             newWorm.ActivateAI();
