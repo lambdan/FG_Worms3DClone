@@ -1,9 +1,12 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Slider = UnityEngine.UI.Slider;
 
 public class HUDUpdater : MonoBehaviour
 {
+    [SerializeField] private TMP_Text _aliveCount;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _teamText;
     [SerializeField] private TMP_Text _turnsPlayedText;
@@ -65,13 +68,14 @@ public class HUDUpdater : MonoBehaviour
         _ammoText.text = bulletsInClip.ToString() + " (" + ammunitionHeld.ToString() + ")";
     }
 
-    public void HideAmmo()
+    public void UpdateAliveCount(List<Team> teams)
     {
-        _ammoText.gameObject.SetActive(false);
-    }
+        string newText = "";
+        foreach (Team team in teams)
+        {
+            newText = newText + team.GetTeamName() + ": " + team.AliveWormsInTeam().ToString() + " alive\n";
+        }
 
-    public void ShowAmmo()
-    {
-        _ammoText.gameObject.SetActive(true);
+        _aliveCount.text = newText;
     }
 }

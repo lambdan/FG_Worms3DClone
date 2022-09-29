@@ -274,6 +274,7 @@ public class GameManager : MonoBehaviour
     // Deaths and high score
     public void DeathReport()
     {
+        _hudUpdater.UpdateAliveCount(_teams);
         _currentTeam.AddScore(1000);
         if (TeamsAlive() <= 1)
         {
@@ -339,7 +340,7 @@ public class GameManager : MonoBehaviour
         _teams = new List<Team>();
         SetLevel(_settingsManager.GetLevel());
         GenerateTeams();
-
+        _hudUpdater.UpdateAliveCount(_teams);
         _currentTeam = _teams[0];
         StartTurn();
         Destroy(_loadingScreen);
