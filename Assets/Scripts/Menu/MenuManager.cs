@@ -134,9 +134,8 @@ public class MenuManager : MenuInputs
 
     void UpdateLevelPreview(GameObject newLevel)
     {
-        if (_levelPreviewObject == null || newLevel.name != _levelPreviewObject.name)
+        if (_levelPreviewObject == null || (newLevel.gameObject.name != _levelPreviewObject.gameObject.name[0..^7]))
         {
-            // It's not the same level
             Destroy(_levelPreviewObject);
             _levelPreviewObject = Instantiate(_settingsManager.GetLevel(), _levelPreviewParent.transform);
         }
