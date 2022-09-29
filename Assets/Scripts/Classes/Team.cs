@@ -76,11 +76,6 @@ public class Team
 
     public Worm GetNextWorm()
     {
-        if (AliveWormsInTeam() <= 1)
-        {
-            return CurrentWorm();
-        }
-
         int next = _currentWormIndex + 1;
         if (next >= _teamWorms.Count)
         {
