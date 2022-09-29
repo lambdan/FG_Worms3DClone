@@ -37,6 +37,7 @@ public class CameraManager : MonoBehaviour
     public void Deactivate() // Used when the turn ends
     {
        //_shouldFollow = false;
+       
         _manualControl = false;
     }
     

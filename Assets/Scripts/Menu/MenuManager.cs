@@ -19,8 +19,7 @@ public class MenuManager : MenuInputs
     
     [SerializeField] private GameObject _highScoreRoot;
     [SerializeField] private GameObject _highScoreContainer;
-
-    private GameObject _levelPreviewObject;
+    
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
     private PlayerNameManager _playerNameManager;
@@ -35,8 +34,6 @@ public class MenuManager : MenuInputs
 
         _highScoreManager = GetComponent<HighScoreManager>();
         _playerNameManager = GetComponent<PlayerNameManager>();
-
-        
     }
     
     void Start()
@@ -64,7 +61,7 @@ public class MenuManager : MenuInputs
         // Make sure we don't have more players than we allow (limited by spawn points)
         if (_settingsManager.GetTotalPlayers() > _settingsManager.GetMaxPlayers())
         {
-            ErrorMessage("There can only be a total of " + _settingsManager.GetMaxPlayers().ToString() + " players.");
+            ErrorMessage("There can only be a total of " + _settingsManager.GetMaxPlayers().ToString() + " players on this map.");
             return;
         }
         
@@ -134,11 +131,16 @@ public class MenuManager : MenuInputs
 
     void UpdateLevelPreview(GameObject newLevel)
     {
+        /*
         if (_levelPreviewObject == null || (newLevel.gameObject.name != _levelPreviewObject.gameObject.name[0..^7]))
         {
             Destroy(_levelPreviewObject);
             _levelPreviewObject = Instantiate(_settingsManager.GetLevel(), _levelPreviewParent.transform);
         }
+
+        Instantiate(_settingsManager.GetLevel(), _levelPreviewParent.transform)
+        _levelPreviewObject = _settingsManager.GetLevel();
+*/
     }
 
     IEnumerator ShowErrorMessage(float duration)

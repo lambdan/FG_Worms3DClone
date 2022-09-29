@@ -5,7 +5,7 @@ public class Team
 {
     private List<Worm> _teamWorms = new List<Worm>();
     private string _teamName = "Unnamed Team";
-    private Color _teamColor = Color.black;
+    private Color _teamColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     private bool _aiControlled = false;
     private int _score = 0;
 

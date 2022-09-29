@@ -85,15 +85,14 @@ public class Health : MonoBehaviour
 
     IEnumerator InvincibilityTimer(float duration)
     {
-        Color[] colors = new Color[] { Color.blue, Color.yellow, Color.green, Color.red };
-        
+
         WormColor wc = GetComponent<WormColor>();
         Color originalColor = wc.GetColor();
 
         float endTime = Time.time + duration;
         while (Time.time < endTime)
         {
-            wc.SetNewColor(colors[Random.Range(0,colors.Length)]);
+            wc.SetNewColor(Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f));
             yield return new WaitForSeconds(0.1f);
         }
 

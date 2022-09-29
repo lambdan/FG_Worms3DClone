@@ -54,6 +54,16 @@ public class PlayerNameManager : MonoBehaviour
     void UpdatePlayerAmount()
     {
         _playerAmount = _settingsManager.GetHumans();
+        while (_playerInputFieldGameObjects.Count < _settingsManager.GetMaxPlayers())
+        {
+            GameObject textFieldGO = Instantiate(_inputFieldPrefab);
+            TMP_InputField textField = textFieldGO.GetComponent<TMP_InputField>();
+
+            textField.text = "Human " + _playerInputFieldGameObjects.Count.ToString();
+
+            _playerInputFieldGameObjects.Add(textFieldGO);
+            _playerInputFields.Add(textField);
+        }
     }
 
     public void RefreshInputContainer()

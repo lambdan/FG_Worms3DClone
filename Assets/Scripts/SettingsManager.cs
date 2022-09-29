@@ -8,26 +8,35 @@ public class SettingsManager : MonoBehaviour
     private GameObject[] _levels;
     private GameObject _level;
     private int _levelIndex;
+    private LevelInfo _levelInfo;
     
     // Default settings
-    private int _maxPlayers = 8;
     private int _humanPlayers = 1;
     private int _aiPlayers = 1;
     private int _turnLength = 15;
     private int _wormsPerTeam = 3;
     private int _maxWormsPerTeam = 20;
-
-    private List<Color> _teamColors = new List<Color>()
-        { Color.blue, Color.red, Color.green, Color.yellow, Color.cyan, Color.magenta, Color.black, Color.gray };
-    private List<string> _playerNames = new List<string>() {"Human 1", "Human 2", "Human 3", "Human 4", "Human 5", "Human 6", "Human 7", "Human 8"};
+    
+    private List<string> _playerNames;
 
     public void SetNames(List<string> newNames)
     {
         _playerNames = newNames;
     }
 
+    public void SetLevel(int newIndex)
+    {
+        _levelIndex = newIndex;
+        _level = Instantiate(_levels[newIndex]);
+        _levelInfo = _level.GetComponent<LevelInfo>();
+    }
+
     public List<string> GetPlayerNames()
     {
+        while (_playerNames.Count < GetMaxPlayers())
+        {
+            _playerNames.Add("Human " + (_playerNames.Count + 1).ToString());
+        }
         return _playerNames;
     }
     
@@ -81,7 +90,7 @@ public class SettingsManager : MonoBehaviour
             _levelIndex = 0;
         }
 
-        _level = _levels[_levelIndex];
+        SetLevel(_levelIndex);
     }
 
     public int GetHumans()
@@ -101,7 +110,7 @@ public class SettingsManager : MonoBehaviour
 
     public int GetMaxPlayers()
     {
-        return _maxPlayers;
+        return _levelInfo.SpawnBasesAmount();
     }
 
     public int GetTurnLength()
@@ -118,11 +127,7 @@ public class SettingsManager : MonoBehaviour
     {
         return _maxWormsPerTeam;
     }
-
-    public List<Color> GetTeamColors()
-    {
-        return _teamColors;
-    }
+    
 
     public GameObject GetLevel()
     {
@@ -140,10 +145,10 @@ public class SettingsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        _playerNames = new List<string>();
         
         _levels = Resources.LoadAll<GameObject>("Levels"); // Scan for levels
-        _levelIndex = 0;
-        _level = _levels[_levelIndex];
-        
+        SetLevel(0);
     }
 }

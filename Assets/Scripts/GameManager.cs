@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
         {
             Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetTeamName(_settingsManager.GetPlayerNames()[_teams.Count]);
-            newTeam.SetTeamColor(_settingsManager.GetTeamColors()[_teams.Count]);
             foreach (Worm worm in newTeam.GetWorms())
             {
                 worm.SetGameManager(this);
@@ -96,7 +95,6 @@ public class GameManager : MonoBehaviour
             Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetAIControlled(true);
             newTeam.SetTeamName("AI Team " + (i + 1));
-            newTeam.SetTeamColor(_settingsManager.GetTeamColors()[_teams.Count]);
             foreach (Worm worm in newTeam.GetWorms())
             {
                 worm.SetGameManager(this);
