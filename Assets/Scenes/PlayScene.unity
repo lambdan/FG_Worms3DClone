@@ -311,20 +311,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelPrefab: {fileID: 4549259294423954129, guid: 96a7e8f889deb1e4586783afe4d296fc, type: 3}
-  humans: 0
-  ais: 2
-  perteam: 1
-  _turnLength: 20
-  teamnames:
-  - Bakas
-  - Idiots
-  - Anime Watchers
-  - ZZ Bottom
-  teamcolors:
-  - {r: 0.025950909, g: 0, b: 1, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.044155598, a: 0}
-  - {r: 0.9894583, g: 1, b: 0, a: 0}
   _wormNames:
   - Adam
   - Bengt
@@ -333,6 +319,10 @@ MonoBehaviour:
   - Erkki
   - Fredrik
   - "G\xF6ran"
+  - Alen
+  - Andrew
+  - Kalle
+  - Pelle
   _startingWeapons:
   - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _wormPrefab: {fileID: 473437008339127252, guid: 07a7405ad236f944a9514fc9537715bf, type: 3}
@@ -374,7 +364,7 @@ MonoBehaviour:
   - {fileID: 4804350354342887509, guid: 0a5fb4e4aa8867b409cd7e7768b178a2, type: 3}
   - {fileID: 4804350354342887509, guid: 82331792e1aa9504d8f8e8fa67b1eb8b, type: 3}
   _pickupsEnabled: 1
-  _spawnFrequency: 1
+  _spawnFrequency: 5
 --- !u!114 &1125836909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,8 +378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _listEntryPrefab: {fileID: 0}
-  testRecord: 0
-  testClear: 0
 --- !u!114 &1125836910
 MonoBehaviour:
   m_ObjectHideFlags: 0

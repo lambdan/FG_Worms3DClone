@@ -85,8 +85,11 @@ public class Team
         while (_teamWorms[next].IsAlive() == false)
         {
             next += 1;
+            if (next >= _teamWorms.Count)
+            {
+                next = 0;
+            }
         }
-
         return GetWorm(next);
     }
 
