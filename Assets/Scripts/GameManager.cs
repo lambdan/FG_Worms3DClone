@@ -1,267 +1,377 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
-[RequireComponent(typeof(HUDUpdater))]
-[RequireComponent(typeof(WormGenerator))]
-[RequireComponent(typeof(WormManager))]
-[RequireComponent(typeof(HumanInputListener))]
+[RequireComponent(typeof(DangerZoneManager))]
+[RequireComponent(typeof(PickupManager))]
+[RequireComponent(typeof(HighScoreManager))]
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private List<Transform> _homeBases;
+    [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private GameObject _wormPrefab;
-    [SerializeField] private float _delayBetweenTurns;
-    [SerializeField] private List<Color> teamColors;
-    [SerializeField] private PauseMenu _pauseMenu;
-    
-    [Header("Test Settings")]
-    [Tooltip("These are only used when starting the PlayScene directly")]
-    [SerializeField] private int _humanPlayers = 1; // Default settings for testing... gets overriden if we have a settings manager
-    [SerializeField] private int _aiPlayers = 1;
-    [SerializeField] private int _turnLength = 30; 
-    [SerializeField] private int _wormsPerTeam = 2;
+    [SerializeField] private GameObject _HUDPrefab;
+    [SerializeField] private GameObject _loadingScreenPrefab;
+    [SerializeField] private GameObject _pauseMenuPrefab;
 
-    private HUDUpdater _HUDUpdater;
-    private CameraManager _cameraMan;
-    private WormManager _wormManager;
-    private WormGenerator _wormGenerator;
-    private HumanInputListener _HIL;
+    private GameObject _HUD;
+    private GameObject _loadingScreen;
+    private GameObject _pauseMenu;
+
     private SettingsManager _settingsManager;
+    private CameraManager _cameraManager;
+    private PickupManager _pickupManager;
+    private DangerZoneManager _dangerZoneManager;
     private HighScoreManager _highScoreManager;
-    private List<int> _scores = new List<int>();
+    private HUDUpdater _hudUpdater;
 
-    private List<List<GameObject>> _teams = new List<List<GameObject>>(); // Holds all living teams
-    private List<GameObject> _currentTeam = new List<GameObject>(); // Holds all living worms of the currently active team
+    private GameObject _level;
+    private LevelInfo _levelInfo;
 
+    private List<Team> _teams;
+    private Team _currentTeam;
+    private int _currentTeamIndex;
+    private Worm _currentWorm;
+
+    private int _turnsPlayed;
+    private float _turnEnds;
     
-    private List<int> _teamAliveWorms = new List<int>();
-    private List<string> _humanNames = new List<string> { "a", "b", "c", "d", "e", "f", "g" };
-    private List<string> _teamNames = new List<string>();
+    // Level initialization
 
-    private int _teamsAlive = 0;
-    private int _currentTeamsTurn = 0;
-    private int _turnsPlayed = 0;
-    private int _teamsGenerated = 0;
-    
-    private bool _paused = false;
-    private bool _gameOver = false;
-    
-    private float _turnEnds; // When the turn will end (time), used in the timer coroutine
-
-    void Awake()
+    void SetLevel(GameObject levelPrefab)
     {
-        _settingsManager = FindObjectOfType<SettingsManager>();
-        if (_settingsManager != null)
-        {
-            // We have a settings manager (because player came from the main menu) - use its settings
-            _humanPlayers = _settingsManager.GetHumans();
-            _aiPlayers = _settingsManager.GetAIs();
-            _turnLength = _settingsManager.GetTurnLength();
-            _wormsPerTeam = _settingsManager.GetWormsPerTeam();
-            _humanNames = _settingsManager.GetHumanNames();
-        }
-        
-        _wormManager = GetComponent<WormManager>();
-        _HUDUpdater = GetComponent<HUDUpdater>();
-        _wormGenerator = GetComponent<WormGenerator>();
-        _HIL = GetComponent<HumanInputListener>();
-        _cameraMan = Camera.main.GetComponent<CameraManager>();
-        _highScoreManager = GetComponent<HighScoreManager>();
-        Time.timeScale = 1; // Important to set here because you might come from a paused game -> main menu -> new game
-    }
-    
-    void GenerateTeams(int humans, int ais)
-    {
-        // Generate teams/worms for human players (aiControlled = false)
-        for (int t = 0; t < humans; t++)
-        {
-            string teamName = _humanNames[t];
-            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, false,
-                _homeBases[_teams.Count].position, teamColors[_teamsGenerated], teamName);
-            
-            _teams.Add(thisTeam);
-            _teamAliveWorms.Add(_wormsPerTeam);
-            _teamNames.Add(teamName);
-            
-            _teamsGenerated++;
-        }
-
-        // Generate teams/worms for AI players (aiControlled = true)
-        for (int t = 0; t < ais; t++)
-        {
-            string teamName = "AI Team " + (t + 1);
-            List<GameObject> thisTeam = _wormGenerator.GenerateTeam(_wormPrefab, _wormsPerTeam, _teamsGenerated, true,
-                _homeBases[_teams.Count].position, teamColors[_teamsGenerated], teamName);
-            
-            _teams.Add(thisTeam);
-            _teamAliveWorms.Add(_wormsPerTeam);
-            _teamNames.Add(teamName);
-            
-            _teamsGenerated++;
-        }
-
-        _teamsAlive = _teamsGenerated;
-        
-        // Init scores
-        for (int t = 0; t < _teamsGenerated; t++)
-        {
-            _scores.Add(0);
-        }
-    }
-    
-    void Start()
-    {
-        GenerateTeams(_humanPlayers, _aiPlayers);
-        
-        _currentTeam = _teams[0];
-        _currentTeamsTurn = 0;
-        
-        // Set max of turn time slider to round length
-        _HUDUpdater.SetTurnSliderMax(_turnLength);
-        
-        StartRound();
+        _level = Instantiate(levelPrefab);
+        _levelInfo = _level.GetComponent<LevelInfo>();
     }
 
-    void StartRound()
-    {
-        _wormManager.SetActiveTeam(_currentTeam);
-        _turnsPlayed += 1;
-        _HUDUpdater.UpdateTurnsPlayed(_turnsPlayed);
-        _turnEnds = Time.time + _turnLength;
-        StartCoroutine(TurnTimer());
-    }
+    // Team generation
 
-    void NextRound()
+    Team GenerateTeam(int amount, Transform homebase)
     {
-        int next = GetNextTeam();
-        _currentTeamsTurn = next;
-        _currentTeam = _teams[_currentTeamsTurn];
-        StartRound();
-    }
+        Team team = new Team();
+        float spawnAngle = (360f / amount); // Used for spawning in a circle around base
 
-    int GetNextTeam()
-    {
-        int nextTeam = _currentTeamsTurn + 1;
-        if (nextTeam >= _teams.Count) // Last team - go back to first
+        for (int i = 0; i < amount; i++)
         {
-            nextTeam = 0;
+            Worm worm = new Worm();
+            Vector3 spawnPoint = homebase.position +
+                                 6 * new Vector3(Mathf.Cos(spawnAngle * i), 0, Mathf.Sin(spawnAngle * i));
+            worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity));
+            worm.GetTransform().LookAt(Vector3.zero); // To make them look toward the center
+
+            team.AddWormToTeam(worm);
         }
-        
-        while (_teamAliveWorms[nextTeam] == 0) // While we are on a team that is dead
+
+        return team;
+    }
+
+    void GenerateTeams()
+    {
+        for (int i = 0; i < _settingsManager.HowManyHumans(); i++)
         {
-            nextTeam += 1;
-            if (nextTeam >= _teams.Count)
+            Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
+            newTeam.SetTeamName(_settingsManager.GetPlayerNames()[_teams.Count]);
+            foreach (Worm worm in newTeam.GetWorms())
             {
-                nextTeam = 0;
+                worm.SetGameManager(this);
+                worm.SetWormColor(newTeam.GetTeamColor());
+                GiveStartingWeapons(worm);
+            }
+
+            _teams.Add(newTeam);
+        }
+
+        for (int i = 0; i < _settingsManager.HowManyAIs(); i++)
+        {
+            Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
+            newTeam.SetAIControlled(true);
+            newTeam.SetTeamName("AI Team " + (i + 1));
+            foreach (Worm worm in newTeam.GetWorms())
+            {
+                worm.SetGameManager(this);
+                worm.SetWormColor(newTeam.GetTeamColor());
+                GiveStartingWeapons(worm);
+
+                worm.GetAIController().SetGameManager(this);
+                worm.GetAIController().SetPickupManager(_pickupManager);
+                worm.GetAIController().SetTeam(newTeam);
+            }
+
+            _teams.Add(newTeam);
+        }
+    }
+
+    void GiveStartingWeapons(Worm worm)
+    {
+        foreach (WeaponProperties weapon in _startingWeapons)
+        {
+            worm.GetWeaponHolder().GetNewWeapon(weapon, 2 * weapon.clipSize);
+        }
+    }
+
+    // Pausing
+
+    public void TogglePause()
+    {
+        _pauseMenu.SetActive(!_pauseMenu.activeSelf);
+    }
+
+    // Worm switching
+
+    public void NextWorm()
+    {
+        DeactivateCurrentWorm();
+        _currentWorm = _currentTeam.GetNextWorm();
+        FocusNewWorm(_currentWorm);
+    }
+
+    void DeactivateCurrentWorm()
+    {
+        _currentWorm.Deactivate();
+    }
+
+    void FocusNewWorm(Worm newWorm)
+    {
+        _cameraManager.SetNewTarget(newWorm.GetGameObject(), newWorm.GetCameraGlue());
+        
+        _hudUpdater.SetTeamText(_currentTeam.GetTeamName());
+        _hudUpdater.SetTeamColor(_currentTeam.GetTeamColor());
+        _hudUpdater.SetPlayerText(newWorm.GetWormName());
+        
+        newWorm.GetWeaponHolder().UpdateAmmoHUD();
+        
+        if (_currentTeam.IsAIControlled())
+        {
+            newWorm.ActivateAI();
+        }
+        else
+        {
+            newWorm.ActivateHumanInput();
+        }
+    }
+
+    // Getters
+    public List<Worm> GetAliveEnemiesOfTeam(Team myTeam)
+    {
+        List<Worm> aliveEnemies = new List<Worm>();
+        foreach (Team team in _teams)
+        {
+            if (team == myTeam)
+            {
+                continue;
+            }
+
+            foreach (Worm worm in team.GetWorms())
+            {
+                if (worm.IsAlive())
+                {
+                    aliveEnemies.Add(worm);
+                }
             }
         }
 
-        return nextTeam;
+        return aliveEnemies;
+    }
+
+    public Worm GetCurrentWorm()
+    {
+        return _currentWorm;
+    }
+
+    public HUDUpdater GetHUDUpdater()
+    {
+        return _hudUpdater;
+    }
+
+    public LevelInfo GetLevelInfo()
+    {
+        return _levelInfo;
+    }
+
+    // Turn based
+    Team NextTeam()
+    {
+        int next = _teams.IndexOf(_currentTeam) + 1;
+        if (next >= _teams.Count)
+        {
+            next = 0;
+        }
+
+        while (_teams[next].AliveWormsInTeam() <= 0)
+        {
+            next += 1;
+        }
+
+        return _teams[next];
+    }
+
+    void UpdateTurnsPlayed()
+    {
+        _turnsPlayed += 1;
+        _hudUpdater.UpdateTurnsPlayed(_turnsPlayed);
+    }
+
+    void SetNewWorm(Worm worm)
+    {
+        _currentWorm = worm;
+        FocusNewWorm(_currentWorm);
+    }
+
+    void StartTurn()
+    {
+        UpdateTurnsPlayed();
+        SetNewWorm(_currentTeam.GetNextWorm());
+        _turnEnds = Time.time + _settingsManager.GetTurnLength();
+        StartCoroutine(TurnTimer());
+    }
+
+    void NextTurn()
+    {
+        _currentTeam = NextTeam();
+        StartTurn();
+    }
+
+    void TurnEnd()
+    {
+        _cameraManager.Deactivate();
+        DeactivateCurrentWorm();
+
+        if (TeamsAlive() > 1)
+        {
+            StartCoroutine(DelayedStartNextTurn(2f));
+        }
+    }
+
+    void CancelTurn()
+    {
+        _turnEnds = Time.time;
     }
 
     void GameOver()
     {
-        _gameOver = true;
-        _cameraMan.Deactivate();
-        _wormManager.DisableAllActiveWorms();
-        _HIL.DisableTarget();
-        _HUDUpdater.UpdateCurrentPlayerText("Game Over!");
-        
-        // Record high score for the team that won
-        _highScoreManager.RecordNewScore(_teamNames[_currentTeamsTurn], _scores[_currentTeamsTurn]);
-
-        StartCoroutine(GameOverDelay()); // Start delay before going back to the main menu
+        _cameraManager.Deactivate();
+        DeactivateCurrentWorm();
+        _highScoreManager.RecordNewScore(_currentTeam.GetTeamName(), _currentTeam.GetScore());
+        _hudUpdater.SetGameOver();
+        StartCoroutine(GameOverDelay());
     }
-    
-    void TeamDefeated(int t)
-    {
-        Debug.Log("Team " + t + " is defeated");
-        _teamsAlive -= 1;
 
-        if (_teamsAlive == 1)
+    int TeamsAlive()
+    {
+        int alive = 0;
+        foreach (Team team in _teams)
+        {
+            if (team.AliveWormsInTeam() > 0)
+            {
+                alive += 1;
+            }
+        }
+
+        return alive;
+    }
+
+    // Deaths and high score
+    public void DeathReport()
+    {
+        _hudUpdater.UpdateAliveCount(_teams);
+        _currentTeam.AddScore(1000);
+        if (TeamsAlive() <= 1)
         {
             GameOver();
         }
-
     }
 
-    public void ReportDeath(int teamNumber)
+    // Game inputs
+    public void InputPause(InputAction.CallbackContext context)
     {
-        // Award team that was active with the kill
-        _scores[_currentTeamsTurn] += 1000;
-        Debug.Log("team " + _currentTeamsTurn + " now has " + _scores[_currentTeamsTurn] + " points");
-        
-        // -1 alive worms of that team
-        _teamAliveWorms[teamNumber] -= 1;
-        
-        // Check if everyone is dead on that team
-        if (_teamAliveWorms[teamNumber] == 0)
+        //Debug.Log(context.control.device.name);
+        if (context.started)
         {
-            TeamDefeated(teamNumber);
-        }
-        
-        // If that death was on current team, end turn
-        if (teamNumber == _currentTeamsTurn)
-        {
-            CancelRound();
-        }
-        
-
-    }
-
-    public void TogglePause()
-    {
-        if (_paused)
-        {
-            // Unpause
-            _pauseMenu.Deactivate();
-            Time.timeScale = 1;
-            _paused = false;
-        }
-        else
-        {
-            // Pause
-            _pauseMenu.Activate();
-            Time.timeScale = 0;
-            _paused = true;
+            TogglePause();
         }
     }
 
-    public void CancelRound()
+    public void InputNextWorm(InputAction.CallbackContext context)
     {
-        _turnEnds = Time.time; // Ugly hack
-    }
-    
-    public List<List<GameObject>> GetAllTeams()
-    {
-        return _teams;
+        if (_currentTeam.IsAIControlled())
+        {
+            return; // So humans cant change worm for the AI 
+        }
+        
+        if (context.started)
+        {
+            NextWorm();
+        }
     }
 
-    IEnumerator DelayedStartNextTurn(float delay)
+    public void ControlsChanged(InputAction.CallbackContext context)
     {
-        yield return new WaitForSeconds(delay);
-        NextRound();
+        Debug.Log(context);
+    }
+
+    // MonoBehaviours
+
+    void Awake()
+    {
+        _loadingScreen = Instantiate(_loadingScreenPrefab);
+        
+        _settingsManager = FindObjectOfType<SettingsManager>();
+        if (_settingsManager == null)
+        {
+            _settingsManager = new GameObject("Settings Manager").AddComponent<SettingsManager>();
+        }
+        
+        _pauseMenu = Instantiate(_pauseMenuPrefab);
+        _pauseMenu.GetComponent<PauseMenu>().SetGameManager(this);
+
+        _HUD = Instantiate(_HUDPrefab);
+
+        _cameraManager = Camera.main.GetComponent<CameraManager>();
+        _dangerZoneManager = GetComponent<DangerZoneManager>();
+        _pickupManager = GetComponent<PickupManager>();
+        _highScoreManager = GetComponent<HighScoreManager>();
+        _hudUpdater = _HUD.GetComponent<HUDUpdater>();
+
+        _hudUpdater.SetTurnSliderMax(_settingsManager.GetTurnLength());
+    }
+
+    void Start()
+    {
+        _teams = new List<Team>();
+        SetLevel(_settingsManager.GetLevel());
+        GenerateTeams();
+        _hudUpdater.UpdateAliveCount(_teams);
+        _currentTeam = _teams[0];
+        
+        _dangerZoneManager.SetLocations(_levelInfo.GetDangerZones());
+        _dangerZoneManager.SetTime(10);
+        _dangerZoneManager.Activate();
+        
+        StartTurn();
+        Destroy(_loadingScreen);
     }
 
     IEnumerator TurnTimer()
     {
         while (Time.time <= _turnEnds)
         {
-            _HUDUpdater.UpdateTurnSlider(_turnEnds - Time.time);
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-        
-        // Turn over
-        _cameraMan.Deactivate();
-        _wormManager.DisableAllActiveWorms();
-        _HIL.DisableTarget();
-
-        if (!_gameOver)
-        {
-            StartCoroutine(DelayedStartNextTurn(_delayBetweenTurns));
+            _hudUpdater.UpdateTurnSlider(_turnEnds - Time.time);
+            yield return new WaitForFixedUpdate();
         }
 
+        TurnEnd();
+    }
+
+    IEnumerator DelayedStartNextTurn(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        NextTurn();
     }
 
     IEnumerator GameOverDelay()

@@ -1,52 +1,23 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
 
 public class HighScoreManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _listEntryPrefab;
+    [SerializeField] private GameObject _listContainer;
     
     private string saveFile;
     private List<HighScoreData> _highScores;
-
-    private GameObject _container;
-    
-    public bool testRecord = false;
-    public bool testClear = false;
     
     void Awake()
     {
         saveFile = Application.persistentDataPath + "/highscores.json";
     }
-    
 
-    void Update()
-    {
-        if (testRecord)
-        {
-            RecordNewScore("abc", 123456);
-            testRecord = false;
-        }
-
-        if (testClear)
-        {
-            ClearRecords();
-            ClearContainer();
-            testClear = false;
-        }
-        
-    }
-
-    public void SetContainer(GameObject target)
-    {
-        _container = target;
-    }
-    
     public HighScoreDataList GetRecords()
     {
         string fileContents;
@@ -67,6 +38,8 @@ public class HighScoreManager : MonoBehaviour
     
     public void RecordNewScore(string name, int score)
     {
+        Debug.Log("recording score: " + name + " - " + score);
+        
         HighScoreData _highScoreData = new HighScoreData();
         _highScoreData.date = DateTime.Now.ToLocalTime().ToString();
         _highScoreData.name = name;
@@ -98,7 +71,7 @@ public class HighScoreManager : MonoBehaviour
 
     void ClearContainer()
     {
-        foreach (Transform child in _container.transform)
+        foreach (Transform child in _listContainer.transform)
         {
             Destroy(child.gameObject);
         }
@@ -117,8 +90,8 @@ public class HighScoreManager : MonoBehaviour
         HighScoreDataList sorted = SortByScore(HSDL);
         foreach (HighScoreData hsd in sorted.highScoreDataList)
         {
-            TMP_Text t = Instantiate(_listEntryPrefab, _container.transform);
-            t.text = hsd.name + ": " + hsd.score.ToString();
+            TMP_Text t = Instantiate(_listEntryPrefab, _listContainer.transform);
+            t.text = hsd.score.ToString() + " (" + hsd.name + ", " + hsd.date + ")";
         }
     }
     

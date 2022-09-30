@@ -7,10 +7,9 @@ public class WeaponHolder : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private Transform _weaponHand;
-    [SerializeField] private Slider _cooldownSlider;
+    [SerializeField] private Slider _reloadBar;
 
-    private HUDUpdater _HUDUpdater;
-    
+    private GameManager _gameManager;
     private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
     private List<int> _bulletsInClip = new List<int>();
     private List<int> _reserveAmmo = new List<int>();
@@ -27,15 +26,7 @@ public class WeaponHolder : MonoBehaviour
 
     void Awake()
     {
-        _HUDUpdater = FindObjectOfType<HUDUpdater>();
-        _cooldownSlider.gameObject.SetActive(false); // Hide cooldown slider
-        
-        // Give weapons listed in starting weapons
-        // TODO this should probably be in GameManager
-        foreach (WeaponProperties WP in _startingWeapons)
-        {
-            GetNewWeapon(WP, WP.clipSize*2); // Start with 2 clips worth of ammo
-        }
+        _reloadBar.gameObject.SetActive(false);
     }
 
     public void SwitchWeapon(int index)
@@ -57,7 +48,7 @@ public class WeaponHolder : MonoBehaviour
         _currentWeaponScript = _currentWeaponObject.GetComponent<WeaponScript>();
         _currentWeaponScript.SetWeaponProperties(_currentWeaponProperties);
 
-        _HUDUpdater.UpdateAmmo(_bulletsInClip[index], _reserveAmmo[index]);
+        UpdateAmmoHUD();
     }
 
     public void GetNewWeapon(WeaponProperties WepProps, int ammo)
@@ -69,7 +60,7 @@ public class WeaponHolder : MonoBehaviour
             {
                 // If we do, just add the ammo, dont get the weapon
                 _reserveAmmo[i] += ammo;
-                _HUDUpdater.UpdateAmmo(_bulletsInClip[i], _reserveAmmo[i]);
+                UpdateAmmoHUD();
                 return;
             }
         }
@@ -110,7 +101,7 @@ public class WeaponHolder : MonoBehaviour
 
             _bulletsInClip[_currentWeaponIndex] -= 1;
             
-            _HUDUpdater.UpdateAmmo(_bulletsInClip[_currentWeaponIndex],  _reserveAmmo[_currentWeaponIndex]);
+            UpdateAmmoHUD();
         } else if (_bulletsInClip[_currentWeaponIndex] == 0 && _reserveAmmo[_currentWeaponIndex] > 0)
         {
             // Reload if you try to fire
@@ -120,6 +111,11 @@ public class WeaponHolder : MonoBehaviour
 
     public void TriggerReload()
     {
+        if (_bulletsInClip[_currentWeaponIndex] == _currentWeaponProperties.clipSize)
+        {
+            return;
+        }
+        
         if (_reloadCoroutine == null && _reserveAmmo[_currentWeaponIndex] > 0)
         {
             _reloadFinished = Time.time + _currentWeaponProperties.reloadSpeed;
@@ -133,7 +129,7 @@ public class WeaponHolder : MonoBehaviour
         {
             StopCoroutine(_reloadCoroutine);
             _reloadCoroutine = null;
-            _cooldownSlider.gameObject.SetActive(false); // hide the slider
+            _reloadBar.gameObject.SetActive(false); // hide the slider
         }
     }
 
@@ -175,11 +171,11 @@ public class WeaponHolder : MonoBehaviour
     
     IEnumerator ReloadWeapon(float reloadTime)
     {
-        _cooldownSlider.gameObject.SetActive(true);
+        _reloadBar.gameObject.SetActive(true);
         while (Time.time < _reloadFinished)
         {
-            _cooldownSlider.maxValue = reloadTime;
-            _cooldownSlider.value = _reloadFinished - Time.time;
+            _reloadBar.maxValue = reloadTime;
+            _reloadBar.value = _reloadFinished - Time.time;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
@@ -197,19 +193,19 @@ public class WeaponHolder : MonoBehaviour
             _reserveAmmo[_currentWeaponIndex] = 0;
         }
         
-        _HUDUpdater.UpdateAmmo(_bulletsInClip[_currentWeaponIndex],  _reserveAmmo[_currentWeaponIndex]);
+        UpdateAmmoHUD();
         StopReload();
     }
 
-    public void HideAmmo()
+    public void UpdateAmmoHUD()
     {
-        _HUDUpdater.HideAmmo();
+        _gameManager.GetHUDUpdater().UpdateAmmo(_bulletsInClip[_currentWeaponIndex],  _reserveAmmo[_currentWeaponIndex]);
     }
 
-    public void ShowAmmo()
+    public void SetGameManager(GameManager gameManager)
     {
-        _HUDUpdater.UpdateAmmo(_bulletsInClip[_currentWeaponIndex],  _reserveAmmo[_currentWeaponIndex]);
-        _HUDUpdater.ShowAmmo();
+        _gameManager = gameManager;
     }
-    
+
+
 }

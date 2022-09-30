@@ -4,17 +4,43 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(GameManager))]
 public class PickupManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _pickups;
+    [SerializeField] private bool _pickupsEnabled;
     [SerializeField] private float _spawnFrequency;
+
+    private GameManager _gameManager;
+    private List<GameObject> _activePickups;
+    private List<Vector3> _possibleSpawnLocations;
+
+    Vector3 RandomPositionBetween(Vector3 a, Vector3 b)
+    {
+        Vector3 randomPosition = a + Random.Range(0f, 1f) * (b - a);
+        randomPosition.y = a.y + b.y; // Dont mess with height though
+        return randomPosition;
+    }
     
-    private List<GameObject> _activePickups = new List<GameObject>();
+    void Awake()
+    {
+        _gameManager = GetComponent<GameManager>();
+        _activePickups = new List<GameObject>();
+        _possibleSpawnLocations = new List<Vector3>();
+    }
     
-    // Start is called before the first frame update
     void Start()
     {
-        if (_pickups.Count > 0)
+                
+        // Generate a list of possible spawn locations based on map's spawn bases
+        List<Transform> playerSpawns = _gameManager.GetLevelInfo().GetSpawnBases();
+        for (int i = 0; i < (playerSpawns.Count*playerSpawns.Count); i++)
+        {
+            Vector3 randomPosition = RandomPositionBetween(playerSpawns[Random.Range(0, playerSpawns.Count)].transform.position, playerSpawns[Random.Range(0, playerSpawns.Count)].transform.position);
+            _possibleSpawnLocations.Add(randomPosition);
+        }
+        
+        if (_pickupsEnabled && _pickups.Count > 0)
         {
             StartCoroutine(SpawnRandomPickup());
         }
@@ -23,9 +49,9 @@ public class PickupManager : MonoBehaviour
 
     IEnumerator SpawnRandomPickup()
     {
-        while (true)
+        while (_pickupsEnabled)
         {
-            Vector3 pos = new Vector3(Random.Range(-40, 40), 2.5f, Random.Range(-40, 40));
+            Vector3 pos = _possibleSpawnLocations[Random.Range(0, _possibleSpawnLocations.Count)] + new Vector3(0, 30, 0);
             GameObject go = Instantiate(_pickups[Random.Range(0, _pickups.Count)], pos, Quaternion.identity);
             _activePickups.Add(go);
             StartCoroutine(LifetimeTimer(go.GetInstanceID(), go.GetComponent<CollisionAction>().GetPickupScript().lifetime));

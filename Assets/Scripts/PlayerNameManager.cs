@@ -1,23 +1,18 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class PlayerNameManager : MonoBehaviour
 {
     [SerializeField] private GameObject _inputFieldPrefab;
-
+    [SerializeField] private GameObject _listContainer;
     private List<GameObject> _playerInputFieldGameObjects = new List<GameObject>();
     private List<TMP_InputField> _playerInputFields = new List<TMP_InputField>();
-
-    private GameObject _container;
-
     private SettingsManager _settingsManager;
-
-    private int _playerAmount;
-    private int _maxPlayers;
 
     void Awake()
     {
@@ -25,73 +20,43 @@ public class PlayerNameManager : MonoBehaviour
         {
             _settingsManager = FindObjectOfType<SettingsManager>();
         }
-
-        _maxPlayers = _settingsManager.GetMaxPlayers();
-
-        // Initialize list of names & input fields with length of max players
-        for (int i = 1; i <= _maxPlayers; i++)
-        {
-
-            GameObject textFieldGO = Instantiate(_inputFieldPrefab);
-            TMP_InputField textField = textFieldGO.GetComponent<TMP_InputField>();
-
-            textField.text = "Human " + i.ToString();
-
-            _playerInputFieldGameObjects.Add(textFieldGO);
-            _playerInputFields.Add(textField);
-        }
     }
-
-    public void SetContainer(GameObject target)
+    
+    void CreateInputField()
     {
-        _container = target;
-        foreach (GameObject inputfieldGO in _playerInputFieldGameObjects)
-        {
-            inputfieldGO.transform.SetParent(_container.transform);
-        }
+        GameObject inputFieldGameObject = Instantiate(_inputFieldPrefab, _listContainer.transform);
+        TMP_InputField textField = inputFieldGameObject.GetComponent<TMP_InputField>();
+        textField.text = "Human " + (_playerInputFieldGameObjects.Count + 1).ToString();
+        int index = _playerInputFields.Count;
+        _playerInputFieldGameObjects.Add(inputFieldGameObject);
+        _playerInputFields.Add(textField);
+        textField.onEndEdit.AddListener(s => GrabNewName(s, index)); // Doesn't work with just putting a .Count here as index
     }
-
-    void UpdatePlayerAmount()
-    {
-        _playerAmount = _settingsManager.GetHumans();
-    }
-
+    
     public void RefreshInputContainer()
     {
-        UpdatePlayerAmount();
-
-        for (int i = 0; i < _maxPlayers; i++)
+        while (_playerInputFieldGameObjects.Count < _settingsManager.HowManyHumans())
         {
-            if (i < _playerAmount)
+            CreateInputField();
+        }
+
+        for (int i = 0; i < _playerInputFieldGameObjects.Count; i++)
+        {
+            if (i < _settingsManager.HowManyHumans())
             {
+                _playerInputFields[i].text = _settingsManager.GetPlayerNames()[i];
                 _playerInputFieldGameObjects[i].SetActive(true);
             }
             else
             {
                 _playerInputFieldGameObjects[i].SetActive(false);
             }
-
         }
-
-        //Debug.Log("hello from refresh in player name manager, there are " + _playerAmount + " players");
     }
 
-    public List<string> GetAllNames()
+    public void GrabNewName(string arg0, int index)
     {
-        List<string> names = new List<string>();
-        foreach (TMP_InputField inputfield in _playerInputFields)
-        {
-            names.Add(inputfield.text);
-        }
-
-        return names;
-    }
-
-    public void SetNames(List<string> newNames)
-    {
-        for (int i = 0; i < newNames.Count; i++)
-        {
-            _playerInputFields[i].text = newNames[i];
-        }
+        Debug.Log("Grab new name " + index + "," + arg0);
+        _settingsManager.SetPlayerName(index, arg0);
     }
 }

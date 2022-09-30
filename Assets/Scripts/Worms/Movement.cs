@@ -1,52 +1,43 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Movement : MonoBehaviour
 {
-    private Rigidbody _rb;
+    [SerializeField] private float _movementSpeed = 7.5f;
+    [SerializeField] private float _rotationSpeed = 120f;
+    [SerializeField] private float _jumpForce = 2000f;
+    [SerializeField] private float _fastFallTriggerVelocity = 20f;
     
-    public float movementSpeed;
-    public float rotationSpeed;
-    public float jumpForce;
-
-    private bool _isGrounded = true;
-    private bool _falling = false;
+    private Rigidbody _rb;
+    private bool _isGrounded;
+    private bool _fastFalling;
+    private Vector2 _moveAxis;
 
     public UnityEvent landedAfterLongFall;
-
-    private Vector2 _moveAxis;
+    
 
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
     
-    public void AxisInput(Vector2 move)
+    public void AxisInput(Vector2 vec)
     {
-        if (move.magnitude > 0.1)
-        {
-            _moveAxis = move;
-        }
-        
+        _moveAxis = vec;
     }
 
     void FixedUpdate()
     {
-        if (_moveAxis != Vector2.zero)
-        {
-            _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * movementSpeed)));
+        _rb.MovePosition(_rb.position + (transform.forward * (_moveAxis.y * Time.fixedDeltaTime * _movementSpeed)));
+        Quaternion deltaRot = Quaternion.Euler(new Vector3(0, _moveAxis.x * _rotationSpeed, 0) * Time.fixedDeltaTime);
+        _rb.MoveRotation(_rb.rotation * deltaRot);
         
-            Quaternion deltaRot = Quaternion.Euler(new Vector3(0,_moveAxis.x*rotationSpeed,0) * Time.fixedDeltaTime);
-            _rb.MoveRotation(_rb.rotation * deltaRot);
-        
-            _moveAxis = Vector2.zero;  
-        }
+        // PlayerInput seems to send a 0.00, 0.00 when it gets disabled which is why we don't need to think about resetting back to 0
+        // ControlledByAI sends a Vector2.zero in OnDisable to achieve the same effect
 
-        if (_rb.velocity.y < -20)
+        if (_rb.velocity.y < -_fastFallTriggerVelocity)
         {
-            _falling = true;
+            _fastFalling = true;
         }
     }
 
@@ -68,14 +59,14 @@ public class Movement : MonoBehaviour
         if (_isGrounded)
         {
             _isGrounded = false;
-            _rb.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+            _rb.AddForce(new Vector3(0, _jumpForce, 0), ForceMode.Impulse);
         }
         
     }
     
     private void OnCollisionEnter(Collision collisionInfo)
     {
-        if (_falling)
+        if (_fastFalling)
         {
             landedAfterLongFall.Invoke();
         }
@@ -83,7 +74,7 @@ public class Movement : MonoBehaviour
         if (_rb.velocity.y <= Mathf.Abs(0.1f))
         {
             _isGrounded = true;
-            _falling = false;
+            _fastFalling = false;
         }
     }
 }

@@ -1,19 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MenuInputs
 {
-    private bool _pauseMenuActive = false;
+    private GameManager _gameManager;
     [SerializeField] private Canvas _canvas;
 
     public override void Select()
     {
-        if (_pauseMenuActive)
-        {
-            switch (GetSelectionIndex())
+        switch (GetSelectionIndex())
             {
                 case 0: // Resume game
-                    FindObjectOfType<GameManager>().TogglePause();
+                    _gameManager.TogglePause();
                     break;
                 case 1: // Restart
                     SceneManager.LoadScene("Scenes/PlayScene");
@@ -21,8 +20,7 @@ public class PauseMenu : MenuInputs
                 case 2: // Quit to menu
                     SceneManager.LoadScene("Scenes/Menu");
                     break;
-            }     
-        }
+            }
     }
 
     void Awake()
@@ -30,15 +28,18 @@ public class PauseMenu : MenuInputs
         newSelection(0); // To make the first item be hovered
     }
 
-    public void Activate()
+    public void SetGameManager(GameManager gameManager)
     {
-        _canvas.gameObject.SetActive(true);
-        _pauseMenuActive = true;
+        _gameManager = gameManager;
+    }
+    
+    private void OnEnable()
+    {
+        Time.timeScale = 0;
     }
 
-    public void Deactivate()
+    private void OnDisable()
     {
-        _canvas.gameObject.SetActive(false);
-        _pauseMenuActive = false;
+        Time.timeScale = 1;
     }
 }

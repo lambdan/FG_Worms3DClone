@@ -1,31 +1,41 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance { get; private set; }
-
-    [SerializeField] private int _maxPlayers;
-
+    private GameObject[] _levels;
+    private GameObject _level;
+    private int _levelIndex;
+    private LevelInfo _levelInfo;
+    
+    // Default settings
     private int _humanPlayers = 1;
     private int _aiPlayers = 1;
     private int _turnLength = 15;
     private int _wormsPerTeam = 3;
-    private List<string> _names = new List<string>();
+    private int _maxWormsPerTeam = 20;
+    
+    private List<string> _playerNames;
 
     public void SetNames(List<string> newNames)
     {
-        _names = newNames;
+        _playerNames = newNames;
     }
 
-    public List<string> GetHumanNames()
+    public void SetLevel(int newIndex)
     {
-        return _names;
+        _levelIndex = newIndex;
+        _level = Instantiate(_levels[newIndex]);
+        _levelInfo = _level.GetComponent<LevelInfo>();
     }
+
+
     
     public void IncrementHumans()
     {
-        if (_humanPlayers >= 8)
+        if (_humanPlayers >= GetMaxPlayers())
         {
             _humanPlayers = 0;
         }
@@ -37,7 +47,7 @@ public class SettingsManager : MonoBehaviour
 
     public void IncrementAIs()
     {
-        if (_aiPlayers >= 8)
+        if (_aiPlayers >= GetMaxPlayers())
         {
             _aiPlayers = 0;
         }
@@ -59,18 +69,29 @@ public class SettingsManager : MonoBehaviour
     public void IncrementWorms()
     {
         _wormsPerTeam += 1;
-        if (_wormsPerTeam > 10)
+        if (_wormsPerTeam > GetMaxWormsPerTeam())
         {
             _wormsPerTeam = 1;
         }
     }
 
-    public int GetHumans()
+    public void IncrementLevel()
+    {
+        _levelIndex += 1;
+        if (_levelIndex >= _levels.Length)
+        {
+            _levelIndex = 0;
+        }
+
+        SetLevel(_levelIndex);
+    }
+
+    public int HowManyHumans()
     {
         return _humanPlayers;
     }
 
-    public int GetAIs()
+    public int HowManyAIs()
     {
         return _aiPlayers;
     }
@@ -82,7 +103,7 @@ public class SettingsManager : MonoBehaviour
 
     public int GetMaxPlayers()
     {
-        return _maxPlayers;
+        return _levelInfo.SpawnBasesAmount();
     }
 
     public int GetTurnLength()
@@ -93,6 +114,36 @@ public class SettingsManager : MonoBehaviour
     public int GetWormsPerTeam()
     {
         return _wormsPerTeam;
+    }
+
+    public int GetMaxWormsPerTeam()
+    {
+        return _maxWormsPerTeam;
+    }
+    
+
+    public GameObject GetLevel()
+    {
+        return _levels[_levelIndex];
+    }
+    
+    public List<string> GetPlayerNames()
+    {
+        while (_playerNames.Count < HowManyHumans())
+        {
+            _playerNames.Add("Player " + (_playerNames.Count + 1).ToString());
+        }
+        return _playerNames;
+    }
+
+    public string GetPlayerName(int index)
+    {
+        return GetPlayerNames()[index];
+    }
+
+    public void SetPlayerName(int index, string newName)
+    {
+        _playerNames[index] = newName;
     }
 
     void Awake()
@@ -106,5 +157,10 @@ public class SettingsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
         }
+
+        _playerNames = new List<string>();
+        
+        _levels = Resources.LoadAll<GameObject>("Levels"); // Scan for levels
+        SetLevel(0);
     }
 }

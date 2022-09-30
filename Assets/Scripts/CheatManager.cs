@@ -1,41 +1,44 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CheatManager : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> _allWeapons;
+
+    private GameManager _gameManager;
     
-    private WormManager _WM;
-    
-    // Update is called once per frame
     void Awake()
     {
-        _WM = GetComponent<WormManager>();
+        _gameManager = GetComponent<GameManager>();
     }
     
-    void Update()
+    public void InvincibilityCheat (InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (context.started)
         {
             GiveInvincibility();
         }
-        
-        if (Input.GetKeyDown(KeyCode.F2))
+    }
+
+    public void WeaponsCheat(InputAction.CallbackContext context)
+    {
+        if (context.started)
         {
             GiveAllWeapons();
         }
     }
-
+    
     void GiveAllWeapons()
     {
         foreach (WeaponProperties wp in _allWeapons)
         {
-            _WM.GetCurrentWorm().GetComponent<WeaponHolder>().GetNewWeapon(wp, 999);
+            _gameManager.GetCurrentWorm().GetWeaponHolder().GetNewWeapon(wp, 999);
         }
     }
 
     void GiveInvincibility()
     {
-        _WM.GetCurrentWorm().GetComponent<Health>().StartInvincibility(999);
+        _gameManager.GetCurrentWorm().GetHealth().StartInvincibility(999);
     }
 }
