@@ -18,20 +18,13 @@ public class SettingsManager : MonoBehaviour
     private int _maxWormsPerTeam = 20;
     
     private List<string> _playerNames;
-
-    public void SetNames(List<string> newNames)
-    {
-        _playerNames = newNames;
-    }
-
+    
     public void SetLevel(int newIndex)
     {
         _levelIndex = newIndex;
         _level = Instantiate(_levels[newIndex]);
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
-
-
     
     public void IncrementHumans()
     {
@@ -134,11 +127,6 @@ public class SettingsManager : MonoBehaviour
             _playerNames.Add("Player " + (_playerNames.Count + 1).ToString());
         }
         return _playerNames;
-    }
-
-    public string GetPlayerName(int index)
-    {
-        return GetPlayerNames()[index];
     }
 
     public void SetPlayerName(int index, string newName)

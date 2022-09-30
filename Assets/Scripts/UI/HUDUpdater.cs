@@ -51,12 +51,7 @@ public class HUDUpdater : MonoBehaviour
             _turnTimeSliderAnimation.Play();
         }
     }
-
-    public void SetTurnSliderMin(float min)
-    {
-        _turnTimeSlider.minValue = min;
-    }
-
+    
     public void SetTurnSliderMax(float max)
     {
         _turnTimeSlider.maxValue = max;
@@ -65,7 +60,7 @@ public class HUDUpdater : MonoBehaviour
     public void UpdateAmmo(int bulletsInClip,  int ammunitionHeld)
     {
         // Results in something like: 18 (120)
-        _ammoText.text = bulletsInClip.ToString() + " (" + ammunitionHeld.ToString() + ")";
+        _ammoText.text = bulletsInClip + " (" + ammunitionHeld + ")";
     }
 
     public void UpdateAliveCount(List<Team> teams)
@@ -73,7 +68,7 @@ public class HUDUpdater : MonoBehaviour
         string newText = "";
         foreach (Team team in teams)
         {
-            newText = newText + team.GetTeamName() + ": " + team.AliveWormsInTeam().ToString() + " alive\n";
+            newText = newText + team.GetTeamName() + ": " + team.AliveWormsInTeam() + " alive\n";
         }
 
         _aliveCount.text = newText;

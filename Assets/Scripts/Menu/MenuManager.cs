@@ -23,7 +23,7 @@ public class MenuManager : MenuInputs
 
     void Awake()
     {
-        _settingsManager = FindObjectOfType<SettingsManager>();
+        _settingsManager = SettingsManager.Instance;
         if (_settingsManager == null)
         {
             _settingsManager = new GameObject("Settings Manager").AddComponent<SettingsManager>();

@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour
     {
         _loadingScreen = Instantiate(_loadingScreenPrefab);
         
-        _settingsManager = FindObjectOfType<SettingsManager>();
+        _settingsManager = SettingsManager.Instance;
         if (_settingsManager == null)
         {
             _settingsManager = new GameObject("Settings Manager").AddComponent<SettingsManager>();

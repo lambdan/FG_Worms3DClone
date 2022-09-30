@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UIElements;
 
 public class PlayerNameManager : MonoBehaviour
 {
@@ -18,7 +14,7 @@ public class PlayerNameManager : MonoBehaviour
     {
         if (_settingsManager == null) // Only grab the settings manager if there isn't one already going (singleton)
         {
-            _settingsManager = FindObjectOfType<SettingsManager>();
+            _settingsManager = SettingsManager.Instance;
         }
     }
     
@@ -54,9 +50,8 @@ public class PlayerNameManager : MonoBehaviour
         }
     }
 
-    public void GrabNewName(string arg0, int index)
+    public void GrabNewName(string newName, int index)
     {
-        Debug.Log("Grab new name " + index + "," + arg0);
-        _settingsManager.SetPlayerName(index, arg0);
+        _settingsManager.SetPlayerName(index, newName);
     }
 }
