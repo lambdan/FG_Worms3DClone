@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -357,9 +354,11 @@ public class GameManager : MonoBehaviour
         _dangerZoneManager.SetLocations(_levelInfo.GetDangerZones());
         _dangerZoneManager.SetTime(10);
         _dangerZoneManager.Activate();
-        
+
         StartTurn();
         Destroy(_loadingScreen);
+
+        UnityEngine.Cursor.visible = false;
     }
 
     IEnumerator TurnTimer()

@@ -47,6 +47,7 @@ public class MenuManager : MenuInputs
 
         newSelection(0); // Focus "Start Game"
         RefreshMenu();
+        UnityEngine.Cursor.visible = true;
     }
 
     void AttemptStartGame()
