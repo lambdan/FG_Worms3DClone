@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,7 +20,7 @@ public class Health : MonoBehaviour
 
     public int GetHealth()
     {
-        return _health < 0 ? 0 : _health;
+        return _health < 0 ? 0 : _health; // Returns 0 if its <0 
     }
 
     public int GetMaxHealth()
@@ -54,16 +53,8 @@ public class Health : MonoBehaviour
 
     public void ChangeMaxHealth(int amount)
     {
-        // Check if health is full...
-        bool wasFull = _health == _maxHealth;
-
         _maxHealth += amount;
-
-        if (wasFull) // ...  because if it was, set health to new max 
-        {
-            ChangeHealth(amount);
-        }
-        
+        _health += amount;
         healthChanged.Invoke();
     }
 
@@ -78,18 +69,15 @@ public class Health : MonoBehaviour
 
     IEnumerator InvincibilityTimer(float duration)
     {
-
         WormColor wc = GetComponent<WormColor>();
         Color originalColor = wc.GetColor();
-
         float endTime = Time.time + duration;
         while (Time.time < endTime)
         {
             wc.SetNewColor(Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f));
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForFixedUpdate();
         }
-
-        wc.SetNewColor(originalColor);
+        wc.SetNewColor(originalColor); // Restore color
         _invincible = false;
     }
 
