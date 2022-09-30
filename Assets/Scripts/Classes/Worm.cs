@@ -40,7 +40,6 @@ public class Worm
     {
         _gameManager = gameManager;
         _weaponHolder.SetGameManager(gameManager);
-        _health.SetGameManager(gameManager);
     }
     
 
@@ -53,6 +52,11 @@ public class Worm
     public bool IsAlive()
     {
         return _health.GetHealth() > 0;
+    }
+
+    public bool IsDead()
+    {
+        return _health.GetHealth() <= 0;
     }
 
     public GameObject GetGameObject()

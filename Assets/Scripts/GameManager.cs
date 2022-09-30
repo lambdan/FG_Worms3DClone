@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
                                  6 * new Vector3(Mathf.Cos(spawnAngle * i), 0, Mathf.Sin(spawnAngle * i));
             worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity));
             worm.GetTransform().LookAt(Vector3.zero); // To make them look toward the center
-            worm.GetHealth().healthZero.AddListener(() => CancelTurn());
+            worm.GetHealth().healthZero.AddListener(() => DeathReport());
 
             team.AddWormToTeam(worm);
         }
@@ -280,6 +280,10 @@ public class GameManager : MonoBehaviour
     // Deaths and high score
     public void DeathReport()
     {
+        if (_currentWorm.IsDead())
+        {
+            CancelTurn();
+        }
         _hudUpdater.UpdateAliveCount(_teams);
         _currentTeam.AddScore(1000);
         if (TeamsAlive() <= 1)

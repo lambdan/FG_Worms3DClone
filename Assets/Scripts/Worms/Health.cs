@@ -8,9 +8,8 @@ public class Health : MonoBehaviour
     public int startHealth;
     private int _health;
     private int _maxHealth;
-    private bool _invincible = false;
-
-    private GameManager _gameManager;
+    private bool _invincible;
+    
     public UnityEvent healthZero;
     public UnityEvent healthChanged;
     
@@ -43,7 +42,6 @@ public class Health : MonoBehaviour
         if (_health <= 0)
         {
             healthZero.Invoke();
-            _gameManager.DeathReport();
         }
 
         if (_health > _maxHealth)
@@ -76,11 +74,6 @@ public class Health : MonoBehaviour
             _invincible = true;
             StartCoroutine(InvincibilityTimer(duration));
         }
-    }
-
-    public void SetGameManager(GameManager gameManager)
-    {
-        _gameManager = gameManager;
     }
 
     IEnumerator InvincibilityTimer(float duration)

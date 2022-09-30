@@ -1,12 +1,15 @@
 using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
+    public float cameraOverviewSpeed = 0.6f;
     private Transform _target; // Player
     private CameraGlue _cameraGlue;
     //private bool _shouldFollow;
     private bool _manualControl;
+    private bool _overviewMode;
     private Vector3 _manualOffset;
     private Vector2 _axisInput;
+    private Vector3 _cameraDestination;
     
     void FixedUpdate()
     {
@@ -17,8 +20,18 @@ public class CameraManager : MonoBehaviour
             {
                 _cameraGlue.GetTransform().position = new Vector3(_cameraGlue.GetTransform().position.x, _target.position.y + 2f, _cameraGlue.GetTransform().position.z);
             }
+        } 
+        
+        if (_overviewMode)
+        {
+            _cameraDestination = transform.position + (cameraOverviewSpeed * Vector3.up);
+        } 
+        else
+        {
+            _cameraDestination = _cameraGlue.GetTransform().position;
         }
-        transform.position = _cameraGlue.GetTransform().position;
+
+        transform.position = _cameraDestination;
         transform.LookAt(_target);
     }
 
@@ -26,6 +39,7 @@ public class CameraManager : MonoBehaviour
     {
         _target = go.transform;
         _cameraGlue = glue;
+        _overviewMode = false;
         //_shouldFollow = true;
     }
     
@@ -36,9 +50,8 @@ public class CameraManager : MonoBehaviour
 
     public void Deactivate() // Used when the turn ends
     {
-       //_shouldFollow = false;
-       
         _manualControl = false;
+        _overviewMode = true;
     }
     
     public void InstantReset()
