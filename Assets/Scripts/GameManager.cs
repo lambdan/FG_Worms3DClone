@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
                                  6 * new Vector3(Mathf.Cos(spawnAngle * i), 0, Mathf.Sin(spawnAngle * i));
             worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity));
             worm.GetTransform().LookAt(Vector3.zero); // To make them look toward the center
+            worm.GetHealth().healthZero.AddListener(() => CancelTurn());
 
             team.AddWormToTeam(worm);
         }
