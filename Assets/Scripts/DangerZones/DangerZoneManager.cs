@@ -2,51 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(GameManager))]
 public class DangerZoneManager : MonoBehaviour
 {
     [SerializeField] private GameObject _dangerZonePrefab;
-    [SerializeField] private List<Transform> _dangerZoneLocations;
-    [SerializeField] private float _switchAfter;
+    private List<Transform> _dangerZoneLocations;
+    private float _switchAfter = 30f;
     [SerializeField] private bool _randomOrder;
 
-    private int _locationIndex = 0;
-    private GameObject _currentDZ;
+    private int _locationIndex;
+    private GameObject _dangerZone;
 
-    void Start()
+    private Coroutine _dangerZoneTimer;
+    
+    int NewLocation()
     {
         if (_randomOrder)
         {
-            _locationIndex = Random.Range(0, _dangerZoneLocations.Count); // Randomly select first location
+            return Random.Range(0, _dangerZoneLocations.Count);
         }
-        
-        _currentDZ = Instantiate(_dangerZonePrefab, _dangerZoneLocations[_locationIndex].position, Quaternion.identity);
-        StartCoroutine(DangerZoneTimer());
+        else
+        {
+            int next = _locationIndex + 1;
+            if (next >= _dangerZoneLocations.Count)
+            {
+                next = 0;
+            }
+
+            return next;
+        }
     }
 
-    int NextLocationIndex()
+    public void SetLocations(List<Transform> locations)
     {
-        int next = _locationIndex + 1;
-        if (next >= _dangerZoneLocations.Count)
-        {
-            next = 0; // Back to first
-        }
+        _dangerZoneLocations = locations;
+    }
 
-        return next;
+    public List<Transform> GetLocations()
+    {
+        return _dangerZoneLocations;
+    }
+
+    public void Activate()
+    {
+        _locationIndex = NewLocation();
+        _dangerZone = Instantiate(_dangerZonePrefab, _dangerZoneLocations[_locationIndex].position, Quaternion.identity);
+        _dangerZoneTimer = StartCoroutine(DangerZoneTimer());
+    }
+
+    public void Deactivate()
+    {
+        StopCoroutine(_dangerZoneTimer);
+        Destroy(_dangerZone);
+    }
+
+    public void SetTime(float newTime)
+    {
+        _switchAfter = newTime;
     }
     
     IEnumerator DangerZoneTimer()
     {
         yield return new WaitForSeconds(_switchAfter);
-
-        if (_randomOrder)
-        {
-            _locationIndex = Random.Range(0, _dangerZoneLocations.Count);
-        }
-        else
-        {
-            _locationIndex = NextLocationIndex();
-        }
-        _currentDZ.transform.position = _dangerZoneLocations[_locationIndex].position;
+        _locationIndex = NewLocation();
+        _dangerZone.transform.position = _dangerZoneLocations[_locationIndex].position;
         StartCoroutine(DangerZoneTimer());
     }
 

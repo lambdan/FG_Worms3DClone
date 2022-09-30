@@ -9,6 +9,9 @@ using UnityEngine.UIElements;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
+[RequireComponent(typeof(DangerZoneManager))]
+[RequireComponent(typeof(PickupManager))]
+[RequireComponent(typeof(HighScoreManager))]
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<WeaponProperties> _startingWeapons;
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
     private SettingsManager _settingsManager;
     private CameraManager _cameraManager;
     private PickupManager _pickupManager;
+    private DangerZoneManager _dangerZoneManager;
     private HighScoreManager _highScoreManager;
     private HUDUpdater _hudUpdater;
 
@@ -329,6 +333,7 @@ public class GameManager : MonoBehaviour
         _HUD = Instantiate(_HUDPrefab);
 
         _cameraManager = Camera.main.GetComponent<CameraManager>();
+        _dangerZoneManager = GetComponent<DangerZoneManager>();
         _pickupManager = GetComponent<PickupManager>();
         _highScoreManager = GetComponent<HighScoreManager>();
         _hudUpdater = _HUD.GetComponent<HUDUpdater>();
@@ -343,6 +348,11 @@ public class GameManager : MonoBehaviour
         GenerateTeams();
         _hudUpdater.UpdateAliveCount(_teams);
         _currentTeam = _teams[0];
+        
+        _dangerZoneManager.SetLocations(_levelInfo.GetDangerZones());
+        _dangerZoneManager.SetTime(10);
+        _dangerZoneManager.Activate();
+        
         StartTurn();
         Destroy(_loadingScreen);
     }

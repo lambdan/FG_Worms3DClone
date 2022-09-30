@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 1125836909}
   - component: {fileID: 1125836910}
   - component: {fileID: 1125836911}
+  - component: {fileID: 1125836912}
   m_Layer: 0
   m_Name: Game Manager v2
   m_TagString: Untagged
@@ -365,6 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _listEntryPrefab: {fileID: 0}
+  _listContainer: {fileID: 0}
 --- !u!114 &1125836910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,3 +517,17 @@ MonoBehaviour:
   m_DefaultActionMap: Game Actions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1125836912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125836903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f7ffe1ee3979404790b502bd451dc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dangerZonePrefab: {fileID: 9037591524251778087, guid: 6e94f51bac604f34ea5e2d4cd226580b, type: 3}
+  _randomOrder: 1
