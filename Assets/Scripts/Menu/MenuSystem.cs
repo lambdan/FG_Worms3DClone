@@ -8,7 +8,7 @@ public class MenuSystem : MonoBehaviour
 {
     public List<TMP_Text> menuEntries;
     private int _selectionIndex = 0;
-    public UnityEvent menuSelection;
+    [HideInInspector] public UnityEvent menuSelection;
     
     void MakeActive(int entryIndex)
     {

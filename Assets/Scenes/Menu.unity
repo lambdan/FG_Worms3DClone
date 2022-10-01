@@ -2118,6 +2118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b768ac3ae6f1c1842917d413e26223f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuEntries: []
+  menuSelection:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1130582077
 GameObject:
   m_ObjectHideFlags: 0

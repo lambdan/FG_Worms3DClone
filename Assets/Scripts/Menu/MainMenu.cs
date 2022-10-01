@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MenuSystem
+public class MainMenu : MenuSystem
 {
     [SerializeField] private TMP_Text _levelText;
     [SerializeField] private GameObject _levelPreviewParent;
