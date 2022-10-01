@@ -28,42 +28,46 @@ public class InputHandler : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!context.performed)
         {
-            _movement.Jump();
+            return;
         }
-        
+        _movement.Jump();
     }
 
     public void NextWeapon(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!context.performed)
         {
-            _weaponHolder.NextWeapon();
+            return;
         }
+        _weaponHolder.NextWeapon();
     }
 
     public void Attack(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if (!context.performed)
             {
-                _weaponHolder.Fire();
+                return;
             }
+            _weaponHolder.Fire();
         }
 
     public void RecenterCamera(InputAction.CallbackContext context)
     {
-            if (context.started)
-            {
-                _cameraManager.InstantReset();
-            } 
+        if (!context.performed)
+        {
+            return;
+        }
+        _cameraManager.InstantReset();
     }
 
     public void ReloadWeapon(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!context.performed)
         {
-            _weaponHolder.TriggerReload();
+            return;
         }
+        _weaponHolder.TriggerReload();
     }
 }
