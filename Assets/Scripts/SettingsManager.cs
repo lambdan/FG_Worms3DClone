@@ -22,7 +22,7 @@ public class SettingsManager : MonoBehaviour
     public void SetLevel(int newIndex)
     {
         _levelIndex = newIndex;
-        _level = Instantiate(_levels[newIndex]);
+        _level = _levels[_levelIndex];
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
     

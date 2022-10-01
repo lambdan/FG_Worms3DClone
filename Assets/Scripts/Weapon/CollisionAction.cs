@@ -13,7 +13,6 @@ public class CollisionAction : MonoBehaviour
         {
             _givesDamage = true;
         }
-        
     }
 
     public void Action(GameObject target)

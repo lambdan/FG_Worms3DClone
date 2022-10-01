@@ -20,6 +20,7 @@ public class MenuManager : MenuInputs
     private SettingsManager _settingsManager;
     private HighScoreManager _highScoreManager;
     private PlayerNameManager _playerNameManager;
+    private GameObject _levelPreviewObject;
 
     void Awake()
     {
@@ -125,16 +126,11 @@ public class MenuManager : MenuInputs
 
     void UpdateLevelPreview(GameObject newLevel)
     {
-        /*
-        if (_levelPreviewObject == null || (newLevel.gameObject.name != _levelPreviewObject.gameObject.name[0..^7]))
+        if (_levelPreviewObject == null || (newLevel.gameObject.name != _levelPreviewObject.gameObject.name[0..^7])) // ^7 to remove (Clone) from the name
         {
             Destroy(_levelPreviewObject);
             _levelPreviewObject = Instantiate(_settingsManager.GetLevel(), _levelPreviewParent.transform);
         }
-
-        Instantiate(_settingsManager.GetLevel(), _levelPreviewParent.transform)
-        _levelPreviewObject = _settingsManager.GetLevel();
-*/
     }
 
     IEnumerator ShowErrorMessage(float duration)
