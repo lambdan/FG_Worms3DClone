@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MenuInputs
+public class MenuManager : MenuSystem
 {
     [SerializeField] private TMP_Text _levelText;
     [SerializeField] private GameObject _levelPreviewParent;
@@ -49,6 +49,7 @@ public class MenuManager : MenuInputs
         newSelection(0); // Focus "Start Game"
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
+        menuSelection.AddListener(Selection);
     }
 
     void AttemptStartGame()
@@ -72,7 +73,7 @@ public class MenuManager : MenuInputs
         SceneManager.LoadScene("Scenes/PlayScene");
     }
     
-    public override void Select()
+    void Selection()
     {
         switch (GetSelectionIndex())
         {

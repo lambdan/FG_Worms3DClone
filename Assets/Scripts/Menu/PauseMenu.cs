@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MenuInputs
+public class PauseMenu : MenuSystem
 {
     private GameManager _gameManager;
     [SerializeField] private Canvas _canvas;
 
-    public override void Select()
+    void Selection()
     {
         switch (GetSelectionIndex())
             {
@@ -26,6 +26,7 @@ public class PauseMenu : MenuInputs
     void Awake()
     {
         newSelection(0); // To make the first item be hovered
+        menuSelection.AddListener(Selection);
     }
 
     public void SetGameManager(GameManager gameManager)

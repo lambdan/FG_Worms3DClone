@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 5
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1490,8 +1490,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -141.35916, y: -0.010002136}
-  m_SizeDelta: {x: 259.8654, y: 211.98}
+  m_AnchoredPosition: {x: -140.4, y: -1.58}
+  m_SizeDelta: {x: 259.8654, y: 208.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &818372508
 MonoBehaviour:
@@ -2099,7 +2099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110331553}
   m_LocalRotation: {x: -0.13485415, y: -0.2471036, z: -0.034750137, w: 0.95892996}
-  m_LocalPosition: {x: 381.6, y: 149.4, z: 0}
+  m_LocalPosition: {x: 621.52, y: 149.4, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2201,7 +2201,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 980147084}
   m_HandleRect: {fileID: 980147083}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2506,7 +2506,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1808854068}
   m_HandleRect: {fileID: 1808854067}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2997,7 +2997,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.72519, y: -21.611}
-  m_SizeDelta: {x: 257.2604, y: 147.0179}
+  m_SizeDelta: {x: 257.2604, y: 147.02}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1401855284
 MonoBehaviour:
@@ -3102,7 +3102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -136.27, y: 81.825}
+  m_AnchoredPosition: {x: -120.8, y: 79.892}
   m_SizeDelta: {x: 274.9873, y: 49.0225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1404465232
@@ -3158,7 +3158,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 5
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3188,7 +3188,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -38.60675, y: -7.7213516, z: -37.31984, w: -9.008202}
+  m_margin: {x: -27.857803, y: -7.7213516, z: -29.258102, w: -9.008202}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3319,8 +3319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0041036, y: -19}
-  m_SizeDelta: {x: 326.4453, y: 209.9731}
+  m_AnchoredPosition: {x: 0.0041036, y: -19.605}
+  m_SizeDelta: {x: 326.4453, y: 208.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1514514616
 MonoBehaviour:
@@ -3529,6 +3529,7 @@ GameObject:
   - component: {fileID: 1641084615}
   - component: {fileID: 1641084617}
   - component: {fileID: 1641084618}
+  - component: {fileID: 1641084619}
   m_Layer: 0
   m_Name: Menu Manager
   m_TagString: Untagged
@@ -3556,6 +3557,9 @@ MonoBehaviour:
   - {fileID: 78408388}
   - {fileID: 1920429339}
   - {fileID: 771403557}
+  menuSelection:
+    m_PersistentCalls:
+      m_Calls: []
   _levelText: {fileID: 610522186}
   _levelPreviewParent: {fileID: 1110331553}
   _humanMenuSelector: {fileID: 420623979}
@@ -3608,6 +3612,128 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputFieldPrefab: {fileID: 1742229923162849631, guid: ba614b5e5e2be8b40aada4b69daaf85d, type: 3}
   _listContainer: {fileID: 154335911}
+--- !u!114 &1641084619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641084614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: e818ad52707626040a76ef880ae08097, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4f2f58e6-2fcd-46c4-ac98-ad2120f4680b
+    m_ActionName: Player/Fire[/Keyboard/leftCtrl,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c6c469e-88bc-438c-a46c-3838a250a193
+    m_ActionName: Player/Movement[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0cc8bd0f-7a1d-4761-9c36-93b8e83caa81
+    m_ActionName: Player/Weapon Switch[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb081b56-64a4-49f8-9601-c01d9f31fe94
+    m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc480a5b-1218-4070-90d7-b1ac18f03ecc
+    m_ActionName: Player/Camera Movement[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ab8e9bb8-cac3-44e7-8b8e-2d407732c605
+    m_ActionName: Player/Camera Reset[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d53902fa-0309-4d0d-af89-e85a62807bb2
+    m_ActionName: Player/Reload[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1d591db4-91e1-4960-9c0a-de8d9367ee06
+    m_ActionName: Game Actions/Pause Menu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b6b4a878-dac7-4f2f-8c23-242e52b89c7c
+    m_ActionName: Game Actions/Worm Switch[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 80141b17-8941-49e4-8477-d360ccaab932
+    m_ActionName: Game Actions/Weapon Cheat[/Keyboard/f2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 58be5343-b183-4016-8485-c2293775b9fd
+    m_ActionName: Game Actions/Invincibility Cheat[/Keyboard/f1]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1641084615}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: MoveUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7df788b3-597d-47f9-a310-d11d55aba8ed
+    m_ActionName: Menus/Move Up[/Keyboard/upArrow,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1641084615}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: MoveDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c42f002a-ec5c-401c-aa0c-2d8d3249f903
+    m_ActionName: Menus/Move Down[/Keyboard/downArrow,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1641084615}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: Select
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6b6ecad5-b459-49fc-be68-264f7062fe0d
+    m_ActionName: Menus/Select[/Keyboard/enter]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Menus
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1679151583
 GameObject:
   m_ObjectHideFlags: 0
