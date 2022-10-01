@@ -203,7 +203,11 @@ public class GameManager : MonoBehaviour
 
         while (_teams[next].AliveWormsInTeam() <= 0)
         {
-            next += 1;
+            next += 1; 
+            if (next >= _teams.Count)
+            {
+                next = 0;
+            }
         }
 
         return _teams[next];
