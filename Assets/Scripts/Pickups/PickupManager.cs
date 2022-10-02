@@ -14,6 +14,7 @@ public class PickupManager : MonoBehaviour
     private GameManager _gameManager;
     private List<GameObject> _activePickups;
     private List<Vector3> _possibleSpawnLocations;
+    private GameObject _pickupParent;
 
     Vector3 RandomPositionBetween(Vector3 a, Vector3 b)
     {
@@ -24,6 +25,7 @@ public class PickupManager : MonoBehaviour
     
     void Awake()
     {
+        _pickupParent = new GameObject("Pickups");
         _gameManager = GetComponent<GameManager>();
         _activePickups = new List<GameObject>();
         _possibleSpawnLocations = new List<Vector3>();
@@ -52,7 +54,7 @@ public class PickupManager : MonoBehaviour
         while (_pickupsEnabled)
         {
             Vector3 pos = _possibleSpawnLocations[Random.Range(0, _possibleSpawnLocations.Count)] + new Vector3(0, 30, 0);
-            GameObject go = Instantiate(_pickups[Random.Range(0, _pickups.Count)], pos, Quaternion.identity);
+            GameObject go = Instantiate(_pickups[Random.Range(0, _pickups.Count)], pos, Quaternion.identity, _pickupParent.transform);
             _activePickups.Add(go);
             StartCoroutine(LifetimeTimer(go.GetInstanceID(), go.GetComponent<CollisionAction>().GetPickupScript().lifetime));
             yield return new WaitForSeconds(_spawnFrequency);

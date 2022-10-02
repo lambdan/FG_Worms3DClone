@@ -8,6 +8,7 @@ public class Team
     private Color _teamColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     private bool _aiControlled = false;
     private int _score = 0;
+    private GameObject _gameObject = new GameObject();
 
     private int _currentWormIndex;
 
@@ -20,6 +21,7 @@ public class Team
     public void SetTeamName(string newName)
     {
         _teamName = newName;
+        _gameObject.name = "Team: " + newName;
     }
 
     public void SetTeamColor(Color newColor)
@@ -51,6 +53,11 @@ public class Team
     public Color GetTeamColor()
     {
         return _teamColor;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return _gameObject;
     }
 
     public bool IsAIControlled()

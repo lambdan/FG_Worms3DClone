@@ -59,9 +59,10 @@ public class GameManager : MonoBehaviour
             Worm worm = new Worm();
             Vector3 spawnPoint = homebase.position +
                                  6 * new Vector3(Mathf.Cos(spawnAngle * i), 0, Mathf.Sin(spawnAngle * i));
-            worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity));
+            worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity, team.GetGameObject().transform));
             worm.GetTransform().LookAt(Vector3.zero); // To make them look toward the center
             worm.GetHealth().healthZero.AddListener(() => DeathReport());
+            worm.GetGameObject().name = worm.GetWormName();
 
             team.AddWormToTeam(worm);
         }

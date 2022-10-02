@@ -11,9 +11,15 @@ public class DangerZoneManager : MonoBehaviour
     [SerializeField] private bool _randomOrder;
 
     private int _locationIndex;
+    private GameObject _dangerZoneParent;
     private GameObject _dangerZone;
 
     private Coroutine _dangerZoneTimer;
+
+    void Awake()
+    {
+        _dangerZoneParent = new GameObject("Danger Zones");
+    }
     
     int NewLocation()
     {
@@ -46,7 +52,7 @@ public class DangerZoneManager : MonoBehaviour
     public void Activate()
     {
         _locationIndex = NewLocation();
-        _dangerZone = Instantiate(_dangerZonePrefab, _dangerZoneLocations[_locationIndex].position, Quaternion.identity);
+        _dangerZone = Instantiate(_dangerZonePrefab, _dangerZoneLocations[_locationIndex].position, Quaternion.identity, _dangerZoneParent.transform);
         _dangerZoneTimer = StartCoroutine(DangerZoneTimer());
     }
 
