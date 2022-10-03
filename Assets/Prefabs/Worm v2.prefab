@@ -212,6 +212,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 58be5343-b183-4016-8485-c2293775b9fd
     m_ActionName: Game Actions/Invincibility Cheat[/Keyboard/f1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7df788b3-597d-47f9-a310-d11d55aba8ed
+    m_ActionName: Menus/Move Up[/DualShock4GamepadHID/dpad/up,/XInputControllerWindows/dpad/up,/DualShock4GamepadHID/leftStick/up,/XInputControllerWindows/leftStick/up,/Keyboard/upArrow,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c42f002a-ec5c-401c-aa0c-2d8d3249f903
+    m_ActionName: Menus/Move Down[/DualShock4GamepadHID/dpad/down,/XInputControllerWindows/dpad/down,/DualShock4GamepadHID/leftStick/down,/XInputControllerWindows/leftStick/down,/Keyboard/downArrow,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b6ecad5-b459-49fc-be68-264f7062fe0d
+    m_ActionName: Menus/Select[/DualShock4GamepadHID/buttonSouth,/XInputControllerWindows/buttonSouth,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
