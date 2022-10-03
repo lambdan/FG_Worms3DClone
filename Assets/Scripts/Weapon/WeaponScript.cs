@@ -19,7 +19,7 @@ public class WeaponScript : MonoBehaviour
     {
         if (Time.time > _nextFire)
         {
-            Instantiate(_bulletPrefab, _barrelExit.position, transform.root.rotation); // Root rotation to get direction the worm is facing
+            Instantiate(_bulletPrefab, _barrelExit.position, transform.parent.rotation);
             _nextFire = Time.time + _fireRate;
         }
     }
