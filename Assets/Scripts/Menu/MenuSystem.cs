@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class MenuSystem : MonoBehaviour
 {
+    public AudioClip selectionSound;
+    protected AudioSource _audioSource;
     public List<TMP_Text> menuEntries;
     private int _selectionIndex = 0;
     [HideInInspector] public UnityEvent menuSelection;
@@ -36,6 +38,7 @@ public class MenuSystem : MonoBehaviour
     {
         _selectionIndex = selection;
         MakeActive(_selectionIndex);
+        _audioSource.Play();
     }
 
     public void Select(InputAction.CallbackContext context)
@@ -45,6 +48,7 @@ public class MenuSystem : MonoBehaviour
             return;
         }
         menuSelection.Invoke();
+        _audioSource.Play();
     } 
 
     public void MoveUp(InputAction.CallbackContext context)

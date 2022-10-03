@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelPreviewSpinner : MenuSystem
+public class LevelPreviewSpinner : MonoBehaviour
 {
     private void FixedUpdate()
     {

@@ -32,6 +32,8 @@ public class MainMenu : MenuSystem
 
         _highScoreManager = GetComponent<HighScoreManager>();
         _playerNameManager = GetComponent<PlayerNameManager>();
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.clip = selectionSound;
     }
     
     void Start()

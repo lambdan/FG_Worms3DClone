@@ -25,10 +25,12 @@ public class PauseMenu : MenuSystem
 
     void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.clip = selectionSound;
         newSelection(0); // To make the first item be hovered
         menuSelection.AddListener(Selection);
     }
-
+    
     public void SetGameManager(GameManager gameManager)
     {
         _gameManager = gameManager;
