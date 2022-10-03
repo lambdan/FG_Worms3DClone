@@ -5,12 +5,14 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    private GameManager _gameManager;
     private Movement _movement;
     private WeaponHolder _weaponHolder;
     private CameraManager _cameraManager;
 
     void Awake()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         _movement = GetComponent<Movement>();
         _weaponHolder = GetComponent<WeaponHolder>();
         _cameraManager = Camera.main.GetComponent<CameraManager>();
@@ -18,16 +20,19 @@ public class InputHandler : MonoBehaviour
     
     public void MovementAxisInput(InputAction.CallbackContext context)
     {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
         _movement.AxisInput(context.ReadValue<Vector2>());
     }
 
     public void CameraAxisInput(InputAction.CallbackContext context)
     {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
         _cameraManager.AxisInput(context.ReadValue<Vector2>());
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
         if (!context.performed)
         {
             return;
@@ -37,6 +42,7 @@ public class InputHandler : MonoBehaviour
 
     public void NextWeapon(InputAction.CallbackContext context)
     {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
         if (!context.performed)
         {
             return;
@@ -45,16 +51,19 @@ public class InputHandler : MonoBehaviour
     }
 
     public void Attack(InputAction.CallbackContext context)
+    {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
+        if (!context.performed)
         {
-            if (!context.performed)
-            {
-                return;
-            }
-            _weaponHolder.Fire();
+            return;
         }
+
+        _weaponHolder.Fire();
+    }
 
     public void RecenterCamera(InputAction.CallbackContext context)
     {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
         if (!context.performed)
         {
             return;
@@ -64,6 +73,7 @@ public class InputHandler : MonoBehaviour
 
     public void ReloadWeapon(InputAction.CallbackContext context)
     {
+        _gameManager.UpdateLastControllerUsed(context.control.device);
         if (!context.performed)
         {
             return;

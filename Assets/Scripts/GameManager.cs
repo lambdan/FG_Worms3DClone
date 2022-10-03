@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private int _turnsPlayed;
     private float _turnEnds;
+    private string _lastDeviceUsed;
     
     // Level initialization
 
@@ -297,6 +298,7 @@ public class GameManager : MonoBehaviour
     // Game inputs
     public void InputPause(InputAction.CallbackContext context)
     {
+        UpdateLastControllerUsed(context.control.device);
         //Debug.Log(context.control.device.name);
         if (context.started)
         {
@@ -306,6 +308,7 @@ public class GameManager : MonoBehaviour
 
     public void InputNextWorm(InputAction.CallbackContext context)
     {
+        UpdateLastControllerUsed(context.control.device);
         if (_currentTeam.IsAIControlled())
         {
             return; // So humans cant change worm for the AI 
@@ -317,9 +320,61 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ControlsChanged(InputAction.CallbackContext context)
+    public void UpdateLastControllerUsed(InputDevice device)
     {
-        Debug.Log(context);
+        string controllerType = "";
+        if (device.name == "Mouse" || device.name == "Keyboard")
+        {
+            controllerType = "keyboard+mouse";
+        } else if (device.name.Contains("Dual")) // DualShock or DualSense
+        {
+            controllerType = "playstation";
+        } else if (device.name.Contains("X")) // Xinput
+        {
+            controllerType = "xbox";
+        }
+        else
+        {
+            controllerType = "xbox";
+        }
+        
+        
+        if (_lastDeviceUsed == controllerType)
+        {
+            return;
+        }
+        else
+        {
+            _lastDeviceUsed = controllerType;
+        }
+
+        List<string> lines = new List<string>();
+        if (controllerType == "keyboard+mouse")
+        {
+            lines.Add("Left CTRL: fire");
+            lines.Add("Space: jump");
+            lines.Add("Q: switch weapon");
+            lines.Add("E: switch worm");
+            lines.Add("R: reload");
+        }
+        else if (controllerType == "playstation") // Playstation
+        {
+            lines.Add("Square: fire");
+            lines.Add("X: jump");
+            lines.Add("Triangle: switch weapon");
+            lines.Add("R1: switch worm");
+            lines.Add("Circle: reload");
+
+        } else if (controllerType == "xbox") // Xbox
+        {
+            lines.Add("X: fire");
+            lines.Add("A: jump");
+            lines.Add("Y: switch weapon");
+            lines.Add("RB: switch worm");
+            lines.Add("B: reload");
+        }
+        
+        _hudUpdater.SetControllerHints(lines);
     }
 
     // MonoBehaviours

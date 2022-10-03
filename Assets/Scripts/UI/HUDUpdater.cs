@@ -7,6 +7,7 @@ using Slider = UnityEngine.UI.Slider;
 public class HUDUpdater : MonoBehaviour
 {
     [SerializeField] private TMP_Text _aliveCount;
+    [SerializeField] private TMP_Text _controllerHints;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _teamText;
     [SerializeField] private TMP_Text _turnsPlayedText;
@@ -72,6 +73,17 @@ public class HUDUpdater : MonoBehaviour
         }
 
         _aliveCount.text = newText;
+    }
+
+    public void SetControllerHints(List<string> lines)
+    {
+        string newText = "";
+        foreach (string line in lines)
+        {
+            newText = newText + line + "\n";
+        }
+
+        _controllerHints.text = newText;
     }
 
     public void SetGameOver()
