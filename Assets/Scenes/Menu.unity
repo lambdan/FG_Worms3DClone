@@ -2118,6 +2118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b768ac3ae6f1c1842917d413e26223f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionSound: {fileID: 0}
   menuEntries: []
   menuSelection:
     m_PersistentCalls:
@@ -2205,7 +2206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 980147084}
   m_HandleRect: {fileID: 980147083}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2510,7 +2511,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1808854068}
   m_HandleRect: {fileID: 1808854067}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3477,7 +3478,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 518019299}
   m_HandleRect: {fileID: 518019298}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3535,7 +3536,7 @@ GameObject:
   - component: {fileID: 1641084618}
   - component: {fileID: 1641084619}
   m_Layer: 0
-  m_Name: Menu Manager
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3553,6 +3554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08c6bdad652d6940bcde7fc2e6048c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionSound: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
   menuEntries:
   - {fileID: 1243782620}
   - {fileID: 610522186}

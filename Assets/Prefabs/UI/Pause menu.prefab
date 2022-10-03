@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f5deb1c2bc34e4fa0dc6cb93df3684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectionSound: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
   menuEntries:
   - {fileID: 5493970555923636279}
   - {fileID: 5493970556414564663}
