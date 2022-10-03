@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _HUDPrefab;
     [SerializeField] private GameObject _loadingScreenPrefab;
     [SerializeField] private GameObject _pauseMenuPrefab;
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip _wormSwitchSound;
+    [SerializeField] private AudioClip _turnStartSound;
+    [SerializeField] private AudioClip _deathSound;
+    [SerializeField] private AudioClip _gameOverSound;
 
     private GameObject _HUD;
     private GameObject _loadingScreen;
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour
     private DangerZoneManager _dangerZoneManager;
     private HighScoreManager _highScoreManager;
     private HUDUpdater _hudUpdater;
+    private AudioSource _audioSource;
 
     private GameObject _level;
     private LevelInfo _levelInfo;
@@ -122,6 +128,13 @@ public class GameManager : MonoBehaviour
         _pauseMenu.SetActive(!_pauseMenu.activeSelf);
     }
 
+    // Audio
+    void PlaySound(AudioClip audioClip)
+    {
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
+    }
+    
     // Worm switching
 
     public void NextWorm()
@@ -154,6 +167,7 @@ public class GameManager : MonoBehaviour
         {
             newWorm.ActivateHumanInput();
         }
+        PlaySound(_wormSwitchSound);
     }
 
     // Getters
@@ -192,6 +206,11 @@ public class GameManager : MonoBehaviour
     public LevelInfo GetLevelInfo()
     {
         return _levelInfo;
+    }
+
+    public AudioSource GetAudioSource()
+    {
+        return _audioSource;
     }
 
     // Turn based
@@ -233,6 +252,7 @@ public class GameManager : MonoBehaviour
         SetNewWorm(_currentTeam.GetNextWorm());
         _turnEnds = Time.time + _settingsManager.GetTurnLength();
         StartCoroutine(TurnTimer());
+        PlaySound(_turnStartSound);
     }
 
     void NextTurn()
@@ -259,6 +279,7 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
+        PlaySound(_gameOverSound);
         _cameraManager.Deactivate();
         DeactivateCurrentWorm();
         _highScoreManager.RecordNewScore(_currentTeam.GetTeamName(), _currentTeam.GetScore());
@@ -283,6 +304,7 @@ public class GameManager : MonoBehaviour
     // Deaths and high score
     public void DeathReport()
     {
+        PlaySound(_deathSound);
         if (_currentWorm.IsDead())
         {
             CancelTurn();
@@ -399,6 +421,7 @@ public class GameManager : MonoBehaviour
         _pickupManager = GetComponent<PickupManager>();
         _highScoreManager = GetComponent<HighScoreManager>();
         _hudUpdater = _HUD.GetComponent<HUDUpdater>();
+        _audioSource = GetComponent<AudioSource>();
 
         _hudUpdater.SetTurnSliderMax(_settingsManager.GetTurnLength());
     }
