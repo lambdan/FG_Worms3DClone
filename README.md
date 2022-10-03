@@ -5,6 +5,8 @@
 
 ## Features Implemented
 
+Everything.
+
 Aiming for grade: VG
 
 ### General
@@ -19,34 +21,33 @@ Aiming for grade: VG
 ### Turn Based Game
 
 - Turn based local multiplayer using the same input device (keyboard/mouse/gamepad)
-- Up to 8 players supported
-	- No engine limit, just that the map only has 8 spawn points
+- Up to n players supported
+	- No engine limit. It's limited by how many spawn points the level has (Flatland has 9, Forest has 4).
 - Simple AI Opponent
 
 ### Pickups
 
 - 4 different pickups related to worm health:
-	- +50 Health
-	- -Poison (takes a chunk of HP and reduces your max HP)
-	- Max HP Increase
-	- Temporary Invincibility
+	- Health pickup (the red cross)
+	- Max HP Increase (the green cross)
+	- Temporary Invincibility (the star)
 - Pickups for each weapon
 	
 
 ### Terrain
 
 - Basic Unity Terrain
+- Simple destructible terrain (shrinks when you shoot them until they're so small they get destroyed)
 
 ### Misc
 
-- High score that is kept through game sessions
-	- It records most turns played in a single game
+- High score that is kept through game sessions, keeping track of score, player name and date
 
 ### Player
 
 - A player only controls one worm at a time, but can switch between all the alive worms on their team
 - Has hit points
-- Custom character controller
+- Custom character controller 
 - Worm can only move a limited range (time limited)
 
 ### Camera
@@ -56,13 +57,14 @@ Aiming for grade: VG
 
 ### Weapon System
 
-- 3 Weapons. You spawn with all of them from the start.
-	- Pistol: fairly standard pistol. Deals 1 damage.
-	- Orange Rifle: fires rolling oranges. Deals 10 damage.
-	- Paper Planes: a paper plane that doesn't reach very far but deals 99 damage.
+- 4 weapons. 
+	- 3 of them use objects that get instantiated
+	- 1 of them use raycasting
 - Weapons have ammo and needs to reload
 
 ## Controls
+
+Controls are listed in the top-right of the screen during gameplay. They update according to what device you are using.
 
 ### Keyboard/Mouse:
 
