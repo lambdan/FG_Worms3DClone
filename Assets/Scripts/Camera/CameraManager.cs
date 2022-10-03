@@ -1,7 +1,7 @@
 using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
-    public float cameraOverviewSpeed = 0.6f;
+    public float cameraOverviewSpeed = 0.4f;
     private Transform _target;
     private CameraGlue _cameraGlue;
     private bool _manualControl;
