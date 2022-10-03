@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcb0f55c0fe3acb4d8c3e58a46d26313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraOverviewSpeed: 0.4
 --- !u!1001 &618147657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,8 +352,9 @@ MonoBehaviour:
   - {fileID: 4804350354342887509, guid: 0621aed3ebe02864cb904351051db04b, type: 3}
   - {fileID: 4804350354342887509, guid: 0a5fb4e4aa8867b409cd7e7768b178a2, type: 3}
   - {fileID: 4804350354342887509, guid: 82331792e1aa9504d8f8e8fa67b1eb8b, type: 3}
+  - {fileID: 4804350354342887509, guid: a305568963ba0d344b4973405c4d805d, type: 3}
   _pickupsEnabled: 1
-  _spawnFrequency: 5
+  _spawnFrequency: 2.5
 --- !u!114 &1125836909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +385,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3c366fce154abda4d8857a5a00595e38, type: 2}
   - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   - {fileID: 11400000, guid: 63925b82845a1874d93bdabc154ed30d, type: 2}
+  - {fileID: 11400000, guid: 9affaef7592e78b4fad0928ef946fb68, type: 2}
 --- !u!114 &1125836911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +515,18 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 58be5343-b183-4016-8485-c2293775b9fd
     m_ActionName: Game Actions/Invincibility Cheat[/Keyboard/f1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7df788b3-597d-47f9-a310-d11d55aba8ed
+    m_ActionName: Menus/Move Up[/XInputControllerWindows/dpad/up,/DualShock4GamepadHID/dpad/up,/XInputControllerWindows/leftStick/up,/DualShock4GamepadHID/leftStick/up,/Keyboard/upArrow,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c42f002a-ec5c-401c-aa0c-2d8d3249f903
+    m_ActionName: Menus/Move Down[/XInputControllerWindows/dpad/down,/DualShock4GamepadHID/dpad/down,/XInputControllerWindows/leftStick/down,/DualShock4GamepadHID/leftStick/down,/Keyboard/downArrow,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b6ecad5-b459-49fc-be68-264f7062fe0d
+    m_ActionName: Menus/Select[/XInputControllerWindows/buttonSouth,/DualShock4GamepadHID/buttonSouth,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game Actions

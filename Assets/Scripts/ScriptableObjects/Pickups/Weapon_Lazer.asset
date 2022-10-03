@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1a2035118392b45b0fde56aa248b6c, type: 3}
+  m_Name: Weapon_Lazer
+  m_EditorClassIdentifier: 
+  title: Lazer Beam
+  description: Lazer Beam pickup
+  lifetime: 15
+  _weaponProperty: {fileID: 11400000, guid: 9affaef7592e78b4fad0928ef946fb68, type: 2}
+  ammo: 1
