@@ -68,7 +68,7 @@ public class ControlledByAI : MonoBehaviour
         // Any obstacles in front of us?
         if (Physics.SphereCast(transform.position, 2, transform.forward - transform.up, out RaycastHit hitinfo, 1.5f) && hitinfo.transform.CompareTag("Obstacle"))
         {
-            StartCoroutine(AvoidObstacle(hitinfo.transform));
+            StartCoroutine(SimpleAvoidObstacle());
         }
         else if (_currentPickupTarget != null && _weaponHolder.HasAmmoInAnyWeapon() == false)
         {
@@ -143,35 +143,19 @@ public class ControlledByAI : MonoBehaviour
         _startedMoving = true;
     }
 
-    IEnumerator AvoidObstacle(Transform danger)
+    IEnumerator SimpleAvoidObstacle()
     {
         _unstucking = true;
-
-        var position = transform.position;
-        float distanceToDanger = Vector3.Distance(position, danger.position);
         
-        Vector3 dest = position + (transform.right * -distanceToDanger/2); // To the left
-        Vector3 dest2 = dest + (transform.right * -distanceToDanger/2) + (transform.forward * distanceToDanger/2); // Up left
-        Vector3 dest3 = dest2 + (transform.forward * distanceToDanger); // Straight ahead
-        
-        while (Vector3.Distance(transform.position, dest) > 1)
+        // Turn around
+        Vector3 destination  = transform.position - (transform.forward * 3) - (transform.right * 20);
+        float timeStarted = Time.time;
+        while (Time.time - timeStarted < 2)
         {
-            _movement.MoveTowards(dest);
-            yield return new WaitForEndOfFrame();
+            _movement.MoveTowards(destination);
+            yield return new WaitForFixedUpdate();
         }
         
-        while (Vector3.Distance(transform.position, dest2) > 1)
-        {
-            _movement.MoveTowards(dest2);
-            yield return new WaitForEndOfFrame();
-        }
-        
-        while (Vector3.Distance(transform.position, dest3) > 1)
-        {
-            _movement.MoveTowards(dest3);
-            yield return new WaitForEndOfFrame();
-        }
-
         // We should be in the clear now??
         _unstucking = false;
     }
