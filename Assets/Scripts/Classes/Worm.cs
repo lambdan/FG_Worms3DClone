@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Worm
 {
-    private string _wormName = new Name().GetRandomName();
+    private string _wormName = Name.GetRandomName();
 
     private GameObject _wormGameObject;
     private PlayerInput _wormPlayerInput;

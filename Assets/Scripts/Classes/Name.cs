@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Name
+public static class Name
 {
-    public string GetRandomName()
+    public static string GetRandomName()
     {
         return _names[Random.Range(0, _names.Count)];
     }
 
-    private List<string> _names = new List<string>() // From https://randomwordgenerator.com/name.php
+    private static List<string> _names = new List<string>() // Names from https://randomwordgenerator.com/name.php
     {
         "Abram",
         "Ada",
