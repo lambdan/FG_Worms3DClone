@@ -6,14 +6,14 @@ public class Destructible : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            if (transform.localScale.magnitude > 5) // If we're still pretty big, create a smaller clone
+            if (transform.localScale.x > 0.2f) // If we're still pretty big, create a smaller clone
             {
-                GameObject a = Instantiate(this.gameObject, transform.position, Quaternion.identity);
-                a.transform.localScale = new Vector3(this.transform.localScale.x * 0.9f, this.transform.localScale.y * 0.9f,
-                    this.transform.localScale.z * 0.9f);
+                transform.localScale *= 0.99f;
             }
-            
-            Destroy(this.gameObject);
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
