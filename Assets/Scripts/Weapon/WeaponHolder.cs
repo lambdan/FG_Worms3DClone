@@ -171,6 +171,7 @@ public class WeaponHolder : MonoBehaviour
     
     IEnumerator ReloadWeapon(float reloadTime)
     {
+        _currentWeaponScript.PlayReloadSound();
         _reloadBar.gameObject.SetActive(true);
         while (Time.time < _reloadFinished)
         {

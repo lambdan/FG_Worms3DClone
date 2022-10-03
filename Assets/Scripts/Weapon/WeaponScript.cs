@@ -1,15 +1,25 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WeaponScript : MonoBehaviour
 {
     [SerializeField] private Transform _barrelExit;
+    [SerializeField] private AudioClip[] _fireSoundEffects;
+    [SerializeField] private AudioClip _reloadSoundEffect;
+
+    private AudioSource _audioSource;
     private float _nextFire;
     private WeaponProperties _weaponProps;
     
     private GameObject _bulletPrefab;
     private float _fireRate;
 
+    void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+    
     public void SetWeaponProperties(WeaponProperties weaponProperties)
     {
         _weaponProps = weaponProperties;
@@ -38,8 +48,33 @@ public class WeaponScript : MonoBehaviour
             {
                 Instantiate(_weaponProps.bulletPrefab, _barrelExit.position, transform.parent.rotation);
             }
+
             
+            PlayFireSound();
             _nextFire = Time.time + _fireRate;
         }
+    }
+
+    public void PlayFireSound()
+    {
+        if (_fireSoundEffects.Length > 0)
+        {
+            PlaySound(_fireSoundEffects[Random.Range(0, _fireSoundEffects.Length)]);
+        }
+    }
+    
+    public void PlayReloadSound()
+    {
+        if (_reloadSoundEffect)
+        {
+            PlaySound(_reloadSoundEffect); 
+        }
+        
+    }
+    
+    void PlaySound(AudioClip audioClip)
+    {
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
     }
 }
