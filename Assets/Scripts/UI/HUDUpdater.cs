@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using Slider = UnityEngine.UI.Slider;
@@ -67,6 +68,10 @@ public class HUDUpdater : MonoBehaviour
     public void UpdateAliveCount(List<Team> teams)
     {
         string newText = "";
+        
+        // Sort by team with most points
+        teams = new List<Team>(teams.OrderByDescending(team => team.GetScore()));
+
         foreach (Team team in teams)
         {
             newText = newText + team.GetTeamName() + ": " + team.AliveWormsInTeam() + " alive (" + team.GetScore() + " points)\n";
