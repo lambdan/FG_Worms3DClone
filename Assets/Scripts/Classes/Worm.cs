@@ -13,6 +13,7 @@ public class Worm
     private Health _health;
     private WeaponHolder _weaponHolder;
     private CameraGlue _cameraGlue;
+    private AudioSource _audioSource;
 
     // Setters
     public void SetWormName(string newName)
@@ -29,6 +30,7 @@ public class Worm
         _health = _wormGameObject.GetComponent<Health>();
         _weaponHolder = _wormGameObject.GetComponent<WeaponHolder>();
         _cameraGlue = _wormGameObject.GetComponent<CameraGlue>();
+        _audioSource = _wormGameObject.GetComponent<AudioSource>();
     }
     
     public void SetWormColor(Color newColor)
@@ -103,6 +105,11 @@ public class Worm
     {
         return _cameraGlue;
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return _audioSource;
+    }
     
     // State
     public void ActivateAI()
@@ -121,5 +128,11 @@ public class Worm
     {
         _wormAIController.enabled = false;
         _wormPlayerInput.enabled = false;
+    }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
     }
 }
