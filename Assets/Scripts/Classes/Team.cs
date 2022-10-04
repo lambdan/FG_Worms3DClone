@@ -20,6 +20,10 @@ public class Team
 
     public void SetTeamName(string newName)
     {
+        if (newName == "")
+        {
+            return;
+        }
         _teamName = newName;
         _gameObject.name = "Team: " + newName;
     }
