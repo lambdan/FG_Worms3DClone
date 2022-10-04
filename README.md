@@ -106,7 +106,6 @@ Controls are listed in the top-right of the screen during gameplay. They update 
 
 ## Screenshots
 
-
-<img width="1920" alt="Worms3DClone_2022-10-04_20 24 52" src="https://user-images.githubusercontent.com/1690265/193896673-d1650eb2-b1bf-46eb-9e24-c3c4150cf9eb.png">
-![Worms3DClone_2022-10-04_20 24 15](https://user-images.githubusercontent.com/1690265/193896705-584583d0-22e4-4fbf-9ca3-e576932b382f.jpg)
-![Worms3DClone_2022-10-04_20 22 54](https://user-images.githubusercontent.com/1690265/193896750-9d70c729-906c-4080-b644-3456deefc489.jpg)
+![Menu](https://djsimg.org/soVQ.png)
+![Gameplay in Forest](https://djsimg.org/sEeG.jpg)
+![Gameplay on Flatland](https://djsimg.org/socY.jpg)
