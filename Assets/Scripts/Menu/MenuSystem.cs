@@ -47,8 +47,8 @@ public class MenuSystem : MonoBehaviour
         {
             return;
         }
-        menuSelection.Invoke();
         _audioSource.Play();
+        menuSelection.Invoke();
     } 
 
     public void MoveUp(InputAction.CallbackContext context)

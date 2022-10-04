@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Invincibility (10 secs)
   description: Makes you invincible for 10 secs
+  pickupSound: {fileID: 8300000, guid: ff5f85da24bc943d1abdc5760a22bc81, type: 3}
   lifetime: 30
   duration: 10

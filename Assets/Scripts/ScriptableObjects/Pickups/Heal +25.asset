@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Heal +50
   description: Heals you 50 HP
+  pickupSound: {fileID: 8300000, guid: 4e1ff8faed12a475eba9be0e46072269, type: 3}
   lifetime: 30
   HealAmount: 50

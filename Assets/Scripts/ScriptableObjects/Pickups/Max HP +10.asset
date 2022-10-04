@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Max HP +10
   description: Bumps up your Max HP by 10
+  pickupSound: {fileID: 8300000, guid: 4e1ff8faed12a475eba9be0e46072269, type: 3}
   lifetime: 30
   amount: 10

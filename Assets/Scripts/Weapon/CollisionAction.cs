@@ -30,6 +30,12 @@ public class CollisionAction : MonoBehaviour
         if (_pickup != null)
         {
             _pickup.OnPickup(target);
+            
+            if (_pickup.pickupSound)
+            {
+                AudioSource.PlayClipAtPoint(_pickup.pickupSound, transform.position);
+            }
+            
             gameObject.SetActive(false);
         }
         

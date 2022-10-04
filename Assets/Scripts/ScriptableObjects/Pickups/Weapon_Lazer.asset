@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Lazer Beam
   description: Lazer Beam pickup
+  pickupSound: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
   lifetime: 15
   _weaponProperty: {fileID: 11400000, guid: 9affaef7592e78b4fad0928ef946fb68, type: 2}
   ammo: 1

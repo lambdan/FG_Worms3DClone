@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Pistol
   description: Pistol Pickup
+  pickupSound: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
   lifetime: 30
   _weaponProperty: {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   ammo: 25
