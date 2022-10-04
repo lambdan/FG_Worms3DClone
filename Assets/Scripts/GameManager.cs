@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
                                  6 * new Vector3(Mathf.Cos(spawnAngle * i), 0, Mathf.Sin(spawnAngle * i));
             worm.SetWormGameObject(Instantiate(_wormPrefab, spawnPoint, Quaternion.identity, team.GetGameObject().transform));
             worm.GetTransform().LookAt(Vector3.zero); // To make them look toward the center
-            worm.GetHealth().healthZero.AddListener(() => DeathReport());
+            worm.GetHealth().healthZero.AddListener(() => DeathReport(worm));
             worm.GetGameObject().name = worm.GetWormName();
 
             team.AddWormToTeam(worm);
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour
             {
                 worm.SetGameManager(this);
                 worm.SetWormColor(newTeam.GetTeamColor());
+                worm.SetTeamNumber(_teams.Count);
                 GiveStartingWeapons(worm);
             }
 
@@ -102,6 +104,7 @@ public class GameManager : MonoBehaviour
             {
                 worm.SetGameManager(this);
                 worm.SetWormColor(newTeam.GetTeamColor());
+                worm.SetTeamNumber(_teams.Count);
                 GiveStartingWeapons(worm);
 
                 worm.GetAIController().SetGameManager(this);
@@ -301,16 +304,26 @@ public class GameManager : MonoBehaviour
         return alive;
     }
 
+    float TurnTimeLeft()
+    {
+        return _turnEnds - Time.time;
+    }
+
     // Deaths and high score
-    public void DeathReport()
+    public void DeathReport(Worm deadWorm)
     {
         PlaySound(_deathSound);
-        if (_currentWorm.IsDead())
+        if (deadWorm.GetTeamNumber() == _currentTeam.GetTeamNumber()) // Worm on active team died, cancel turn (suicide?)
         {
             CancelTurn();
         }
+        else
+        {
+            float factor = 1 + Mathf.Abs(TurnTimeLeft());
+            _currentTeam.AddScore(1000 * factor); // Worm on other team died, award!
+        }
+        
         _hudUpdater.UpdateAliveCount(_teams);
-        _currentTeam.AddScore(1000);
         if (TeamsAlive() <= 1)
         {
             GameOver();
@@ -363,10 +376,6 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        else
-        {
-            _lastDeviceUsed = controllerType;
-        }
 
         List<string> lines = new List<string>();
         if (controllerType == "keyboard+mouse")
@@ -397,6 +406,7 @@ public class GameManager : MonoBehaviour
             lines.Add("RS (click): recenter camera");
         }
         
+        _lastDeviceUsed = controllerType;
         _hudUpdater.SetControllerHints(lines);
     }
 
@@ -449,7 +459,7 @@ public class GameManager : MonoBehaviour
     {
         while (Time.time <= _turnEnds)
         {
-            _hudUpdater.UpdateTurnSlider(_turnEnds - Time.time);
+            _hudUpdater.UpdateTurnSlider(TurnTimeLeft());
             yield return new WaitForFixedUpdate();
         }
 

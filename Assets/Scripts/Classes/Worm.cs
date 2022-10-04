@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class Worm
 {
     private string _wormName = Name.GetRandomName();
+    private int _teamNumber;
 
     private GameObject _wormGameObject;
     private PlayerInput _wormPlayerInput;
@@ -14,6 +15,7 @@ public class Worm
     private WeaponHolder _weaponHolder;
     private CameraGlue _cameraGlue;
     private AudioSource _audioSource;
+    
 
     // Setters
     public void SetWormName(string newName)
@@ -43,6 +45,11 @@ public class Worm
         _gameManager = gameManager;
         _weaponHolder.SetGameManager(gameManager);
     }
+
+    public void SetTeamNumber(int newTeamNumber)
+    {
+        _teamNumber = newTeamNumber;
+    }
     
 
     // Getters
@@ -54,6 +61,11 @@ public class Worm
     public bool IsAlive()
     {
         return _health.GetHealth() > 0;
+    }
+
+    public int GetTeamNumber()
+    {
+        return _teamNumber;
     }
 
     public bool IsDead()

@@ -10,6 +10,7 @@ public class Team
     private int _score = 0;
     private GameObject _gameObject = new GameObject();
 
+    private int _teamNumber;
     private int _currentWormIndex;
 
     // Setters
@@ -38,9 +39,15 @@ public class Team
         _aiControlled = newState;
     }
 
-    public void AddScore(int amount)
+    public void AddScore(float amount)
     {
-        _score += amount;
+        _score += (int)amount;
+        Debug.Log("Adding " + amount + " score (" + _score + ")");
+    }
+
+    public void SetTeamNumber(int newTeamNumber)
+    {
+        _teamNumber = newTeamNumber;
     }
 
     // Getters
@@ -52,6 +59,11 @@ public class Team
     public string GetTeamName()
     {
         return _teamName;
+    }
+
+    public int GetTeamNumber()
+    {
+        return _teamNumber;
     }
 
     public Color GetTeamColor()
@@ -93,7 +105,7 @@ public class Team
             next = 0;
         }
 
-        while (_teamWorms[next].IsAlive() == false)
+        while (_teamWorms[next].IsDead())
         {
             next += 1;
             if (next >= _teamWorms.Count)
