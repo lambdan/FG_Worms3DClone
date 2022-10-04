@@ -69,7 +69,7 @@ public class HUDUpdater : MonoBehaviour
         string newText = "";
         foreach (Team team in teams)
         {
-            newText = newText + team.GetTeamName() + ": " + team.AliveWormsInTeam() + " alive\n";
+            newText = newText + team.GetTeamName() + ": " + team.AliveWormsInTeam() + " alive (" + team.GetScore() + " points)\n";
         }
 
         _aliveCount.text = newText;
@@ -89,6 +89,6 @@ public class HUDUpdater : MonoBehaviour
     public void SetGameOver()
     {
         _aliveCount.text = "GAME OVER";
-        _aliveCount.color = Color.red;
+        _aliveCount.color = Color.magenta;
     }
 }
