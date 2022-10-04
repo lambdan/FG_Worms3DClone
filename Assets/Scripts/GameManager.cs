@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         {
             Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetTeamName(_settingsManager.GetPlayerNames()[_teams.Count]);
+            newTeam.SetTeamNumber(_teams.Count);
             foreach (Worm worm in newTeam.GetWorms())
             {
                 worm.SetGameManager(this);
@@ -100,6 +101,7 @@ public class GameManager : MonoBehaviour
             Team newTeam = GenerateTeam(_settingsManager.GetWormsPerTeam(), _levelInfo.GetSpawnBases()[_teams.Count]);
             newTeam.SetAIControlled(true);
             newTeam.SetTeamName("AI Team " + (i + 1));
+            newTeam.SetTeamNumber(_teams.Count);
             foreach (Worm worm in newTeam.GetWorms())
             {
                 worm.SetGameManager(this);
@@ -313,7 +315,7 @@ public class GameManager : MonoBehaviour
     public void DeathReport(Worm deadWorm)
     {
         PlaySound(_deathSound);
-        if (deadWorm.GetTeamNumber() == _currentTeam.GetTeamNumber()) // Worm on active team died, cancel turn (suicide?)
+        if (deadWorm.GetTeamNumber() == _currentTeam.GetTeamNumber()) // Suicide or team kill
         {
             CancelTurn();
         }
