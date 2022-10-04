@@ -348,16 +348,14 @@ public class GameManager : MonoBehaviour
         if (device.name == "Mouse" || device.name == "Keyboard")
         {
             controllerType = "keyboard+mouse";
-        } else if (device.name.Contains("Dual")) // DualShock or DualSense
+        } 
+        else if (device.name.Contains("Dual")) // DualShock or DualSense
         {
             controllerType = "playstation";
-        } else if (device.name.Contains("X")) // Xinput
-        {
-            controllerType = "xbox";
         }
         else
         {
-            controllerType = "xbox";
+            controllerType = "xbox"; // Most controls use a xbox layout
         }
         
         
@@ -373,11 +371,12 @@ public class GameManager : MonoBehaviour
         List<string> lines = new List<string>();
         if (controllerType == "keyboard+mouse")
         {
-            lines.Add("Left CTRL: fire");
+            lines.Add("CTRL/LMB: fire");
             lines.Add("Space: jump");
             lines.Add("Q: switch weapon");
             lines.Add("E: switch worm");
             lines.Add("R: reload");
+            lines.Add("C: recenter camera");
         }
         else if (controllerType == "playstation") // Playstation
         {
@@ -386,6 +385,7 @@ public class GameManager : MonoBehaviour
             lines.Add("Triangle: switch weapon");
             lines.Add("R1: switch worm");
             lines.Add("Circle: reload");
+            lines.Add("R3 (click): recenter camera");
 
         } else if (controllerType == "xbox") // Xbox
         {
@@ -394,6 +394,7 @@ public class GameManager : MonoBehaviour
             lines.Add("Y: switch weapon");
             lines.Add("RB: switch worm");
             lines.Add("B: reload");
+            lines.Add("RS (click): recenter camera");
         }
         
         _hudUpdater.SetControllerHints(lines);
