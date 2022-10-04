@@ -106,6 +106,7 @@ Controls are listed in the top-right of the screen during gameplay. They update 
 
 ## Screenshots
 
-![2022-09-21_08 57 10 428_Worms3DClone](https://user-images.githubusercontent.com/1690265/191438325-918786e9-23dd-4fdd-960d-b7bf7bcd8369.png)
 
-![2022-09-21_08 56 47 718_Worms3DClone](https://user-images.githubusercontent.com/1690265/191438344-afebabe2-6f61-42cd-bed9-3b23ff7ea2c8.png)
+<img width="1920" alt="Worms3DClone_2022-10-04_20 24 52" src="https://user-images.githubusercontent.com/1690265/193896673-d1650eb2-b1bf-46eb-9e24-c3c4150cf9eb.png">
+![Worms3DClone_2022-10-04_20 24 15](https://user-images.githubusercontent.com/1690265/193896705-584583d0-22e4-4fbf-9ca3-e576932b382f.jpg)
+![Worms3DClone_2022-10-04_20 22 54](https://user-images.githubusercontent.com/1690265/193896750-9d70c729-906c-4080-b644-3456deefc489.jpg)
