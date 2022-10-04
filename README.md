@@ -5,88 +5,103 @@
 
 ## Features Implemented
 
-Everything.
+Everything.... I think? See the comments, especially on the ones marked with ⚠️.
 
 Aiming for grade: VG
 
-### General
+## General
 
-- Play Scene
-- Main Menu and Game Over Scene
-	- Technically not a Game Over scene, but the Play Scene says Game Over for a while before going back to the main menu
-- Pause Menu and Settings Screen
-	- Pause Menu can restart the match or quit to the main menu
-	- In the main menu you can adjust settings
+| Feature                                                      | Implemented | Comment                                                                                                            |
+|:------------------------------------------------------------:|:-----------:|:------------------------------------------------------------------------------------------------------------------:|
+| (G) Only play scene is required                              | ✅           |                                                                                                                    |
+| (VG, small) Add main menu (start) scene and game over scene  | ⚠️           | There is a Menu scene and PlayScene. Game Over is displayed in the PlayScene before going back to Main Menu scene. |
+| (VG, medium) Implement Pause menu and settings menu          | ⚠️           | There is a pause menu. Settings are done on the main menu before starting a game.                                  |
 
-### Turn Based Game
+## Turn based game
 
-- Turn based local multiplayer using the same input device (keyboard/mouse/gamepad)
-- Up to n players supported
-	- No engine limit. It's limited by how many spawn points the level has (Flatland has 9, Forest has 4).
-- Simple AI Opponent
+| Feature                                                                        | Implemented | Comment                                                                                                                                                     |
+|:--------------------------------------------------------------------------------:|:-------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| (G) You can have two players using the same input device taking turns.         | ✅           | Keyboard, Keyboard/Mouse and Gamepads supported                                                                                                             |
+| (VG, large) Support up to 4 players (using the same input device taking turns) | ✅           | Up to *n* players supported. Limited by how many home bases the map has.                                                                                    |
+| (VG, large) Implement a simple AI opponent.                                    | ✅           | It is very simple. It finds the nearest enemy, looks at it, and starts walking straight towards it until its in firing range, and then it starts blasting. It tries to avoid obstacles and grabs ammo when needed. |
 
-### Pickups
+## Terrain
 
-- 4 different pickups related to worm health:
-	- Health pickup (the red cross)
-	- Max HP Increase (the green cross)
-	- Temporary Invincibility (the star)
-- Pickups for each weapon
-	
+|                                               Feature                                               | Implemented | Comment |
+|:---------------------------------------------------------------------------------------------------:|:-----------:|:-------:|
+| (G) Basic Unity terrain or primitives will suffice for a level                                      | ✅           |         |
+| (VG, large) Destructible terrain (You can use Unity's built in terrain or your own custom solution) | ⚠️           |Nothing fancy, it just shrinks when you fire on them until they're so small that I destroy them|
 
-### Terrain
+## Player
 
-- Basic Unity Terrain
-- Simple destructible terrain (shrinks when you shoot them until they're so small they get destroyed)
+|                                          Feature                                         | Implemented |                                          Comment                                         |
+|:----------------------------------------------------------------------------------------:|:-----------:|:----------------------------------------------------------------------------------------:|
+| (G) A player only controls one worm                                                      | ✅           | One worm is controlled at a time. You can switch between the worms in your team however. |
+| (G) Use the built in Character Controller. Add jumping.                                  | ❌           | I made my own for the VG - see below                                                     |
+| (G) Has hit points                                                                       | ✅           |                                                                                          |
+| (VG, small) Implement a custom character controller to control the movement of the worm. | ✅           | Moving, rotation and jumping supported                                                   |
+| (VG, small) A worm can only move a certain range                                         | ⚠️           | Limited by time                                                                          |
+| (VG, medium) A player controls a team of (multiple worms)                                | ✅           | Up to *n* worms supported. I've capped it at 20 for now.                                 |
 
-### Misc
+## Camera
 
-- High score that is kept through game sessions, keeping track of score, player name and date
+|              Feature              | Implemented |                 Comment                |
+|:---------------------------------:|:-----------:|:--------------------------------------:|
+| (G) Focus camera on active player | ✅           |                                        |
+| (VG, small) Camera movement       | ✅           | You can spin it around the active worm |
 
-### Player
+## Weapon system
 
-- A player only controls one worm at a time, but can switch between all the alive worms on their team
-- Has hit points
-- Custom character controller 
-- Worm can only move a limited range (time limited)
+|                                                                                                           Feature                                                                                                          | Implemented |                                         Comment                                        |
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------:|:--------------------------------------------------------------------------------------:|
+| (G) Minimum of two different weapons/attacks, can be of similar functionality, can be bound to an individual button, like weapon 1 is left mouse button and weapon 2 is right mouse button                                 | ✅           | 4 different weapons. You swap between them.                                            |
+| (VG, small) a weapon can have ammo and needs to reload                                                                                                                                                                     | ✅           |                                                                                        |
+| (VG, medium) The two types of weapons/attacks must function differently, I.E a pistol and a hand grenade. The player can switch between the different weapons and using the active weapon on for example left mouse button | ✅           | I have 2 weapons firing "physical" projectiles, 1 throwable and 1 that uses raycasting |
 
-### Camera
+## (VG, medium) Pickups
 
-- Camera focuses and follows active player
-- Camera movement using mouse or right stick on gamepad
+|                                           Feature                                           | Implemented | Comment |
+|:-------------------------------------------------------------------------------------------:|:-----------:|:-------:|
+| Spawning randomly on the map during the play session                                        | ✅           |         |
+| Gives something to the player picking it up, I.E health, extra ammo, new weapon, armour etc | ✅           |         |
 
-### Weapon System
+## (VG, medium) Cheat functionalities
 
-- 4 weapons. 
-	- 3 of them use objects that get instantiated
-	- 1 of them use raycasting
-- Weapons have ammo and needs to reload
+|                             Feature                            | Implemented |                                           Comment                                          |
+|:--------------------------------------------------------------:|:-----------:|:------------------------------------------------------------------------------------------:|
+| Two different cheats, I.E Invincible, all weapons on start etc | ✅           | F1 = Make current worm invincible. F2 = Give all weapons and lots of ammo to current worm. |
+
+## Miscellaneous
+
+|                                             Feature                                            | Implemented |                 Comment                |
+|:----------------------------------------------------------------------------------------------:|:-----------:|:--------------------------------------:|
+| (VG, medium) Battle royal, danger zones that move around on the map after a set amount of time | ✅           |                                        |
+| (VG, medium) High score that is persistent across game sessions                                | ✅           | Also keeps track of team name and date |
+
+## Also implemented even though no one asked for it:
+
+|       Feature      | Implemented |                                                                Comment                                                               |
+|:------------------:|:-----------:|:------------------------------------------------------------------------------------------------------------------------------------:|
+| Sound Effects      | ✅           | Menu selections, pickups, taking damage, gun fire                                                                                    |
+| Controller Hints   | ✅           | Shown in the top right during gameplay. Updates accordingly with what controller you're using (KB/M, Playstation and Xbox supported) |
+| 2 different levels | ✅           |                                                                                                                                      |
+| HUD                | ✅           | Team alive/score, controller hints, team name, worm name, time limit, ammo, and turns played is shown                                |
 
 ## Controls
 
-Controls are listed in the top-right of the screen during gameplay. They update according to what device you are using.
+Controls are listed in the top-right of the screen during gameplay. They update according to what device you are using (tested with keyboard/mouse, Playstation controller and Xbox controller). 
 
-### Keyboard/Mouse:
-
-- WASD/Arrow Keys: movement
-- Q: switch weapon
-- E: switch worm
-- CTRL: fire weapon
-- Space: jump
-- C: recenter camera
-
-- Mouse: camera movement
-- Left Mouse Button: fire weapon
-
-### Gamepad:
-
-- Left Stick: movement
-- Right Stick: camera controls
-- Y: switch weapon
-- X: attack
-- A: jump
-- RB: switch worm
-- Right Stick Click: recenter camera
+|      Action      |      Keyboard      |       Mouse       | Playstation Controller |     Xbox Controller    |
+|:----------------:|:------------------:|:-----------------:|:----------------------:|:----------------------:|
+| Movement         | WASD or arrow keys |                   | Left Stick             | Left Stick             |
+| Camera Movement  |                    | Move the mouse    | Right Stick            | Right Stick            |
+| Camera Re-center | C                  |                   | R3 (Right Stick Click) | RS (Right Stick Click) |
+| Jump             | Space              |                   | X                      | A                      |
+| Fire/Attack      | CTRL               | Left Mouse Button | Square                 | X                      |
+| Reload           | R                  |                   | Circle                 | B                      |
+| Switch Weapon    | Q                  |                   | Triangle               | Y                      |
+| Switch Worm      | E                  |                   | R1                     | RB                     |
+| Pause Menu       | ESC                |                   | Start (Options)        | Start                  |
 
 
 ## Screenshots
