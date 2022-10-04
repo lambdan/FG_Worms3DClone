@@ -11,6 +11,8 @@ public class MenuSystem : MonoBehaviour
     public List<TMP_Text> menuEntries;
     private int _selectionIndex = 0;
     [HideInInspector] public UnityEvent menuSelection;
+    [HideInInspector] public UnityEvent menuIncrease;
+    [HideInInspector] public UnityEvent menuDecrease;
     
     void MakeActive(int entryIndex)
     {
@@ -49,7 +51,27 @@ public class MenuSystem : MonoBehaviour
         }
         _audioSource.Play();
         menuSelection.Invoke();
-    } 
+    }
+
+    public void Increase(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        _audioSource.Play();
+        menuIncrease.Invoke();
+    }
+    
+    public void Decrease(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        _audioSource.Play();
+        menuDecrease.Invoke();
+    }
 
     public void MoveUp(InputAction.CallbackContext context)
     {

@@ -498,6 +498,24 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Decrease"",
+                    ""type"": ""Button"",
+                    ""id"": ""1dd8c309-30ab-4a47-89b2-837669901fc2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Increase"",
+                    ""type"": ""Button"",
+                    ""id"": ""be267156-fbb5-4689-b96f-e2f6c09177ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -610,6 +628,105 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3cd1762d-876b-4474-9874-da79851fcaec"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e434f6b3-9dfc-4cb5-85cd-fc5fb6e2b660"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b847a4bb-95fb-46e1-b3a9-7a69f4575be7"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""716b1f72-a318-4137-8d91-3494fabad2c3"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac112926-987e-48bd-b1f3-61ba74a718bc"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9747c72a-c62a-4efe-bd1e-d07b007e6c1e"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c50e3df-de09-46ab-b995-acabd6be9ccb"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""621ee68f-701f-43d5-a4ef-f3c04eb40469"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c838b533-ae3f-440d-ab3a-7faad6200d9d"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -636,6 +753,8 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         m_Menus_MoveUp = m_Menus.FindAction("Move Up", throwIfNotFound: true);
         m_Menus_MoveDown = m_Menus.FindAction("Move Down", throwIfNotFound: true);
         m_Menus_Select = m_Menus.FindAction("Select", throwIfNotFound: true);
+        m_Menus_Decrease = m_Menus.FindAction("Decrease", throwIfNotFound: true);
+        m_Menus_Increase = m_Menus.FindAction("Increase", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -836,6 +955,8 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menus_MoveUp;
     private readonly InputAction m_Menus_MoveDown;
     private readonly InputAction m_Menus_Select;
+    private readonly InputAction m_Menus_Decrease;
+    private readonly InputAction m_Menus_Increase;
     public struct MenusActions
     {
         private @DefaultControls m_Wrapper;
@@ -843,6 +964,8 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         public InputAction @MoveUp => m_Wrapper.m_Menus_MoveUp;
         public InputAction @MoveDown => m_Wrapper.m_Menus_MoveDown;
         public InputAction @Select => m_Wrapper.m_Menus_Select;
+        public InputAction @Decrease => m_Wrapper.m_Menus_Decrease;
+        public InputAction @Increase => m_Wrapper.m_Menus_Increase;
         public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -861,6 +984,12 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @Select.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnSelect;
+                @Decrease.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnDecrease;
+                @Decrease.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnDecrease;
+                @Decrease.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnDecrease;
+                @Increase.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnIncrease;
+                @Increase.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnIncrease;
+                @Increase.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnIncrease;
             }
             m_Wrapper.m_MenusActionsCallbackInterface = instance;
             if (instance != null)
@@ -874,6 +1003,12 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Decrease.started += instance.OnDecrease;
+                @Decrease.performed += instance.OnDecrease;
+                @Decrease.canceled += instance.OnDecrease;
+                @Increase.started += instance.OnIncrease;
+                @Increase.performed += instance.OnIncrease;
+                @Increase.canceled += instance.OnIncrease;
             }
         }
     }
@@ -900,5 +1035,7 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
         void OnMoveUp(InputAction.CallbackContext context);
         void OnMoveDown(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnDecrease(InputAction.CallbackContext context);
+        void OnIncrease(InputAction.CallbackContext context);
     }
 }

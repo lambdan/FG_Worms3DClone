@@ -2118,11 +2118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b768ac3ae6f1c1842917d413e26223f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionSound: {fileID: 0}
-  menuEntries: []
-  menuSelection:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1130582077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,7 +2202,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 980147083}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.9999999
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2511,7 +2506,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1808854068}
   m_HandleRect: {fileID: 1808854067}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3567,6 +3562,12 @@ MonoBehaviour:
   menuSelection:
     m_PersistentCalls:
       m_Calls: []
+  menuIncrease:
+    m_PersistentCalls:
+      m_Calls: []
+  menuDecrease:
+    m_PersistentCalls:
+      m_Calls: []
   _levelText: {fileID: 610522186}
   _levelPreviewParent: {fileID: 1110331553}
   _humanMenuSelector: {fileID: 420623979}
@@ -3736,6 +3737,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 6b6ecad5-b459-49fc-be68-264f7062fe0d
     m_ActionName: Menus/Select[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1641084615}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: Decrease
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1dd8c309-30ab-4a47-89b2-837669901fc2
+    m_ActionName: Menus/DeSelect[/DualShock4GamepadHID/buttonWest,/XInputControllerWindows/buttonWest,/DualShock4GamepadHID/dpad/left,/XInputControllerWindows/dpad/left,/Keyboard/leftArrow,/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1641084615}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: Increase
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: be267156-fbb5-4689-b96f-e2f6c09177ee
+    m_ActionName: Menus/Increase[/Keyboard/d,/Keyboard/rightArrow,/DualShock4GamepadHID/dpad/right,/XInputControllerWindows/dpad/right]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Menus

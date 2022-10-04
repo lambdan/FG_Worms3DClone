@@ -26,52 +26,67 @@ public class SettingsManager : MonoBehaviour
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
     
-    public void IncrementHumans()
+    public void ChangeHumanAmount(int amount)
     {
+        _humanPlayers += amount;
         if (_humanPlayers >= GetMaxPlayers())
+        {
+            _humanPlayers = GetMaxPlayers();
+        } else if (_humanPlayers <= 0)
         {
             _humanPlayers = 0;
         }
-        else
-        {
-            _humanPlayers += 1;
-        }
     }
 
-    public void IncrementAIs()
+    public void ChangeAIAmount(int amount)
     {
+        _aiPlayers += amount;
         if (_aiPlayers >= GetMaxPlayers())
+        {
+            _aiPlayers = GetMaxPlayers();
+        } else if (_aiPlayers <= 0)
         {
             _aiPlayers = 0;
         }
-        else
-        {
-            _aiPlayers += 1;
-        }
     }
 
-    public void IncrementTurnTime()
+    public void ChangeTurnTime(int amount)
     {
-        _turnLength += 5;
+        _turnLength += amount;
         if (_turnLength > 100)
         {
-            _turnLength = 5;
+            _turnLength = 100;
+        }
+
+        if (_turnLength <= 0)
+        {
+            _turnLength = 0;
         }
     }
 
-    public void IncrementWorms()
+    public void ChangeWormsAmount(int amount)
     {
-        _wormsPerTeam += 1;
+        _wormsPerTeam += amount;
         if (_wormsPerTeam > GetMaxWormsPerTeam())
+        {
+            _wormsPerTeam = GetMaxWormsPerTeam();
+        }
+
+        if (_wormsPerTeam <= 1)
         {
             _wormsPerTeam = 1;
         }
     }
 
-    public void IncrementLevel()
+    public void ChangeLevel(int amount)
     {
-        _levelIndex += 1;
+        _levelIndex += amount;
         if (_levelIndex >= _levels.Length)
+        {
+            _levelIndex = _levels.Length - 1;
+        }
+
+        if (_levelIndex < 0)
         {
             _levelIndex = 0;
         }

@@ -47,11 +47,12 @@ public class MainMenu : MenuSystem
             _highScoreRoot.SetActive(false); // Hide high scores if none
         }
         
-
         newSelection(0); // Focus "Start Game"
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
         menuSelection.AddListener(Selection);
+        menuIncrease.AddListener(Increase);
+        menuDecrease.AddListener(Decrease);
     }
 
     void AttemptStartGame()
@@ -77,27 +78,56 @@ public class MainMenu : MenuSystem
     
     void Selection()
     {
-        switch (GetSelectionIndex())
+        if (GetSelectionIndex() == 0)
         {
-            case 0: AttemptStartGame();
-                break;
-            case 1: _settingsManager.IncrementLevel();
-                break;
-            case 2: _settingsManager.IncrementHumans();
-                break;
-            case 3: _settingsManager.IncrementAIs();
-                break;
-            case 4: _settingsManager.IncrementTurnTime();
-                break;
-            case 5: _settingsManager.IncrementWorms();
-                break;
-            case 6: Application.Quit();
-                break;
+            AttemptStartGame();
+        } else if (GetSelectionIndex() >= 1 && GetSelectionIndex() <= 5)
+        {
+            Increase();
+        } else if (GetSelectionIndex() == 6)
+        {
+            Application.Quit();
         }
         
         RefreshMenu();
     }
 
+    void Increase()
+    {
+        switch (GetSelectionIndex())
+        {
+            case 1: _settingsManager.ChangeLevel(+1);
+                break;
+            case 2: _settingsManager.ChangeHumanAmount(+1);
+                break;
+            case 3: _settingsManager.ChangeAIAmount(+1);
+                break;
+            case 4: _settingsManager.ChangeTurnTime(+5);
+                break;
+            case 5: _settingsManager.ChangeWormsAmount(+1);
+                break; 
+        }
+        RefreshMenu();
+    }
+
+    void Decrease()
+    {
+        switch (GetSelectionIndex())
+        {
+            case 1: _settingsManager.ChangeLevel(-1);
+                break;
+            case 2: _settingsManager.ChangeHumanAmount(-1);
+                break;
+            case 3: _settingsManager.ChangeAIAmount(-1);
+                break;
+            case 4: _settingsManager.ChangeTurnTime(-5);
+                break;
+            case 5: _settingsManager.ChangeWormsAmount(-1);
+                break;
+        }
+        RefreshMenu();
+    }
+    
     void RefreshMenu()
     {
         UpdateLevelPreview(_settingsManager.GetLevel());
