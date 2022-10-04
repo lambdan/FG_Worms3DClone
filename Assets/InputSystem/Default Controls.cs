@@ -336,6 +336,17 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""32283316-9e88-4d9f-b6ba-75019eeea0ef"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Camera Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""37e709db-a190-4897-9927-04bcbc41bff7"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",

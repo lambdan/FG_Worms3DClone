@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
             lines.Add("Triangle: switch weapon");
             lines.Add("R1: switch worm");
             lines.Add("Circle: reload");
-            lines.Add("R3 (click): recenter camera");
+            lines.Add("L2: recenter camera");
 
         } else if (controllerType == "xbox") // Xbox
         {
@@ -403,7 +403,7 @@ public class GameManager : MonoBehaviour
             lines.Add("Y: switch weapon");
             lines.Add("RB: switch worm");
             lines.Add("B: reload");
-            lines.Add("RS (click): recenter camera");
+            lines.Add("LT: recenter camera");
         }
         
         _lastDeviceUsed = controllerType;
