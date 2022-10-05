@@ -653,17 +653,6 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b847a4bb-95fb-46e1-b3a9-7a69f4575be7"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Decrease"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ac112926-987e-48bd-b1f3-61ba74a718bc"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
@@ -675,12 +664,12 @@ public partial class @DefaultControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5c50e3df-de09-46ab-b995-acabd6be9ccb"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""id"": ""7d896012-699b-465d-a199-ddeead85b124"",
+                    ""path"": ""<Keyboard>/rightShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Increase"",
+                    ""action"": ""Decrease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
