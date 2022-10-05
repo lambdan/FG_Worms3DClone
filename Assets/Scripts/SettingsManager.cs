@@ -25,16 +25,10 @@ public class SettingsManager : MonoBehaviour
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
     
-    public void ChangeHumanAmount(int amount)
+    public void ChangeHumanAmount(int newAmount)
     {
-        _humanPlayers += amount;
-        if (_humanPlayers >= GetMaxPlayers())
-        {
-            _humanPlayers = GetMaxPlayers();
-        } else if (_humanPlayers <= 0)
-        {
-            _humanPlayers = 0;
-        }
+        _humanPlayers = newAmount;
+        Debug.Log("Human players is now" + HowManyHumans());
     }
 
     public void ChangeAIAmount(int amount)
@@ -132,6 +126,11 @@ public class SettingsManager : MonoBehaviour
     public GameObject GetLevel()
     {
         return _levels[_levelIndex];
+    }
+
+    public GameObject[] GetLevels()
+    {
+        return _levels;
     }
     
     public List<string> GetPlayerNames()

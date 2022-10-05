@@ -1,11 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
 
 public class MainMenu : MenuSystem
 {
-    [SerializeField] private TMP_Text _levelText;
+    [SerializeField] private TMP_Dropdown _levelDropdown;
+    [SerializeField] private Slider _humanSlider;
+    [SerializeField] private TMP_Text _humanNumber;
+    
     [SerializeField] private GameObject _levelPreviewParent;
     [SerializeField] private TMP_Text _humanMenuSelector;
     [SerializeField] private TMP_Text _aiMenuSelector;
@@ -46,7 +52,18 @@ public class MainMenu : MenuSystem
             _highScoreRoot.SetActive(false); // Hide high scores if none
         }
         
-        newSelection(0); // Focus "Start Game"
+        // Populate level dropdown
+        _levelDropdown.options.Clear();
+        foreach (var level in _settingsManager.GetLevels())
+        {
+            _levelDropdown.options.Add(new TMP_Dropdown.OptionData(text: level.name));
+        }
+        _levelDropdown.value = 0;
+
+        RefreshHumanSlider();
+
+        //_levelDropdown.onValueChanged.Invoke(); // Update level preview here
+
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -55,7 +72,25 @@ public class MainMenu : MenuSystem
         menuDecrease.AddListener(Decrease);
     }
 
-    void AttemptStartGame()
+    public void RefreshHumanSlider()
+    {
+        _humanSlider.wholeNumbers = true;
+        _humanSlider.minValue = 0;
+        _humanSlider.maxValue = _settingsManager.GetMaxPlayers();
+    }
+
+    public void UpdateHumanAmount()
+    {
+        _settingsManager.ChangeHumanAmount((int)_humanSlider.value);
+        _humanNumber.text = _settingsManager.HowManyHumans().ToString();
+    }
+
+    public void SetLevelIndex(int index)
+    {
+        _settingsManager.SetLevel(index);
+    }
+    
+    public void AttemptStartGame()
     {
         
         // Make sure we don't have more players than we allow (limited by spawn points)
@@ -130,14 +165,6 @@ public class MainMenu : MenuSystem
     
     void RefreshMenu()
     {
-        UpdateLevelPreview(_settingsManager.GetLevel());
-        _levelText.text = _settingsManager.GetLevel().name;
-        _humanMenuSelector.text = _settingsManager.HowManyHumans().ToString();
-        _aiMenuSelector.text = _settingsManager.HowManyAIs().ToString();
-        _turnTimeSelector.text = _settingsManager.GetTurnLength().ToString();
-        _wormsPerTeamSelector.text = _settingsManager.GetWormsPerTeam().ToString();
-
-        // Show name input if there are human players
         if (_settingsManager.HowManyHumans() <= 0)
         {
             _playerNameRoot.SetActive(false);
@@ -157,8 +184,9 @@ public class MainMenu : MenuSystem
         StartCoroutine(ShowErrorMessage(3));
     }
 
-    void UpdateLevelPreview(GameObject newLevel)
+    public void UpdateLevelPreview()
     {
+        var newLevel = _settingsManager.GetLevel();
         if (_levelPreviewObject == null || (newLevel.gameObject.name != _levelPreviewObject.gameObject.name[0..^7])) // ^7 to remove (Clone) from the name
         {
             Destroy(_levelPreviewObject);
