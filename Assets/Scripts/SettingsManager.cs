@@ -57,9 +57,9 @@ public class SettingsManager : MonoBehaviour
             _turnLength = 100;
         }
 
-        if (_turnLength <= 0)
+        if (_turnLength <= 5)
         {
-            _turnLength = 0;
+            _turnLength = 5;
         }
     }
 
