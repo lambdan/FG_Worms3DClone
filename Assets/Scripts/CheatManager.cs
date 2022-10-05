@@ -31,9 +31,9 @@ public class CheatManager : MonoBehaviour
     
     void GiveAllWeapons()
     {
-        foreach (WeaponProperties wp in _allWeapons)
+        foreach (WeaponProperties weaponProperties in _allWeapons)
         {
-            _gameManager.GetCurrentWorm().GetWeaponHolder().GetNewWeapon(wp, 999);
+            _gameManager.GetCurrentWorm().GetWeaponHolder().GetNewWeapon(weaponProperties, 999);
         }
     }
 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -35,8 +34,6 @@ public class WeaponScript : MonoBehaviour
                 if (Physics.Raycast(_barrelExit.position, transform.parent.forward,
                         out hit, Mathf.Infinity))
                 {
-                    //Debug.Log(hit.collider);
-                    //Debug.DrawRay(_barrelExit.position, hit.point, Color.green, 5f);
                     DamageTaker dmgTaker = hit.collider.GetComponentInParent<DamageTaker>();
                     if (dmgTaker)
                     {

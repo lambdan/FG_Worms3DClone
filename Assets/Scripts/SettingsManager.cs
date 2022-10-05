@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
@@ -13,7 +12,7 @@ public class SettingsManager : MonoBehaviour
     // Default settings
     private int _humanPlayers = 1;
     private int _aiPlayers = 1;
-    private int _turnLength = 15;
+    private int _turnLength = 20;
     private int _wormsPerTeam = 3;
     private int _maxWormsPerTeam = 20;
     

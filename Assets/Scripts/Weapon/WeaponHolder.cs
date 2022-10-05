@@ -51,12 +51,12 @@ public class WeaponHolder : MonoBehaviour
         UpdateAmmoHUD();
     }
 
-    public void GetNewWeapon(WeaponProperties WepProps, int ammo)
+    public void GetNewWeapon(WeaponProperties newWeaponProperties, int ammo)
     {
         // Check if we already have this weapon
         for (int i = 0; i < _heldWeapons.Count; i++)
         {
-            if (_heldWeapons[i].name == WepProps.name)
+            if (_heldWeapons[i].name == newWeaponProperties.name)
             {
                 // If we do, just add the ammo, dont get the weapon
                 _reserveAmmo[i] += ammo;
@@ -65,8 +65,8 @@ public class WeaponHolder : MonoBehaviour
             }
         }
         
-        _heldWeapons.Add(WepProps);
-        _bulletsInClip.Add(WepProps.clipSize);
+        _heldWeapons.Add(newWeaponProperties);
+        _bulletsInClip.Add(newWeaponProperties.clipSize);
         _reserveAmmo.Add(ammo);
         
         // Switch to latest picked up weapon (its gonna be at the end of the list)

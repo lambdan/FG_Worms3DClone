@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Max HP Upgrade Pickup", menuName = "Pickups/Max HP Up", order = 0)]

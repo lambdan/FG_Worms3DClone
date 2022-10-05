@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +14,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private GameObject _wormPrefab;
     [SerializeField] private GameObject _HUDPrefab;
-    [SerializeField] private GameObject _loadingScreenPrefab;
     [SerializeField] private GameObject _pauseMenuPrefab;
     [Header("Sound Effects")]
     [SerializeField] private AudioClip _wormSwitchSound;
@@ -24,7 +22,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip _gameOverSound;
 
     private GameObject _HUD;
-    private GameObject _loadingScreen;
     private GameObject _pauseMenu;
 
     private SettingsManager _settingsManager;
@@ -109,7 +106,7 @@ public class GameManager : MonoBehaviour
                 worm.SetTeamNumber(_teams.Count);
                 GiveStartingWeapons(worm);
 
-                worm.GetAIController().SetGameManager(this);
+                worm.GetAIController().SetGameManager(this); // Add AI specific stuff for AI teams
                 worm.GetAIController().SetPickupManager(_pickupManager);
                 worm.GetAIController().SetTeam(newTeam);
             }
@@ -339,8 +336,6 @@ public class GameManager : MonoBehaviour
     // Game inputs
     public void InputPause(InputAction.CallbackContext context)
     {
-        UpdateLastControllerUsed(context.control.device);
-        //Debug.Log(context.control.device.name);
         if (context.started)
         {
             TogglePause();
@@ -349,19 +344,19 @@ public class GameManager : MonoBehaviour
 
     public void InputNextWorm(InputAction.CallbackContext context)
     {
-        UpdateLastControllerUsed(context.control.device);
+        
         if (_currentTeam.IsAIControlled())
         {
             return; // So humans cant change worm for the AI 
         }
-        
+        UpdateControllerHints(context.control.device);
         if (context.started)
         {
             NextWorm();
         }
     }
 
-    public void UpdateLastControllerUsed(InputDevice device)
+    public void UpdateControllerHints(InputDevice device)
     {
         string controllerType = "";
         if (device.name == "Mouse" || device.name == "Keyboard")
@@ -420,8 +415,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        _loadingScreen = Instantiate(_loadingScreenPrefab);
-        
         _settingsManager = SettingsManager.Instance;
         if (_settingsManager == null)
         {
@@ -456,7 +449,6 @@ public class GameManager : MonoBehaviour
         _dangerZoneManager.Activate();
 
         StartTurn();
-        Destroy(_loadingScreen);
 
         UnityEngine.Cursor.visible = false;
     }

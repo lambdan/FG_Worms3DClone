@@ -20,10 +20,10 @@ public class CollisionAction : MonoBehaviour
         if (_givesDamage)
         {
             // Check if target has a damage taker, and if so, give it the damage
-            DamageTaker _dmgTaker = target.GetComponentInParent<DamageTaker>();
-            if (_dmgTaker != null)
+            DamageTaker _damageTaker = target.GetComponentInParent<DamageTaker>();
+            if (_damageTaker != null)
             {
-                _dmgTaker.TakeDamage(_damageGiver.GetDamageAmount());
+                _damageTaker.TakeDamage(_damageGiver.GetDamageAmount());
             }
         }
         

@@ -6,10 +6,10 @@ using UnityEngine;
 public class DangerZoneManager : MonoBehaviour
 {
     [SerializeField] private GameObject _dangerZonePrefab;
-    private List<Transform> _dangerZoneLocations;
-    private float _switchAfter = 30f;
+    [SerializeField] private float _switchAfter = 30f;
     [SerializeField] private bool _randomOrder;
 
+    private List<Transform> _dangerZoneLocations;
     private int _locationIndex;
     private GameObject _dangerZoneParent;
     private GameObject _dangerZone;
