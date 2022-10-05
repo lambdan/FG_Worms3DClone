@@ -386,7 +386,7 @@ public class GameManager : MonoBehaviour
             lines.Add("Q: switch weapon");
             lines.Add("E: switch worm");
             lines.Add("R: reload");
-            lines.Add("C: recenter camera");
+            lines.Add("C/RMB: recenter camera");
         }
         else if (controllerType == "playstation") // Playstation
         {

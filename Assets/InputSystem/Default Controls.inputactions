@@ -325,6 +325,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c91cd664-920c-4d86-886c-6650b36d672b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Camera Reset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "37e709db-a190-4897-9927-04bcbc41bff7",
                     "path": "<Keyboard>/r",
                     "interactions": "",
