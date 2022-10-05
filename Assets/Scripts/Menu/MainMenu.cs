@@ -49,6 +49,7 @@ public class MainMenu : MenuSystem
         newSelection(0); // Focus "Start Game"
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
         menuSelection.AddListener(Selection);
         menuIncrease.AddListener(Increase);
         menuDecrease.AddListener(Decrease);

@@ -451,6 +451,7 @@ public class GameManager : MonoBehaviour
         StartTurn();
 
         UnityEngine.Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
     }
 
     IEnumerator TurnTimer()
