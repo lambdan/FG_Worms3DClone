@@ -288,6 +288,10 @@ public class GameManager : MonoBehaviour
         _cameraManager.Deactivate();
         DeactivateCurrentWorm();
         _highScoreManager.RecordNewScore(_currentTeam.GetTeamName(), _currentTeam.GetScore());
+        
+        PlayerPrefs.SetInt("LastWinningScore", _currentTeam.GetScore()); // Will be used for game over scene
+        PlayerPrefs.SetString("LastWinner", _currentTeam.GetTeamName());
+        
         _hudUpdater.SetGameOver();
         StartCoroutine(GameOverDelay());
     }
@@ -481,7 +485,6 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
         }
-
-        SceneManager.LoadScene("Scenes/Menu"); // Go back to main menu
+        SceneManager.LoadScene("Scenes/GameOver");
     }
 }

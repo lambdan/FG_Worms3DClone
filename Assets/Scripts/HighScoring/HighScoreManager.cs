@@ -38,13 +38,10 @@ public class HighScoreManager : MonoBehaviour
     
     public void RecordNewScore(string name, int score)
     {
-        Debug.Log("recording score: " + name + " - " + score);
-        
         HighScoreData _highScoreData = new HighScoreData();
         _highScoreData.date = DateTime.Now.ToLocalTime().ToString();
         _highScoreData.name = name;
         _highScoreData.score = score;
-
         SaveData(_highScoreData);
     }
 
@@ -58,8 +55,6 @@ public class HighScoreManager : MonoBehaviour
         // Write savefile back to storage
         string newJSON = JsonUtility.ToJson(HSDL);
         File.WriteAllText(saveFile, newJSON);
-
-        Debug.Log("wrote to " + saveFile);
     }
 
     void ClearRecords()

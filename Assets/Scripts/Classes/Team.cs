@@ -4,11 +4,12 @@ using UnityEngine;
 public class Team
 {
     private List<Worm> _teamWorms = new List<Worm>();
+    private GameObject _gameObject = new GameObject(); // So we get a "folder" for each team in the editor... looks nicer
     private string _teamName = "Unnamed Team";
     private Color _teamColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-    private bool _aiControlled = false;
-    private int _score = 0;
-    private GameObject _gameObject = new GameObject();
+    private bool _aiControlled;
+    private int _score;
+    
 
     private int _teamNumber;
     private int _currentWormIndex;
@@ -42,7 +43,6 @@ public class Team
     public void AddScore(float amount)
     {
         _score += (int)amount;
-        Debug.Log("Adding " + amount + " score (" + _score + ")");
     }
 
     public void SetTeamNumber(int newTeamNumber)

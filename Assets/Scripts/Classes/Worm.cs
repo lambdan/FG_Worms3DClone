@@ -62,17 +62,17 @@ public class Worm
     {
         return _health.GetHealth() > 0;
     }
-
-    public int GetTeamNumber()
-    {
-        return _teamNumber;
-    }
-
+    
     public bool IsDead()
     {
         return _health.GetHealth() <= 0;
     }
 
+    public int GetTeamNumber()
+    {
+        return _teamNumber;
+    }
+    
     public GameObject GetGameObject()
     {
         return _wormGameObject;

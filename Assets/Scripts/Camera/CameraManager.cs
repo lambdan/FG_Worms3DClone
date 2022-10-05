@@ -1,7 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
-    public float cameraOverviewSpeed = 0.4f;
+    [SerializeField] private float cameraOverviewSpeed = 0.4f;
     private Transform _target;
     private CameraGlue _cameraGlue;
     private bool _manualControl;
@@ -34,10 +35,10 @@ public class CameraManager : MonoBehaviour
         transform.LookAt(_target);
     }
 
-    public void SetNewTarget(GameObject go, CameraGlue glue)
+    public void SetNewTarget(GameObject targetGameObject, CameraGlue cameraGlue)
     {
-        _target = go.transform;
-        _cameraGlue = glue;
+        _target = targetGameObject.transform;
+        _cameraGlue = cameraGlue;
         _overviewMode = false;
     }
     
