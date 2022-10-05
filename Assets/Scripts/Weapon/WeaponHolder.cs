@@ -19,7 +19,7 @@ public class WeaponHolder : MonoBehaviour
     private GameObject _currentWeaponObject;
     private WeaponScript _currentWeaponScript;
 
-    private float _nextFire = 0;
+    private float _nextFire;
     
     private float _reloadFinished = 0;
     private Coroutine _reloadCoroutine = null;
@@ -33,6 +33,7 @@ public class WeaponHolder : MonoBehaviour
     {
         // Stop reloading (but dont reset bulletsFiredThisClip var)
         StopReload();
+        _nextFire = 0;
 
         if (_currentWeaponObject != null)
         {
