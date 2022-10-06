@@ -10,17 +10,14 @@ public class WeaponHolder : MonoBehaviour
 
     private GameManager _gameManager;
     
-    private List<int> _bulletsInClip = new List<int>();
-    private List<int> _reserveAmmo = new List<int>();
-
     private int _currentWeaponIndex;
-    
     private List<GameObject> _weaponObjects = new List<GameObject>();
     private List<WeaponScript> _weaponScripts = new List<WeaponScript>();
     private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
+    private List<int> _bulletsInClip = new List<int>();
+    private List<int> _reserveAmmo = new List<int>();
 
     private float _nextFire;
-
     private float _reloadFinished;
     private Coroutine _reloadCoroutine;
 
@@ -31,7 +28,6 @@ public class WeaponHolder : MonoBehaviour
 
     public void SwitchWeapon(int newIndex)
     {
-        // Stop reloading (but dont reset bulletsFiredThisClip var)
         StopReload();
         _nextFire = 0;
 
@@ -72,7 +68,7 @@ public class WeaponHolder : MonoBehaviour
         weaponScript.SetWeaponProperties(newWeaponProperties);
         
         _weaponObjects.Add(weapon);
-        _weaponScripts.Add(weapon.GetComponent<WeaponScript>());
+        _weaponScripts.Add(weaponScript);
 
         // Switch to latest picked up weapon (its gonna be at the end of the list)
         SwitchWeapon(_heldWeapons.Count - 1);
@@ -84,15 +80,12 @@ public class WeaponHolder : MonoBehaviour
             // Only have 1 gun, nothing to switch to
             return;
         }
-        
         int next = _currentWeaponIndex + 1;
         if (next >= _heldWeapons.Count)
         {
             next = 0; // Back to first weapon
         }
-        
         SwitchWeapon(next);
-
     }
     
     public void Fire()
