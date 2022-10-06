@@ -345,9 +345,9 @@ public class GameManager : MonoBehaviour
     public void InputNextWorm(InputAction.CallbackContext context)
     {
         
-        if (_currentTeam.IsAIControlled())
+        if (TurnTimeLeft() <= 0 || _currentTeam.IsAIControlled())
         {
-            return; // So humans cant change worm for the AI 
+            return;
         }
         UpdateControllerHints(context.control.device);
         if (context.started)
