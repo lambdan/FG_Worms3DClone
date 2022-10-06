@@ -8,11 +8,15 @@ using Slider = UnityEngine.UI.Slider;
 
 public class MainMenu : MenuSystem
 {
+    [SerializeField] private GameObject _levelPreviewParent;
+    
     [SerializeField] private TMP_Dropdown _levelDropdown;
     [SerializeField] private Slider _humanSlider;
     [SerializeField] private TMP_Text _humanNumber;
+    [SerializeField] private Slider _aiSlider;
+    [SerializeField] private TMP_Text _aiNumber;
     
-    [SerializeField] private GameObject _levelPreviewParent;
+    
     [SerializeField] private TMP_Text _humanMenuSelector;
     [SerializeField] private TMP_Text _aiMenuSelector;
     [SerializeField] private TMP_Text _turnTimeSelector;
@@ -58,12 +62,16 @@ public class MainMenu : MenuSystem
         {
             _levelDropdown.options.Add(new TMP_Dropdown.OptionData(text: level.name));
         }
-        _levelDropdown.value = 0;
 
-        RefreshHumanSlider();
+        _levelDropdown.value = _settingsManager.GetLevelIndex();
 
-        //_levelDropdown.onValueChanged.Invoke(); // Update level preview here
-
+        _humanSlider.value = _settingsManager.HowManyHumans();
+        UpdateHumanAmount();
+        _aiSlider.value = _settingsManager.HowManyAIs();
+        UpdateAIAmount();
+        
+        RefreshSliderMinMax();
+        
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -72,11 +80,14 @@ public class MainMenu : MenuSystem
         menuDecrease.AddListener(Decrease);
     }
 
-    public void RefreshHumanSlider()
+    public void RefreshSliderMinMax()
     {
         _humanSlider.wholeNumbers = true;
+        _aiSlider.wholeNumbers = true;
         _humanSlider.minValue = 0;
+        _aiSlider.minValue = 0;
         _humanSlider.maxValue = _settingsManager.GetMaxPlayers();
+        _aiSlider.maxValue = _settingsManager.GetMaxPlayers();
     }
 
     public void UpdateHumanAmount()
@@ -85,9 +96,16 @@ public class MainMenu : MenuSystem
         _humanNumber.text = _settingsManager.HowManyHumans().ToString();
     }
 
+    public void UpdateAIAmount()
+    {
+        _settingsManager.ChangeAIAmount((int)_aiSlider.value);
+        _aiNumber.text = _settingsManager.HowManyAIs().ToString();
+    }
+
     public void SetLevelIndex(int index)
     {
         _settingsManager.SetLevel(index);
+        RefreshSliderMinMax();
     }
     
     public void AttemptStartGame()

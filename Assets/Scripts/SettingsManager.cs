@@ -31,16 +31,10 @@ public class SettingsManager : MonoBehaviour
         Debug.Log("Human players is now" + HowManyHumans());
     }
 
-    public void ChangeAIAmount(int amount)
+    public void ChangeAIAmount(int newAmount)
     {
-        _aiPlayers += amount;
-        if (_aiPlayers >= GetMaxPlayers())
-        {
-            _aiPlayers = GetMaxPlayers();
-        } else if (_aiPlayers <= 0)
-        {
-            _aiPlayers = 0;
-        }
+        _aiPlayers = newAmount;
+        Debug.Log("AI players is now" + HowManyAIs());
     }
 
     public void ChangeTurnTime(int amount)
@@ -131,6 +125,11 @@ public class SettingsManager : MonoBehaviour
     public GameObject[] GetLevels()
     {
         return _levels;
+    }
+
+    public int GetLevelIndex()
+    {
+        return _levelIndex;
     }
     
     public List<string> GetPlayerNames()
