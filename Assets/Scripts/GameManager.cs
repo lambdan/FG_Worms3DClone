@@ -128,6 +128,22 @@ public class GameManager : MonoBehaviour
     public void TogglePause()
     {
         _pauseMenu.SetActive(!_pauseMenu.activeSelf);
+        
+        if (_pauseMenu.activeSelf)
+        {
+            _currentWorm.Deactivate(); // Deactivate so you cant make any inputs in the pause menu
+        }
+        else // Reactivate
+        {
+            if (_currentTeam.IsAIControlled())
+            {
+                _currentWorm.ActivateAI();
+            }
+            else
+            {
+                _currentWorm.ActivateHumanInput();
+            }
+        }
     }
 
     // Audio
@@ -344,6 +360,10 @@ public class GameManager : MonoBehaviour
 
     public void InputNextWorm(InputAction.CallbackContext context)
     {
+        if (Time.timeScale == 0)
+        {
+            return; // Game is paused
+        }
         
         if (TurnTimeLeft() <= 0 || _currentTeam.IsAIControlled())
         {
