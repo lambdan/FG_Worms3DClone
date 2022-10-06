@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -25,9 +24,7 @@ public class ControlledByAI : MonoBehaviour
     private float distanceToEnemy;
 
     private GameObject _currentPickupTarget;
-
-    private bool _startedMoving;
-    private bool _unstucking;
+    private bool _avoidingObstacle;
 
     private Vector3 _lastPosition;
     private RaycastHit hit;
@@ -40,7 +37,7 @@ public class ControlledByAI : MonoBehaviour
     
     void Update()
     {
-        if (!_startedMoving || _unstucking)
+        if (_avoidingObstacle)
         {
             return; 
         }
@@ -131,16 +128,10 @@ public class ControlledByAI : MonoBehaviour
 
         return nearestPickup;
     }
-    
-    IEnumerator WaitBeforeMoving(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        _startedMoving = true;
-    }
 
     IEnumerator SimpleAvoidObstacle()
     {
-        _unstucking = true;
+        _avoidingObstacle = true;
         
         // Turn around
         Vector3 destination  = transform.position - (transform.forward * 3) - (transform.right * 20);
@@ -150,9 +141,7 @@ public class ControlledByAI : MonoBehaviour
             _movement.MoveTowards(destination);
             yield return new WaitForFixedUpdate();
         }
-        
-        // We should be in the clear now??
-        _unstucking = false;
+        _avoidingObstacle = false;
     }
 
     public void SetGameManager(GameManager gameManager)
@@ -176,8 +165,6 @@ public class ControlledByAI : MonoBehaviour
         _currentPickupTarget = FindNearestPickup();
         
         // Fake a thinking period
-        _startedMoving = false;
-        StartCoroutine(WaitBeforeMoving(Random.Range(1, 2)));
     }
 
     void OnDisable()
