@@ -52,6 +52,10 @@ public class WeaponHolder : MonoBehaviour
             {
                 // If we do, just add the ammo, dont get the weapon
                 _reserveAmmo[i] += ammo;
+                if (_reserveAmmo[i] > 10000) // Limit max ammo (not realistic to pick up this much but QA liked spamming the all weapons cheat =))
+                {
+                    _reserveAmmo[i] = 10000;
+                }
                 UpdateAmmoHUD();
                 return;
             }
