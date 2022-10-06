@@ -7,11 +7,11 @@ public class WeaponPickup : PickupSO
     public WeaponProperties _weaponProperty;
     public int ammo;
     
-    public override void OnPickup(GameObject pickedUpBy)
+    public override void OnPickup(GameObject receiver)
     {
-        if (pickedUpBy.TryGetComponent(out WeaponHolder wh))
+        if (receiver.TryGetComponent(out WeaponHolder receiverWeaponHolder))
         {
-            wh.GetNewWeapon(_weaponProperty, ammo);
+            receiverWeaponHolder.GetNewWeapon(_weaponProperty, ammo);
         }
     }
 

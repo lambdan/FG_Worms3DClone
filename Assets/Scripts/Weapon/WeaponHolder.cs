@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class WeaponHolder : MonoBehaviour
 {
-    [SerializeField] private List<WeaponProperties> _startingWeapons;
     [SerializeField] private Transform _weaponHand;
     [SerializeField] private Slider _reloadBar;
 
@@ -20,8 +19,8 @@ public class WeaponHolder : MonoBehaviour
     private WeaponScript _currentWeaponScript;
 
     private float _nextFire;
-    
-    private float _reloadFinished = 0;
+
+    private float _reloadFinished;
     private Coroutine _reloadCoroutine = null;
 
     void Awake()

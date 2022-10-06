@@ -11,7 +11,7 @@ public class PointTextTowardsCamera : MonoBehaviour
     
     void LateUpdate()
     {
-        // transform.LookAt doesnt work here... makes it mirrored for some reason
+        // transform.LookAt doesnt work here... makes it mirrored
         Quaternion q = Quaternion.LookRotation(transform.position - _cam.transform.position);
         transform.rotation = q;
     }

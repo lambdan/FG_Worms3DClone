@@ -34,7 +34,7 @@ public class PickupManager : MonoBehaviour
                 
         // Generate a list of possible spawn locations based on map's spawn bases
         List<Transform> playerSpawns = _gameManager.GetLevelInfo().GetSpawnBases();
-        for (int i = 0; i < (playerSpawns.Count*playerSpawns.Count); i++)
+        for (int i = 0; i < (playerSpawns.Count*100); i++)
         {
             Vector3 randomPosition = RandomPositionBetween(playerSpawns[Random.Range(0, playerSpawns.Count)].transform.position, playerSpawns[Random.Range(0, playerSpawns.Count)].transform.position);
             _possibleSpawnLocations.Add(randomPosition);
@@ -51,10 +51,10 @@ public class PickupManager : MonoBehaviour
     {
         while (_pickupsEnabled)
         {
-            Vector3 pos = _possibleSpawnLocations[Random.Range(0, _possibleSpawnLocations.Count)] + new Vector3(0, 30, 0);
-            GameObject go = Instantiate(_pickups[Random.Range(0, _pickups.Count)], pos, Quaternion.identity, _pickupParent.transform);
-            _activePickups.Add(go);
-            StartCoroutine(LifetimeTimer(go.GetInstanceID(), go.GetComponent<CollisionAction>().GetPickupScript().lifetime));
+            Vector3 position = _possibleSpawnLocations[Random.Range(0, _possibleSpawnLocations.Count)] + new Vector3(0, 30, 0);
+            GameObject gameObj = Instantiate(_pickups[Random.Range(0, _pickups.Count)], position, Quaternion.identity, _pickupParent.transform);
+            _activePickups.Add(gameObj);
+            StartCoroutine(LifetimeTimer(gameObj.GetInstanceID(), gameObj.GetComponent<CollisionAction>().GetPickupScript().lifetime));
             yield return new WaitForSeconds(_spawnFrequency);
         }
     }

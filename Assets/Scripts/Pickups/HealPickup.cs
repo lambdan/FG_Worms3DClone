@@ -5,11 +5,11 @@ public class HealPickup : PickupSO
 {
     public int HealAmount;
     
-    public override void OnPickup(GameObject pickedUpBy)
+    public override void OnPickup(GameObject receiver)
     {
-        if (pickedUpBy.TryGetComponent(out Health health))
+        if (receiver.TryGetComponent(out Health receiverHealth))
         {
-            health.ChangeHealth(HealAmount);
+            receiverHealth.ChangeHealth(HealAmount);
         }
     }
 }

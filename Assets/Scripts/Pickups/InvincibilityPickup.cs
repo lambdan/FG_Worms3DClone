@@ -6,11 +6,11 @@ public class InvincibilityPickup : PickupSO
 {
     public float duration;
     
-    public override void OnPickup(GameObject pickedUpBy)
+    public override void OnPickup(GameObject receiver)
     {
-        if (pickedUpBy.TryGetComponent(out Health health))
+        if (receiver.TryGetComponent(out Health receiverHealth))
         {
-            health.StartInvincibility(duration);
+            receiverHealth.StartInvincibility(duration);
         }
     }
 }

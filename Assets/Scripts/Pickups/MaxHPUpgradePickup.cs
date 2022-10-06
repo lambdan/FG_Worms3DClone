@@ -6,11 +6,11 @@ public class MaxHPUpgradePickup : PickupSO
 {
     public int amount;
     
-    public override void OnPickup(GameObject pickedUpBy)
+    public override void OnPickup(GameObject receiver)
     {
-        if (pickedUpBy.TryGetComponent(out Health health))
+        if (receiver.TryGetComponent(out Health receiverHealth))
         {
-            health.ChangeMaxHealth(amount);
+            receiverHealth.ChangeMaxHealth(amount);
         }
     }
 }
