@@ -8,6 +8,8 @@ public class InputHandler : MonoBehaviour
     private WeaponHolder _weaponHolder;
     private CameraManager _cameraManager;
 
+    private bool _cameraHeld;
+
     void Awake()
     {
         _gameManager = FindObjectOfType<GameManager>();
@@ -24,6 +26,10 @@ public class InputHandler : MonoBehaviour
 
     public void CameraAxisInput(InputAction.CallbackContext context)
     {
+        if (_cameraHeld)
+        {
+            return;
+        }
         _gameManager.UpdateControllerHints(context.control.device);
         _cameraManager.AxisInput(context.ReadValue<Vector2>());
     }
@@ -62,11 +68,21 @@ public class InputHandler : MonoBehaviour
     public void RecenterCamera(InputAction.CallbackContext context)
     {
         _gameManager.UpdateControllerHints(context.control.device);
-        if (!context.performed)
+
+        if (context.started)
         {
-            return;
+            _cameraHeld = true;
         }
-        _cameraManager.InstantReset();
+        
+        if (context.canceled)
+        {
+            _cameraHeld = false;
+        }
+        
+        if (context.performed)
+        {
+            _cameraManager.InstantReset();
+        }
     }
 
     public void ReloadWeapon(InputAction.CallbackContext context)
