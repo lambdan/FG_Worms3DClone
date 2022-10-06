@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 
 public class MainMenu : MenuSystem
@@ -20,13 +18,7 @@ public class MainMenu : MenuSystem
     [SerializeField] private Slider _wormsPerTeamSlider;
     [SerializeField] private TMP_Text _wormsPerTeamNumber;
     
-    
-    [SerializeField] private TMP_Text _humanMenuSelector;
-    [SerializeField] private TMP_Text _aiMenuSelector;
-    [SerializeField] private TMP_Text _turnTimeSelector;
-    [SerializeField] private TMP_Text _wormsPerTeamSelector;
     [SerializeField] private TMP_Text _messageBox;
-
     [SerializeField] private GameObject _playerNameRoot;
     [SerializeField] private GameObject _highScoreRoot;
 
@@ -71,22 +63,12 @@ public class MainMenu : MenuSystem
         // Set up sliders
         RefreshSliderMinMax();
         _humanSlider.value = _settingsManager.HowManyHumans();
-        //UpdateHumanAmount();
         _aiSlider.value = _settingsManager.HowManyAIs();
-        //UpdateAIAmount();
         _turnLengthSlider.value = _settingsManager.GetTurnLength();
-        //ChangedTurnLength();
         _wormsPerTeamSlider.value = _settingsManager.GetWormsPerTeam();
-
-
-        /*
-        RefreshMenu();
+        
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
-        menuSelection.AddListener(Selection);
-        menuIncrease.AddListener(Increase);
-        menuDecrease.AddListener(Decrease);
-        */
     }
 
     private void RefreshSliderMinMax()
@@ -103,6 +85,7 @@ public class MainMenu : MenuSystem
         _settingsManager.ChangeHumanAmount((int)_humanSlider.value);
         _humanNumber.text = _settingsManager.HowManyHumans().ToString();
         
+        // Should name entries or not?
         if (_settingsManager.HowManyHumans() <= 0)
         {
             _playerNameRoot.SetActive(false);
@@ -163,63 +146,6 @@ public class MainMenu : MenuSystem
 
         // We can start !
         SceneManager.LoadScene("Scenes/PlayScene");
-    }
-    
-    void Selection()
-    {
-        if (GetSelectionIndex() == 0)
-        {
-            AttemptStartGame();
-        } else if (GetSelectionIndex() >= 1 && GetSelectionIndex() <= 5)
-        {
-            Increase();
-        } else if (GetSelectionIndex() == 6)
-        {
-            Application.Quit();
-        }
-        
-        RefreshMenu();
-    }
-
-    void Increase()
-    {
-        switch (GetSelectionIndex())
-        {
-            case 1: _settingsManager.ChangeLevel(+1);
-                break;
-            case 2: _settingsManager.ChangeHumanAmount(+1);
-                break;
-            case 3: _settingsManager.ChangeAIAmount(+1);
-                break;
-            case 4: _settingsManager.ChangeTurnLength(+5);
-                break;
-            case 5: _settingsManager.ChangeWormsAmount(+1);
-                break; 
-        }
-        RefreshMenu();
-    }
-
-    void Decrease()
-    {
-        switch (GetSelectionIndex())
-        {
-            case 1: _settingsManager.ChangeLevel(-1);
-                break;
-            case 2: _settingsManager.ChangeHumanAmount(-1);
-                break;
-            case 3: _settingsManager.ChangeAIAmount(-1);
-                break;
-            case 4: _settingsManager.ChangeTurnLength(-5);
-                break;
-            case 5: _settingsManager.ChangeWormsAmount(-1);
-                break;
-        }
-        RefreshMenu();
-    }
-    
-    void RefreshMenu()
-    {
-
     }
 
     void ErrorMessage(string msg)
