@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
         {
             _currentWorm.Deactivate(); // Deactivate so you cant make any inputs in the pause menu
         }
-        else // Reactivate
+        else if (TurnTimeLeft() > 0) // Reactivate if turn isn't over
         {
             if (_currentTeam.IsAIControlled())
             {
