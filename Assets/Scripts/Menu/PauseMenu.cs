@@ -29,10 +29,14 @@ public class PauseMenu : MonoBehaviour
     private void OnEnable()
     {
         Time.timeScale = 0;
+        UnityEngine.Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnDisable()
     {
         Time.timeScale = 1;
+        UnityEngine.Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
     }
 }
