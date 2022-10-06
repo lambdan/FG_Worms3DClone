@@ -44,8 +44,8 @@ public class HealthBar : MonoBehaviour
 
     public void Refresh()
     {
+        SetMax(_health.GetMaxHealth());
         _slider.value = _health.GetHealth();
         _text.text = _health.GetHealth().ToString();
-        SetMax(_health.GetMaxHealth());
     }
 }
