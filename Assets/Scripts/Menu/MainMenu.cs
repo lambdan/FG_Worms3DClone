@@ -17,6 +17,8 @@ public class MainMenu : MenuSystem
     [SerializeField] private TMP_Text _aiNumber;
     [SerializeField] private Slider _turnLengthSlider;
     [SerializeField] private TMP_Text _turnLengthNumber;
+    [SerializeField] private Slider _wormsPerTeamSlider;
+    [SerializeField] private TMP_Text _wormsPerTeamNumber;
     
     
     [SerializeField] private TMP_Text _humanMenuSelector;
@@ -74,8 +76,9 @@ public class MainMenu : MenuSystem
         //UpdateAIAmount();
         _turnLengthSlider.value = _settingsManager.GetTurnLength();
         //ChangedTurnLength();
+        _wormsPerTeamSlider.value = _settingsManager.GetWormsPerTeam();
 
-        
+
         /*
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
@@ -109,11 +112,16 @@ public class MainMenu : MenuSystem
 
     public void ChangedTurnLength()
     {
-        Debug.Log("Turn length was " + _settingsManager.GetTurnLength());
         _settingsManager.ChangeTurnLength((int)_turnLengthSlider.value);
         _turnLengthNumber.text = _settingsManager.GetTurnLength().ToString();
-        Debug.Log("Turn length is now " + _settingsManager.GetTurnLength());
     }
+
+    public void ChangedWormsPerTeamAmount()
+    {
+        _settingsManager.ChangeWormsAmount((int)_wormsPerTeamSlider.value);
+        _wormsPerTeamNumber.text = _settingsManager.GetWormsPerTeam().ToString();
+    }
+    
 
     public void SetLevelIndex(int index)
     {

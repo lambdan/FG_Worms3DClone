@@ -41,18 +41,9 @@ public class SettingsManager : MonoBehaviour
         _turnLength = newTime;
     }
 
-    public void ChangeWormsAmount(int amount)
+    public void ChangeWormsAmount(int newAmount)
     {
-        _wormsPerTeam += amount;
-        if (_wormsPerTeam > GetMaxWormsPerTeam())
-        {
-            _wormsPerTeam = GetMaxWormsPerTeam();
-        }
-
-        if (_wormsPerTeam <= 1)
-        {
-            _wormsPerTeam = 1;
-        }
+        _wormsPerTeam = newAmount;
     }
 
     public void ChangeLevel(int amount)
