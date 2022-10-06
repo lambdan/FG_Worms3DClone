@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 7.5
   _rotationSpeed: 120
-  _jumpForce: 2000
+  _jumpForce: 1750
   _fastFallTriggerVelocity: 20
   landedAfterLongFall:
     m_PersistentCalls:
@@ -269,6 +269,21 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 100
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  fallingOutOfBounds:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4932588296584274209}
+        m_TargetAssemblyTypeName: DamageTaker, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 999999
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -368,8 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5609bb4fc56b76142b245b64a6085edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingWeapons:
-  - {fileID: 11400000, guid: 01da3ab408965964bb09ce1329ab9b3f, type: 2}
   _weaponHand: {fileID: 134202490290356421}
   _reloadBar: {fileID: 5973061251489488857}
 --- !u!114 &4513286937411717522

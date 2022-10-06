@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
     private Vector2 _moveAxis;
 
     public UnityEvent landedAfterLongFall;
-    
+    public UnityEvent fallingOutOfBounds;
 
     void Awake()
     {
@@ -38,6 +38,11 @@ public class Movement : MonoBehaviour
         if (_rb.velocity.y < -_fastFallTriggerVelocity)
         {
             _fastFalling = true;
+        }
+
+        if (_rb.velocity.y < -50f) // Fell outside map?
+        {
+            fallingOutOfBounds.Invoke();
         }
     }
 
