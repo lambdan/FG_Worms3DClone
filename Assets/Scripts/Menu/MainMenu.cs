@@ -102,6 +102,16 @@ public class MainMenu : MenuSystem
     {
         _settingsManager.ChangeHumanAmount((int)_humanSlider.value);
         _humanNumber.text = _settingsManager.HowManyHumans().ToString();
+        
+        if (_settingsManager.HowManyHumans() <= 0)
+        {
+            _playerNameRoot.SetActive(false);
+        }
+        else
+        {
+            _playerNameRoot.SetActive(true);
+            _playerNameManager.RefreshInputContainer();
+        }
     }
 
     public void UpdateAIAmount()
@@ -127,6 +137,11 @@ public class MainMenu : MenuSystem
     {
         _settingsManager.SetLevel(index);
         RefreshSliderMinMax();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
     
     public void AttemptStartGame()
@@ -204,15 +219,7 @@ public class MainMenu : MenuSystem
     
     void RefreshMenu()
     {
-        if (_settingsManager.HowManyHumans() <= 0)
-        {
-            _playerNameRoot.SetActive(false);
-        }
-        else
-        {
-            _playerNameRoot.SetActive(true);
-            _playerNameManager.RefreshInputContainer();
-        }
+
     }
 
     void ErrorMessage(string msg)
