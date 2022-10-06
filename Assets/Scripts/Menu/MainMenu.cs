@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Slider = UnityEngine.UI.Slider;
 
-public class MainMenu : MenuSystem
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _levelPreviewParent;
     
@@ -37,8 +37,6 @@ public class MainMenu : MenuSystem
 
         _highScoreManager = GetComponent<HighScoreManager>();
         _playerNameManager = GetComponent<PlayerNameManager>();
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = selectionSound;
     }
     
     void Start()
