@@ -15,6 +15,8 @@ public class MainMenu : MenuSystem
     [SerializeField] private TMP_Text _humanNumber;
     [SerializeField] private Slider _aiSlider;
     [SerializeField] private TMP_Text _aiNumber;
+    [SerializeField] private Slider _turnLengthSlider;
+    [SerializeField] private TMP_Text _turnLengthNumber;
     
     
     [SerializeField] private TMP_Text _humanMenuSelector;
@@ -62,31 +64,34 @@ public class MainMenu : MenuSystem
         {
             _levelDropdown.options.Add(new TMP_Dropdown.OptionData(text: level.name));
         }
-
         _levelDropdown.value = _settingsManager.GetLevelIndex();
 
-        _humanSlider.value = _settingsManager.HowManyHumans();
-        UpdateHumanAmount();
-        _aiSlider.value = _settingsManager.HowManyAIs();
-        UpdateAIAmount();
-        
+        // Set up sliders
         RefreshSliderMinMax();
+        _humanSlider.value = _settingsManager.HowManyHumans();
+        //UpdateHumanAmount();
+        _aiSlider.value = _settingsManager.HowManyAIs();
+        //UpdateAIAmount();
+        _turnLengthSlider.value = _settingsManager.GetTurnLength();
+        //ChangedTurnLength();
+
         
+        /*
         RefreshMenu();
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         menuSelection.AddListener(Selection);
         menuIncrease.AddListener(Increase);
         menuDecrease.AddListener(Decrease);
+        */
     }
 
-    public void RefreshSliderMinMax()
+    private void RefreshSliderMinMax()
     {
-        _humanSlider.wholeNumbers = true;
-        _aiSlider.wholeNumbers = true;
         _humanSlider.minValue = 0;
-        _aiSlider.minValue = 0;
         _humanSlider.maxValue = _settingsManager.GetMaxPlayers();
+
+        _aiSlider.minValue = 0;
         _aiSlider.maxValue = _settingsManager.GetMaxPlayers();
     }
 
@@ -100,6 +105,14 @@ public class MainMenu : MenuSystem
     {
         _settingsManager.ChangeAIAmount((int)_aiSlider.value);
         _aiNumber.text = _settingsManager.HowManyAIs().ToString();
+    }
+
+    public void ChangedTurnLength()
+    {
+        Debug.Log("Turn length was " + _settingsManager.GetTurnLength());
+        _settingsManager.ChangeTurnLength((int)_turnLengthSlider.value);
+        _turnLengthNumber.text = _settingsManager.GetTurnLength().ToString();
+        Debug.Log("Turn length is now " + _settingsManager.GetTurnLength());
     }
 
     public void SetLevelIndex(int index)
@@ -155,7 +168,7 @@ public class MainMenu : MenuSystem
                 break;
             case 3: _settingsManager.ChangeAIAmount(+1);
                 break;
-            case 4: _settingsManager.ChangeTurnTime(+5);
+            case 4: _settingsManager.ChangeTurnLength(+5);
                 break;
             case 5: _settingsManager.ChangeWormsAmount(+1);
                 break; 
@@ -173,7 +186,7 @@ public class MainMenu : MenuSystem
                 break;
             case 3: _settingsManager.ChangeAIAmount(-1);
                 break;
-            case 4: _settingsManager.ChangeTurnTime(-5);
+            case 4: _settingsManager.ChangeTurnLength(-5);
                 break;
             case 5: _settingsManager.ChangeWormsAmount(-1);
                 break;

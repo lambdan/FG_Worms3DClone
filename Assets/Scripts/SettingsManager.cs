@@ -4,6 +4,7 @@ using UnityEngine;
 public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance { get; private set; }
+    
     private GameObject[] _levels;
     private GameObject _level;
     private int _levelIndex;
@@ -28,27 +29,16 @@ public class SettingsManager : MonoBehaviour
     public void ChangeHumanAmount(int newAmount)
     {
         _humanPlayers = newAmount;
-        Debug.Log("Human players is now" + HowManyHumans());
     }
 
     public void ChangeAIAmount(int newAmount)
     {
         _aiPlayers = newAmount;
-        Debug.Log("AI players is now" + HowManyAIs());
     }
 
-    public void ChangeTurnTime(int amount)
+    public void ChangeTurnLength(int newTime)
     {
-        _turnLength += amount;
-        if (_turnLength > 100)
-        {
-            _turnLength = 100;
-        }
-
-        if (_turnLength <= 5)
-        {
-            _turnLength = 5;
-        }
+        _turnLength = newTime;
     }
 
     public void ChangeWormsAmount(int amount)
