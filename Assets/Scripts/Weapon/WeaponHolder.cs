@@ -9,45 +9,41 @@ public class WeaponHolder : MonoBehaviour
     [SerializeField] private Slider _reloadBar;
 
     private GameManager _gameManager;
-    private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
+    
     private List<int> _bulletsInClip = new List<int>();
     private List<int> _reserveAmmo = new List<int>();
+
+    private int _currentWeaponIndex;
     
-    private int _currentWeaponIndex = 0;
-    private WeaponProperties _currentWeaponProperties;
-    private GameObject _currentWeaponObject;
-    private WeaponScript _currentWeaponScript;
+    private List<GameObject> _weaponObjects = new List<GameObject>();
+    private List<WeaponScript> _weaponScripts = new List<WeaponScript>();
+    private List<WeaponProperties> _heldWeapons = new List<WeaponProperties>();
 
     private float _nextFire;
 
     private float _reloadFinished;
-    private Coroutine _reloadCoroutine = null;
+    private Coroutine _reloadCoroutine;
 
     void Awake()
     {
         _reloadBar.gameObject.SetActive(false);
     }
 
-    public void SwitchWeapon(int index)
+    public void SwitchWeapon(int newIndex)
     {
         // Stop reloading (but dont reset bulletsFiredThisClip var)
         StopReload();
         _nextFire = 0;
 
-        if (_currentWeaponObject != null)
-        {
-            Destroy(_currentWeaponObject); // Remove current weapon
-        }
+        // Deactivate old weapon
+        _weaponObjects[_currentWeaponIndex].SetActive(false);
 
-        _currentWeaponProperties = _heldWeapons[index];
-        _currentWeaponIndex = index;
+        // Set new weapon
+        _currentWeaponIndex = newIndex;
+        _weaponObjects[_currentWeaponIndex].transform.position = _weaponHand.position;
+        _weaponObjects[_currentWeaponIndex].transform.rotation = _weaponHand.rotation;
+        _weaponObjects[_currentWeaponIndex].SetActive(true);
         
-        GameObject weapon = Instantiate(_currentWeaponProperties.weaponPrefab, _weaponHand.position,
-            _weaponHand.rotation, _weaponHand);
-        _currentWeaponObject = weapon;
-        _currentWeaponScript = _currentWeaponObject.GetComponent<WeaponScript>();
-        _currentWeaponScript.SetWeaponProperties(_currentWeaponProperties);
-
         UpdateAmmoHUD();
     }
 
@@ -68,7 +64,16 @@ public class WeaponHolder : MonoBehaviour
         _heldWeapons.Add(newWeaponProperties);
         _bulletsInClip.Add(newWeaponProperties.clipSize);
         _reserveAmmo.Add(ammo);
+
+        GameObject weapon = Instantiate(newWeaponProperties.weaponPrefab, _weaponHand.transform); // weapon hand as parent
+        weapon.SetActive(false);
+
+        WeaponScript weaponScript = weapon.GetComponent<WeaponScript>();
+        weaponScript.SetWeaponProperties(newWeaponProperties);
         
+        _weaponObjects.Add(weapon);
+        _weaponScripts.Add(weapon.GetComponent<WeaponScript>());
+
         // Switch to latest picked up weapon (its gonna be at the end of the list)
         SwitchWeapon(_heldWeapons.Count - 1);
     }
@@ -85,9 +90,8 @@ public class WeaponHolder : MonoBehaviour
         {
             next = 0; // Back to first weapon
         }
-
-        _currentWeaponIndex = next;
-        SwitchWeapon(_currentWeaponIndex);
+        
+        SwitchWeapon(next);
 
     }
     
@@ -95,9 +99,9 @@ public class WeaponHolder : MonoBehaviour
     {
         if (Time.time > _nextFire && _reloadCoroutine == null && _bulletsInClip[_currentWeaponIndex] > 0)
         {
-            _currentWeaponScript.Fire();
+            _weaponScripts[_currentWeaponIndex].Fire();
             
-            _nextFire = Time.time + _currentWeaponProperties.fireRate; // When can we fire again? (cooldown)
+            _nextFire = Time.time + _heldWeapons[_currentWeaponIndex].fireRate; // When can we fire again? (cooldown)
 
             _bulletsInClip[_currentWeaponIndex] -= 1;
             
@@ -111,15 +115,15 @@ public class WeaponHolder : MonoBehaviour
 
     public void TriggerReload()
     {
-        if (_bulletsInClip[_currentWeaponIndex] == _currentWeaponProperties.clipSize)
+        if (_bulletsInClip[_currentWeaponIndex] == _heldWeapons[_currentWeaponIndex].clipSize)
         {
-            return;
+            return; // Avoid reloading when clip is already full
         }
         
         if (_reloadCoroutine == null && _reserveAmmo[_currentWeaponIndex] > 0)
         {
-            _reloadFinished = Time.time + _currentWeaponProperties.reloadSpeed;
-            _reloadCoroutine = StartCoroutine(ReloadWeapon(_currentWeaponProperties.reloadSpeed)); 
+            _reloadFinished = Time.time + _heldWeapons[_currentWeaponIndex].reloadSpeed;
+            _reloadCoroutine = StartCoroutine(ReloadWeapon(_heldWeapons[_currentWeaponIndex].reloadSpeed)); 
         }
     }
 
@@ -171,16 +175,16 @@ public class WeaponHolder : MonoBehaviour
     
     IEnumerator ReloadWeapon(float reloadTime)
     {
-        _currentWeaponScript.PlayReloadSound();
+        _weaponScripts[_currentWeaponIndex].PlayReloadSound();
         _reloadBar.gameObject.SetActive(true);
         while (Time.time < _reloadFinished)
         {
             _reloadBar.maxValue = reloadTime;
             _reloadBar.value = _reloadFinished - Time.time;
-            yield return new WaitForSeconds(Time.deltaTime);
+            yield return new WaitForEndOfFrame();
         }
 
-        int amountNeeded = _currentWeaponProperties.clipSize - _bulletsInClip[_currentWeaponIndex];
+        int amountNeeded = _heldWeapons[_currentWeaponIndex].clipSize - _bulletsInClip[_currentWeaponIndex];
         if (_reserveAmmo[_currentWeaponIndex] > amountNeeded)
         {
             // We have enough for a full clip
