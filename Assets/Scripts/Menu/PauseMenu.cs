@@ -1,33 +1,24 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MenuSystem
+public class PauseMenu : MonoBehaviour
 {
     private GameManager _gameManager;
     [SerializeField] private Canvas _canvas;
 
-    void Selection()
+    public void ResumeGame()
     {
-        switch (GetSelectionIndex())
-            {
-                case 0: // Resume game
-                    _gameManager.TogglePause();
-                    break;
-                case 1: // Restart
-                    SceneManager.LoadScene("Scenes/PlayScene");
-                    break;
-                case 2: // Quit to menu
-                    SceneManager.LoadScene("Scenes/Menu");
-                    break;
-            }
+        _gameManager.TogglePause();
     }
 
-    void Awake()
+    public void RestartGame()
     {
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = selectionSound;
-        newSelection(0); // To make the first item be hovered
-        menuSelection.AddListener(Selection);
+        SceneManager.LoadScene("Scenes/PlayScene");
+    }
+
+    public void QuitToMenu()
+    {
+        SceneManager.LoadScene("Scenes/Menu");
     }
     
     public void SetGameManager(GameManager gameManager)

@@ -4,6 +4,7 @@ using UnityEngine;
 public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager Instance { get; private set; }
+    
     private GameObject[] _levels;
     private GameObject _level;
     private int _levelIndex;
@@ -25,56 +26,24 @@ public class SettingsManager : MonoBehaviour
         _levelInfo = _level.GetComponent<LevelInfo>();
     }
     
-    public void ChangeHumanAmount(int amount)
+    public void ChangeHumanAmount(int newAmount)
     {
-        _humanPlayers += amount;
-        if (_humanPlayers >= GetMaxPlayers())
-        {
-            _humanPlayers = GetMaxPlayers();
-        } else if (_humanPlayers <= 0)
-        {
-            _humanPlayers = 0;
-        }
+        _humanPlayers = newAmount;
     }
 
-    public void ChangeAIAmount(int amount)
+    public void ChangeAIAmount(int newAmount)
     {
-        _aiPlayers += amount;
-        if (_aiPlayers >= GetMaxPlayers())
-        {
-            _aiPlayers = GetMaxPlayers();
-        } else if (_aiPlayers <= 0)
-        {
-            _aiPlayers = 0;
-        }
+        _aiPlayers = newAmount;
     }
 
-    public void ChangeTurnTime(int amount)
+    public void ChangeTurnLength(int newTime)
     {
-        _turnLength += amount;
-        if (_turnLength > 100)
-        {
-            _turnLength = 100;
-        }
-
-        if (_turnLength <= 5)
-        {
-            _turnLength = 5;
-        }
+        _turnLength = newTime;
     }
 
-    public void ChangeWormsAmount(int amount)
+    public void ChangeWormsAmount(int newAmount)
     {
-        _wormsPerTeam += amount;
-        if (_wormsPerTeam > GetMaxWormsPerTeam())
-        {
-            _wormsPerTeam = GetMaxWormsPerTeam();
-        }
-
-        if (_wormsPerTeam <= 1)
-        {
-            _wormsPerTeam = 1;
-        }
+        _wormsPerTeam = newAmount;
     }
 
     public void ChangeLevel(int amount)
@@ -132,6 +101,16 @@ public class SettingsManager : MonoBehaviour
     public GameObject GetLevel()
     {
         return _levels[_levelIndex];
+    }
+
+    public GameObject[] GetLevels()
+    {
+        return _levels;
+    }
+
+    public int GetLevelIndex()
+    {
+        return _levelIndex;
     }
     
     public List<string> GetPlayerNames()
