@@ -65,6 +65,11 @@ public class MainMenu : MonoBehaviour
         _turnLengthSlider.value = _settingsManager.GetTurnLength();
         _wormsPerTeamSlider.value = _settingsManager.GetWormsPerTeam();
         
+        _humanNumber.text = _settingsManager.HowManyHumans().ToString();
+        _aiNumber.text = _settingsManager.HowManyAIs().ToString();
+        _turnLengthNumber.text = _settingsManager.GetTurnLength().ToString();
+        _wormsPerTeamNumber.text = _settingsManager.GetWormsPerTeam().ToString();
+        
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
     }
