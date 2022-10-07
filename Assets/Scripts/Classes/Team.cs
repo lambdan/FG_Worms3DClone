@@ -6,7 +6,7 @@ public class Team
     private List<Worm> _teamWorms = new List<Worm>();
     private GameObject _gameObject = new GameObject(); // So we get a "folder" for each team in the editor... looks nicer
     private string _teamName = "Unnamed Team";
-    private Color _teamColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+    private Color _teamColor = TeamColor.GetAvailableTeamColor();
     private bool _aiControlled;
     private int _score;
     

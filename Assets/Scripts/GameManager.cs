@@ -459,6 +459,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _teams = new List<Team>();
+        TeamColor.ClearUsedColors();
         SetLevel(_settingsManager.GetLevel());
         GenerateTeams();
         _hudUpdater.UpdateAliveCount(_teams);
